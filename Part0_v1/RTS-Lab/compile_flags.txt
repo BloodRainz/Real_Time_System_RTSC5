@@ -1,0 +1,4 @@
+-IC:\Users\Kavineshver\Documents\TinyTimber\Part0_v1\RTS-Lab
+-IC:\Users\Kavineshver\Documents\TinyTimber\Part0_v1\RTS-Lab\device\inc
+-IC:\Users\Kavineshver\Documents\TinyTimber\Part0_v1\RTS-Lab\driver\inc
+-DSTM32F40_41xxx
