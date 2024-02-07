@@ -2,12 +2,13 @@
  * Part 0 Section 2 Submission: I/O interface
  * 
  * RTS-C5: 	Emil Johansson (emiuo@chalmers.se) 
- * 			Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
- * 			Joshua Geraghty (joshuag@chalmers.se)
+ * 		Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
+ * 		Joshua Geraghty (joshuag@chalmers.se)
  * 
  * Verified by Lab TA, 07.02.2024 @ 18:30
  * 
- * - Allows the user to input multiple digits, and store the value to a three integer memory in FIFO style.
+ * - Allows the user to input multiple digits, and store the value to a three integer memory in FIFO style. 
+ * - Use 'e' to store the entered digits as a number. 
  * - Allows the user to clear the memory, using F (MUST be capital F)
  * - Prints the sum of the memory, and the median of the memory.
  * 
