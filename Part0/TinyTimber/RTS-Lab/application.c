@@ -1,20 +1,55 @@
+/*
+ * Part 0 Section 2 Submission: I/O interface
+ * 
+ * RTS-C5: 	Emil Johansson (emiuo@chalmers.se) 
+ * 		Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
+ * 		Joshua Geraghty (joshuag@chalmers.se)
+ * 
+ * Verified by Lab TA, 07.02.2024 @ 18:30
+ * 
+ * - Allows the user to input multiple digits, and store the value to a three integer memory in FIFO style. 
+ * - Use 'e' to store the entered digits as a number. 
+ * - Allows the user to clear the memory, using F (MUST be capital F)
+ * - Prints the sum of the memory, and the median of the memory.
+ * 
+ * KNOWN BUGS:
+ * - Typing in massive numbers to the buffer will go out of bounds - so please don't type 5 billion gazillion and press e.  
+ * - No SYNC or ASYNC methods used: so theoretically possible to press 
+ * 		two inputs in at the same time.
+ * 
+ */
+ 
 #include "TinyTimber.h"
 #include "sciTinyTimber.h"
 #include "canTinyTimber.h"
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "notes.h"
+
 typedef struct {
     Object super;
     int count;
     char c;
-	char buf[50];
+	char buffer[50];  // buffer to store the user input
+	int three_num[3]; // buffer to store the user input when e is pressed
+	int storage;	  // determines how many user input values are stored
+	int key;		  // user defined key
 } App;
 
-App app = { initObject(), 0, 'X', {0} };
+App app = { initObject(), 0, 'X', {0}, {0}, 0 };
 
 void reader(App*, int);
 void receiver(App*, int);
+
+// Method to determine the median of one, two and three values.
+int parseMedian(App*,int);
+
+// 
+int period(int, int);
+
+// 
+void key_press(App*, int);
 
 Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
@@ -28,9 +63,16 @@ void receiver(App *self, int unused) {
 }
 
 void reader(App *self, int c) {
+	
+	// Create a char to print text and value together
+	SCI_WRITE(&sci0, "Rcv: \'");
+	SCI_WRITECHAR(&sci0, c);
+	SCI_WRITE(&sci0, "\'\n");
+	
+	// Buffer for writing
+	char write_buf[200];
 	switch(c)
 	{
-		// Consider making an if statement
 		// Case where valid decimal integers are typed.
 		case '0':
 		case '1':
@@ -44,45 +86,177 @@ void reader(App *self, int c) {
 		case '9':
 		case '-':
 			// Add valid value into buffer
-			self->buf[self->count++] = c;
-			
-			// Create a char to print text and value together
-			SCI_WRITE(&sci0, "Rcv: \'");
-			SCI_WRITECHAR(&sci0, c);
-			SCI_WRITE(&sci0, "\'\n");
-			
-			// Troubleshooting buffer state
-			int bufferValue = atoi(self->buf);
-			char snbufOne[200];
-			snprintf(snbufOne,200,"Input: %d\n", bufferValue;
-			SCI_WRITE(&sci0, snbufOne);
-			
-			// Troubleshooting current count
-			char snbufCount[200];
-			snprintf(snbufCount,200,"Count: %d\n", self->count);
-			SCI_WRITE(&sci0, snbufCount);
+			self->buffer[self->count++] = c;
 			break;
 			
 		// Case where delimiter, e, is typed.
 		case 'e':
-			self->buf[self->count] = '\0';
-			// Convert buffer to an integer value
-			int valueEnd = atoi(self->buf);
-			// Reset the count to 0
+			self->buffer[self->count] = '\0';
 			self->count = 0;
-			// Create a char to print text and value together
-			char snbuf[200];
-			snprintf(snbuf,200,"Entered integer: %d\n", valueEnd);
-			SCI_WRITE(&sci0, snbuf);
+			
+			// Shift the buffer to the right:
+			// FIFO style storage
+			self->three_num[2] = self->three_num[1];
+			self->three_num[1] = self->three_num[0];
+			self->three_num[0] = atoi(self->buffer);
+			
+			// Determine the full size of the buffer:
+			// size of entire buffer / size of one buffer value.
+			int fullsize = sizeof(self->three_num)/sizeof(self->three_num[0]);
+			
+			// Ensure that storage does not increase above the allocated memory.
+			if (self->storage < fullsize)
+			{
+				self->storage++;
+			}
+		
+			// Get the sum of all number within the history.
+			int sum3 = self->three_num[0] + self->three_num[1] + self->three_num[2];
+			
+			// Get the median of all numbers within the history.
+			int median3 = parseMedian(self, 0);
+			
+			// Lab specified output. 
+			snprintf(write_buf, 200, "Entered integer: %d : sum = %d , median = %d \n", self->three_num[0], sum3, median3);
+			SCI_WRITE(&sci0, write_buf);
 			break;
 			
+		// Erase three history buffer case, when capital F is pressed.
+		case 'F':
+			// Erase history of numbers.
+			self->three_num[0] = 0;
+			self->three_num[1] = 0;
+			self->three_num[2] = 0;
+			
+			// Reset storage value, since no user values are stored.
+			self->storage = 0;
+			
+			SCI_WRITE(&sci0, "The 3-history has been erased\n");
+			break;
+			
+		case 'K':
+			
+			snprintf(write_buf, 200, "Entered key mode. \n");
+			SCI_WRITE(&sci0,write_buf);
+			
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+			
+			self->key = atoi(self->buffer);
+			
+			if (-5 < self->key && self->key < 5)
+			{
+				SCI_WRITE(&sci0, "Key: ");
+				
+				snprintf(write_buf, 32, "%d", self->key);
+				SCI_WRITE(&sci0, write_buf);
+				SCI_WRITE(&sci0, "\n");
+				
+				SCI_WRITE(&sci0, "Note periods: \n");
+				// FOR LOOP CRASHING CODE:
+				for(int i = 0; i < 32; i++){
+           
+					int currentnote = song[i];
+       
+					int currentperiod = period(currentnote, self->key);
+					
+					// period function returns a 0 when idx is outside of range.
+					if (currentperiod == 0)
+					{
+						SCI_WRITE(&sci0, "ERROR: Note went outside of range \n");
+						break;
+					}
+					
+					snprintf(write_buf, 200, "%d", currentperiod);
+					SCI_WRITE(&sci0, write_buf);
+					SCI_WRITE(&sci0, "\n");
+				}
+				SCI_WRITE(&sci0, "All periods printed. \n");
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "Invalid key chosen\n");
+				break;
+			}
 		// Case where invalid values are typed
 		default:
 			break;
 	}
-   // SCI_WRITE(&sci0, "Rcv: \'");
-   // SCI_WRITECHAR(&sci0, c);
-   // SCI_WRITE(&sci0, "\'\n");
+}
+
+int parseMedian(App* self, int unused)
+{
+	int med; 		// Median value output 
+	int i, j, t; 	// Integers for bubble sorting algorithm
+	int a[3]; 		// Array to store the sorted version of three_history
+	
+	// Obtain the median when one value is entered.
+	// its just the user entered value for one value.
+	if (self->storage == 1)
+	{
+		med = self->three_num[0];
+		return med;
+	}
+	
+	// Obtain the median when two values are entered.
+	// Essentially average of two values.
+	else if (self->storage == 2)
+	{
+		med = ((self->three_num[0] + self->three_num[1]) * 0.5);
+		return med;	
+	}
+	
+	// Obtain the median when three values are entered.
+	// Sort the array in order, then pick the middle value.
+	// However, don't change the position of the values within the three_history,
+	// so use a temporary array to store ordered three_history
+	else if (self->storage == 3)
+	{
+		a[0] = self->three_num[0];
+		a[1] = self->three_num[1];
+		a[2] = self->three_num[2];
+		
+		// Bubble sort algo: sorts the array from min to max.
+		// has a poor worst case time, so not applicable for large data sets - change in future.
+		for (i = 0 ; i <= self->storage-1 ; i++) 
+		{ 
+			for (j = 0 ; j <= self->storage-i ; j++) 
+			{
+				if (a[j] <= a[j+1])
+				{ 
+					t = a[j];
+					a[j] = a[j+1];
+					a[j+1] = t;
+				}
+				else
+					continue ;
+			}
+		}
+		med = a[1]; // Median is middle value of the sorted array.
+		return med;
+	}
+	else
+		return 0;
+}
+
+int period(int i, int Keynote){
+	
+    int idx = i + Keynote + f0_pos;
+	
+    if(idx < 0 || idx > 25)
+    {
+        return 0;
+    }
+	else
+	{
+		return notes[idx][1];
+	}
+}
+
+void key_press(App* self, int key){
+	
+	return;
 }
 
 void startApp(App *self, int arg) {

@@ -52,6 +52,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="notes.h"/>
     <File Name="application.c" ExcludeProjConfig=""/>
     <File Name="sciTinyTimber.c"/>
     <File Name="sciTinyTimber.h"/>
