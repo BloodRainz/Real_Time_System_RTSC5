@@ -7,6 +7,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+Sound sound = initSound();
+
+Backgroundtask backgroundtask = initBackgroundtask();
+
 int getSound(Sound* self, int volume)
 {
     return self->volume;

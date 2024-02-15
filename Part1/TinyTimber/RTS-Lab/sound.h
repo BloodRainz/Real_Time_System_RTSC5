@@ -6,8 +6,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define initSound() { initObject(), {0}, 0, 0, 0, 'X'};
-
 #define DAC_Output (*((volatile uint8_t*) 0x4000741C))
 
 typedef struct {
@@ -19,12 +17,16 @@ typedef struct {
 	char c;
 } Sound;
 
+#define initSound() { initObject(), {0}, 0, 0, 0, 'X'};
+
 extern Sound sound;
 
 typedef struct{
     Object super;
     int Background_loop_range;
 } Backgroundtask;
+
+#define initBackgroundtask() {initObject(), 0};
 
 extern Backgroundtask backgroundtask;
 
@@ -35,7 +37,7 @@ int setfrequency1Khz(Sound*, int);
 int setperiod(Sound*, int);
 void toggle_DAC_output(Sound*, int);
 int Toggle(Sound*, int);
-void BackgroundLOOP(Backgroundtask* self, int);
+void BackgroundLOOP(Backgroundtask*, int);
 void load(Backgroundtask*, int);
 
 #endif

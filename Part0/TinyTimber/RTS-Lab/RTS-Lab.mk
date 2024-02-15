@@ -5,7 +5,7 @@
 ## Debug
 ProjectName            :=RTS-Lab
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/jger/EDA223/Real_Time_System_RTSC5/Part0/TinyTimber
+WorkspacePath          :=/home/jger/EDA223/Real_Time_System_RTSC5/Part1/TinyTimber
 ProjectPath            :=/home/jger/EDA223/Real_Time_System_RTSC5/Part0/TinyTimber/RTS-Lab
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=jger
-Date                   :=11/02/24
+Date                   :=14/02/24
 CodeLitePath           :=/home/jger/.codelite
 LinkerName             :=/home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-g++
 SharedObjectLinkerName :=/home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-g++ -shared -fPIC

@@ -42,8 +42,6 @@ typedef struct {
 
 App app = { initObject(), 0, 'X', {0}, {0}, 0, 0 };
 
-Sound sound = initSound();
-
 //Sound sound = {initObject(),  {0}, 0, 0, 0, 'X'};
 
 void reader(App*, int);

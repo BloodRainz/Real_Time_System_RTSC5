@@ -1,11 +1,11 @@
 /*
- * Part 0 Section 2 Submission: I/O interface
+ * Part 0 Submission: I/O interface
  * 
  * RTS-C5: 	Emil Johansson (emiuo@chalmers.se) 
  * 		Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
  * 		Joshua Geraghty (joshuag@chalmers.se)
  * 
- * Verified by Lab TA, 07.02.2024 @ 18:30
+ * Verified by Lab TA, 
  * 
  * - Allows the user to input multiple digits, and store the value to a three integer memory in FIFO style. 
  * - Use 'e' to store the entered digits as a number. 
@@ -16,6 +16,7 @@
  * - Typing in massive numbers to the buffer will go out of bounds - so please don't type 5 billion gazillion and press e.  
  * - No SYNC or ASYNC methods used: so theoretically possible to press 
  * 		two inputs in at the same time.
+ * - Whitespace created after last character within period loop.
  * 
  */
  
@@ -49,7 +50,7 @@ int parseMedian(App*,int);
 int period(int, int);
 
 // 
-void key_press(App*, int);
+//void key_press(App*, int);
 
 Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
@@ -144,7 +145,7 @@ void reader(App *self, int c) {
 			
 			self->key = atoi(self->buffer);
 			
-			if (-5 < self->key && self->key < 5)
+			if (-5 <= self->key && self->key <= 5)
 			{
 				SCI_WRITE(&sci0, "Key: ");
 				
@@ -153,8 +154,10 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, "\n");
 				
 				SCI_WRITE(&sci0, "Note periods: \n");
-				// FOR LOOP CRASHING CODE:
-				for(int i = 0; i < 32; i++){
+				
+				// Prints individual period per counter number.
+				
+				for(int i = 0; i < song_length; i++){
            
 					int currentnote = song[i];
        
@@ -167,10 +170,10 @@ void reader(App *self, int c) {
 						break;
 					}
 					
-					snprintf(write_buf, 200, "%d", currentperiod);
+					snprintf(write_buf, 200, "%d ", currentperiod);
 					SCI_WRITE(&sci0, write_buf);
-					SCI_WRITE(&sci0, "\n");
 				}
+				SCI_WRITE(&sci0, "\n");
 				SCI_WRITE(&sci0, "All periods printed. \n");
 				break;
 			}
@@ -252,11 +255,6 @@ int period(int i, int Keynote){
 	{
 		return notes[idx][1];
 	}
-}
-
-void key_press(App* self, int key){
-	
-	return;
 }
 
 void startApp(App *self, int arg) {
