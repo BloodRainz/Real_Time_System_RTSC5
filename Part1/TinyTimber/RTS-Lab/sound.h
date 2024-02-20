@@ -1,43 +1,35 @@
-#ifndef _SOUND_
-#define _SOUND_
+#ifndef SOUND_H
+#define SOUND_H
 
 #include "TinyTimber.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-
-#define DAC_Output (*((volatile uint8_t*) 0x4000741C))
+#include <stdint.h>
 
 typedef struct {
-	Object super;
-	char buf[50];
-	uint8_t  volume;
-	uint8_t  prev_volume;
-	int peri;
-	char c;
-} Sound;
-
-#define initSound() { initObject(), {0}, 0, 0, 0, 'X'};
-
-extern Sound sound;
-
-typedef struct{
     Object super;
-    int Background_loop_range;
-} Backgroundtask;
+    uint8_t volume;
+    uint8_t prev_sound;
+    int period;
+    char c;
+char buf[50];
+} SoundObject;
 
-#define initBackgroundtask() {initObject(), 0};
+//typedef struct{
+   // Object super;
+   // int Background_loop_range;
 
-extern Backgroundtask backgroundtask;
+//} Backgroundtask;
+//Backgroundtask backgroundtask = {initObject(), 1000};
 
-int getSound(Sound*, int);
-int setLevel(Sound*, int);
-int mute(Sound*, int, int);
-int setfrequency1Khz(Sound*, int);
-int setperiod(Sound*, int);
-void toggle_DAC_output(Sound*, int);
-int Toggle(Sound*, int);
-void BackgroundLOOP(Backgroundtask*, int);
-void load(Backgroundtask*, int);
+#define initSound() { initObject(), 0, 0, 0, 'X', {0} };
+int getSound(SoundObject*, int);
+int setLevel(SoundObject*, int);
+int mute(SoundObject*, int, int);
+int setfrequency1Khz(SoundObject*, int);
+int setperiod(SoundObject*, int);
+void toggle_DAC_output(SoundObject*, int);
+int Toggle(SoundObject*, int);
+//void BackgroundLOOP(Backgroundtask* self, int Background_loop_range);
+//void load(Backgroundtask* self, int Background_loop_range);
 
+#define DAC_Output (*((volatile uint8_t*) 0x4000741C))
 #endif

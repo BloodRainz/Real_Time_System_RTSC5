@@ -25,10 +25,9 @@
 #include "canTinyTimber.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "sound.h"
 
 #include "notes.h"
-
-#include "sound.h"
 
 typedef struct {
     Object super;
@@ -37,28 +36,29 @@ typedef struct {
 	char buffer[50];  // buffer to store the user input
 	int three_num[3]; // buffer to store the user input when e is pressed
 	int storage;	  // determines how many user input values are stored
-	int key;		  // user defined key
+	int key;
+    // user defined key
 } App;
 
-App app = { initObject(), 0, 'X', {0}, {0}, 0, 0 };
-
-//Sound sound = {initObject(),  {0}, 0, 0, 0, 'X'};
-
+App app = { initObject(), 0, 'X', {0}, {0}, 0 };
+SoundObject sound = initSound();
 void reader(App*, int);
 void receiver(App*, int);
 
 // Method to determine the median of one, two and three values.
 int parseMedian(App*,int);
-
+int volume_entered = 0;
 // 
 int period(int, int);
 
 // 
-//void key_press(App*, int);
+void key_press(App*, int);
 
 Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
 Can can0 = initCan(CAN_PORT0, &app, receiver);
+
+int volume1;
 
 void receiver(App *self, int unused) {
     CANMsg msg;
@@ -149,7 +149,7 @@ void reader(App *self, int c) {
 			
 			self->key = atoi(self->buffer);
 			
-			if (-5 <= self->key && self->key <= 5)
+			if (-5 < self->key && self->key < 5)
 			{
 				SCI_WRITE(&sci0, "Key: ");
 				
@@ -158,10 +158,8 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, "\n");
 				
 				SCI_WRITE(&sci0, "Note periods: \n");
-				
-				// Prints individual period per counter number.
-				
-				for(int i = 0; i < song_length; i++){
+				// FOR LOOP CRASHING CODE:
+				for(int i = 0; i < 32; i++){
            
 					int currentnote = song[i];
        
@@ -174,10 +172,10 @@ void reader(App *self, int c) {
 						break;
 					}
 					
-					snprintf(write_buf, 200, "%d ", currentperiod);
+					snprintf(write_buf, 200, "%d", currentperiod);
 					SCI_WRITE(&sci0, write_buf);
+					SCI_WRITE(&sci0, "\n");
 				}
-				SCI_WRITE(&sci0, "\n");
 				SCI_WRITE(&sci0, "All periods printed. \n");
 				break;
 			}
@@ -186,17 +184,112 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, "Invalid key chosen\n");
 				break;
 			}
+
+        case 'V':
+			snprintf(write_buf, 200, "Entered key mode. \n");
+			SCI_WRITE(&sci0,write_buf);
+
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+            int Key;
+            
+            //if (volume_entered = 0) {
+			self->key = atoi(self->buffer);
+            
+           // }
+           // else if(volume_entered = 1 && atoi(self->buffer) != 0){
+           //   volume_entered = 0;  
+          //  }
+                
+            Key = self->key;
+                   // snprintf(write_buf, 200, "%d", (&sound, setLevel, Key));
+					//SCI_WRITE(&sci0, write_buf);
+
+        //Key = volume1;
+			snprintf(write_buf, 200, "%d   ", Key);
+			SCI_WRITE(&sci0, write_buf);
+			if(SYNC(&sound, setLevel, Key) == 0){
+				SCI_WRITE(&sci0, "NEW VOLUME \n");
+              //    int k =  (SYNC(&sound, setLevel, Key));
+				snprintf(write_buf, 200, "%d", SYNC(&sound, getSound, Key));
+				SCI_WRITE(&sci0, write_buf);
+				SCI_WRITE(&sci0, " current Key \n");
+            // snprintf(write_buf, 200, "%d", k);
+           //  SCI_WRITE(&sci0, write_buf);
+           // SCI_WRITE(&sci0, " current volume \n");
+				break;
+			}
+			else{
+          SCI_WRITE(&sci0, "OUT OF RANGE \n"); 
+                int k =  (SYNC(&sound, getSound, Key));
+             snprintf(write_buf, 200, "%d", k);
+             SCI_WRITE(&sci0, write_buf);
+            SCI_WRITE(&sci0, " current volume \n");
+           break;
+        }
+        ASYNC(&sound, toggle_DAC_output, NULL);
+       // int k = SYNC(&sound, setfrequency1Khz, period);
+
+        break;
 		
+		// Mute functionality
+        case 'M':
+		// Clear the buffer: prevent preloading values.
+		self->buffer[self->count] = '\0';
+		self->count = 0;
+		
+		// Sync with MUTE function in sound.c
+        SYNC(&sound, mute, NULL);
+        SCI_WRITE(&sci0, "MUTED \n");
+        break;
+		
+		// Increase the volume by one step.
+		
+        case 'X':
+		
+		// Clear the buffer: prevent preloading values.
+		self->buffer[self->count] = '\0';
+		self->count = 0;
+		
+        int volymX = SYNC(&sound, getSound, Key);
+		// int x;
+        (SYNC(&sound, setLevel, volymX + 1));
+        self-> key = volymX;
+        //volume1 = volymX;
+        int AX = (SYNC(&sound, getSound, Key));
+        snprintf(write_buf, 200, "%d", AX);
+             SCI_WRITE(&sci0, write_buf);
+            SCI_WRITE(&sci0, " current Volume \n");
+        break; 
+ 
+		// Decrease the volume by one step.
+		case 'Z':
+		
+        int volyme = SYNC(&sound, getSound, Key);
+        SYNC(&sound, setLevel, volyme - 1);
+        self-> key = volyme;
+        //  volume1 = volyme;
+        int AZ = (SYNC(&sound, getSound, Key));
+        snprintf(write_buf, 200, "%d", AZ);
+		SCI_WRITE(&sci0, write_buf);
+		SCI_WRITE(&sci0, " current Volume \n");
+		
+		// Clear the buffer: prevent preloading values.
+		self->buffer[self->count] = '\0';
+		self->count = 0;
+        break;
+		
+		// Initialise the DAC to play a 1kHz signal
 		case 'P':
+		// Call 'setfrequency1Khz within sound.c
+        SYNC(&sound, setfrequency1Khz, period);
 		
-			SYNC(&sound, getSound, 5);
-			SYNC(&sound, toggle_DAC_output, NULL);
-			break;
+		// Clear the buffer: prevent preloading values.
+		self->buffer[self->count] = '\0';
+		self->count = 0;
 		
-		case 'M':
-			SYNC(&sound,mute,NULL);
-			break;
-		// Case where invalid values are typed
+    break;
+        
 		default:
 			break;
 	}
@@ -271,12 +364,28 @@ int period(int i, int Keynote){
 	}
 }
 
+void key_press(App* self, int key){
+	
+	return;
+}
+
 void startApp(App *self, int arg) {
     CANMsg msg;
-
+  ASYNC(&sound, toggle_DAC_output, 0);
     CAN_INIT(&can0);
     SCI_INIT(&sci0);
     SCI_WRITE(&sci0, "Hello, hello...\n");
+	
+	// Instructions for the user
+	SCI_WRITE(&sci0, "Welcome to the audio player\n");
+	SCI_WRITE(&sci0, "INSTRUCTIONS: \n");
+	SCI_WRITE(&sci0, "Type a value between -5 and 5, and press K to select the song key.\n");
+	SCI_WRITE(&sci0, "Press P to play the 1kHz audio through the speaker.\n");
+	SCI_WRITE(&sci0, "Type a value between 1 and 20, and press V to set the volume.\n");
+	SCI_WRITE(&sci0, "RECOMMENDED VOLUME RANGE: 1 to 5.\n");
+	SCI_WRITE(&sci0, "Press X to increase the volume by 1.\n");
+	SCI_WRITE(&sci0, "Press Z to decrease the volume by 1.\n");
+	SCI_WRITE(&sci0, "Press M to mute and unmute the volume.\n");
 
     msg.msgId = 1;
     msg.nodeId = 1;
