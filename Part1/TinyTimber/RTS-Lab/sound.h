@@ -10,16 +10,18 @@
 #define MAX_VOLUME 5
 
 #define VOL_INCR 1
+
+#define SOUND_DEADLINE USEC(100)
+
 typedef struct {
     Object super;
     uint8_t volume;
     uint8_t prev_sound;
-    int period;
-    char c;
-	char buf[50];
+    int notePeriod;
+	int enableDl;
 } SoundObject;
 
-#define initSound() { initObject(), 0, 0, 0, 'X', {0} };
+#define initSound() { initObject(), 0, 0, 0, 0};
 
 
 
@@ -29,6 +31,8 @@ int mute(SoundObject*, int, int);
 int setfrequency1Khz(SoundObject*, int);
 int setperiod(SoundObject*, int);
 void toggle_DAC_output(SoundObject*, int);
-int Toggle(SoundObject*, int);
+
+int statusSoundDeadline(SoundObject*, int);
+int enableSoundDeadline(SoundObject*, int);
 
 #endif

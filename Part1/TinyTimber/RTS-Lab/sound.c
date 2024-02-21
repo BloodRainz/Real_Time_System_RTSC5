@@ -22,9 +22,9 @@ int setLevel(SoundObject* self, int volume)
 	}
 }
 
-int setfrequency1Khz(SoundObject* self, int period)
+int setfrequency1Khz(SoundObject* self, int unused)
 {
-	self-> period = USEC(500);
+	self->notePeriod = USEC(500);
 	return 0;
 }
 
@@ -42,6 +42,8 @@ int mute(SoundObject* self, int volume, int prev_sound)
 
 void toggle_DAC_output(SoundObject* self, int state)
 {
+	Time dl = 0;
+	
 	static int DAC_value;
 	if(state == 0){
 		DAC_value = 0;
@@ -51,6 +53,30 @@ void toggle_DAC_output(SoundObject* self, int state)
 		DAC_value = self->volume;
 	}
 	
+	// Enabling and disabling of DAC values
+	if (self->enableDl == 1)
+	{
+		dl = USEC(100);
+	}
+	else
+	{
+		dl = 0;
+	}
+	
 	DAC_Output = DAC_value;
-	AFTER(USEC(self->period), self, toggle_DAC_output, !state);
+	SEND(USEC(self->notePeriod), dl, self, toggle_DAC_output, !state);
+}
+
+int statusSoundDeadline(SoundObject* self, int unused)
+{
+	return self->enableDl;
+}
+
+
+// Maybe an easier way to implement, like with a not statement 
+// to flip the bit
+int enableSoundDeadline(SoundObject* self, int unused)
+{
+	self->enableDl = !self->enableDl;
+	return self->enableDl;
 }

@@ -186,17 +186,23 @@ void reader(App *self, int c) {
 			}
 			else
 			{
-				SCI_WRITE(&sci0, "Invalid key chosen\n");
+				SCI_WRITE(&sci0, "Invalid key chosen. \n");
 				break;
 			}
 
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Volume controls
+		//
+		// User defined volume
 		case 'V':
 
+			// Delimiter
 			self->buffer[self->count] = '\0';
 			self->count = 0;
             
 			current_volume = atoi(self->buffer);
             
+			// If no volume is selected, print current volume.
 			if (current_volume == 0)
 			{
 				SCI_WRITE(&sci0, "No volume entered.\n");
@@ -205,12 +211,15 @@ void reader(App *self, int c) {
 				break;
 			}
 	
+			// If SYNC setlevel is successful, print new volume
 			if(SYNC(&sound, setLevel, current_volume) == current_volume)
 			{
-				snprintf(write_buf, 200, "New volume: %d", SYNC(&sound, getSound, NULL));
+				snprintf(write_buf, 200, "New volume: %d \n", SYNC(&sound, getSound, NULL));
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+			
+			// If user defined volume is out of range
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Volume out of range. \n");
@@ -220,9 +229,7 @@ void reader(App *self, int c) {
 			break;
 			}
 			ASYNC(&sound, toggle_DAC_output, NULL);
-			// int k = SYNC(&sound, setfrequency1Khz, period);
-
-			break;
+		break;
 		
 		// Mute functionality
 		case 'M':
@@ -236,6 +243,10 @@ void reader(App *self, int c) {
 			break;
 		
 		// Increase the volume by one step.
+		
+		// Notes: this method was being very fussy: would prefer to remove incr_volume values
+		//		  and create the method like the V method, but wouldn't work.
+		//			- Josh, 21.02.2024
 		case 'X':
 		
 			// Clear the buffer: prevent preloading values.
@@ -244,14 +255,17 @@ void reader(App *self, int c) {
 		
 			current_volume = SYNC(&sound, getSound, NULL);
 			
+			// TROUBLESHOOTING PRINT
 			//snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
 			//SCI_WRITE(&sci0, write_buf);
 			
 			int incr_volume = current_volume + VOL_INCR;
 			
+			// TROUBLESHOOTING PRINT
 			//snprintf(write_buf, 200, "Incr_volume %d \n", incr_volume);
 			//SCI_WRITE(&sci0, write_buf);
 			
+			// If new volume is less than MAX VOLUME
 			if(incr_volume < MAX_VOLUME+1)
 			{
 				current_volume = SYNC(&sound, setLevel, incr_volume);
@@ -259,6 +273,8 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+			
+			// If new volume is out of range
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
@@ -272,6 +288,10 @@ void reader(App *self, int c) {
 		break; 
  
 		// Decrease the volume by one step.
+		
+		// Notes: this method was being very fussy: would prefer to remove decr_volume values
+		//		  and create the method like the V method, but wouldn't work.
+		//			- Josh, 21.02.2024
 		case 'Z':
 		
 			// Clear the buffer: prevent preloading values.
@@ -280,8 +300,8 @@ void reader(App *self, int c) {
 		
 			current_volume = SYNC(&sound, getSound, NULL);
 			
-			snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
-			SCI_WRITE(&sci0, write_buf);
+			//snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
+			//SCI_WRITE(&sci0, write_buf);
 			
 			int decr_volume = current_volume - VOL_INCR;
 			
@@ -309,12 +329,18 @@ void reader(App *self, int c) {
 		
 		// Initialise the DAC to play a 1kHz signal
 		case 'P':
-			// Call 'setfrequency1Khz within sound.c
-			SYNC(&sound, setfrequency1Khz, period);
 		
 			// Clear the buffer: prevent preloading values.
 			self->buffer[self->count] = '\0';
 			self->count = 0;
+			
+			// Call 'setfrequency1Khz within sound.c
+			SYNC(&sound, setfrequency1Khz, period);
+			SCI_WRITE(&sci0, "DAC Initialised.\n");
+			
+			snprintf(write_buf, 200, "Current volume: %d \n", SYNC(&sound, getSound, NULL));
+			SCI_WRITE(&sci0, write_buf);
+		
 			
 		break;
 			
@@ -355,6 +381,7 @@ void reader(App *self, int c) {
 				break;
 			}
 		break;
+		
 		// Increase busy load by 500
 		case 'I':
 		
@@ -410,6 +437,27 @@ void reader(App *self, int c) {
 
 
 		//////////////////////////////////////////////////////////////////////////
+		// Deadline controls
+		
+		// Enable/disable deadlines
+		
+		case 'D':
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+			
+			int soundDlStatus = SYNC(&sound, enableSoundDeadline, 0);
+			int taskDlStatus = SYNC(&task, enableTaskDeadline, 0);
+			
+			SCI_WRITE(&sci0, "Task deadlines changed. \n");
+			
+			snprintf(write_buf, 200, "Current sounddeadline: %d \n", soundDlStatus);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Current task deadline: %d \n", taskDlStatus);
+			SCI_WRITE(&sci0, write_buf);
+			break;
+		
 		default:
 			break;
 	}
@@ -494,7 +542,9 @@ void startApp(App *self, int arg) {
 	ASYNC(&sound, toggle_DAC_output, 0);
 	
 	// Uncomment next line to add busy feature
-	// ASYNC(&task, beBusy, 0);
+	ASYNC(&task, beBusy, 0);
+	
+	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);
     SCI_WRITE(&sci0, "Hello, hello...\n");
@@ -515,6 +565,7 @@ void startApp(App *self, int arg) {
 	SCI_WRITE(&sci0, "Type a value between 1000 and 8000, and press L to set the loop range.\n");
 	SCI_WRITE(&sci0, "Press I to increase the loop range by 500.\n");
 	SCI_WRITE(&sci0, "Press U to decrease the loop range by 500.\n");
+	SCI_WRITE(&sci0, "Press D to enable/disable deadlines.\n");
 	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
 
     msg.msgId = 1;
