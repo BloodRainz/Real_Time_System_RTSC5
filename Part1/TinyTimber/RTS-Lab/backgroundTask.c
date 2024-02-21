@@ -21,7 +21,7 @@ void beBusy(Backgroundtask* self, int unused)
 		{ 
 			// Busy for loop
 		}
-	SEND(loopPeriod, dl, self, beBusy, unused);
+	SEND(loopPeriod, loopPeriod, self, beBusy, unused);
 
 }
 

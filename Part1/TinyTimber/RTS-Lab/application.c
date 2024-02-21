@@ -54,7 +54,6 @@ int parseMedian(App*,int);
 int period(int, int);
 
 // 
-void key_press(App*, int);
 
 Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
@@ -532,10 +531,6 @@ int period(int i, int Keynote){
 	}
 }
 
-void key_press(App* self, int key){
-	
-	return;
-}
 
 void startApp(App *self, int arg) {
     CANMsg msg;
