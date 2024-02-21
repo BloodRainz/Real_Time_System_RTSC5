@@ -52,6 +52,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="backgroundTask.c"/>
+    <File Name="backgroundTask.h"/>
     <File Name="sound.c"/>
     <File Name="sound.h"/>
     <File Name="notes.h"/>

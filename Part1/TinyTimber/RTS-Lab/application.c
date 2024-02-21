@@ -27,27 +27,29 @@
 #include <stdio.h>
 #include "sound.h"
 
+#include "backgroundTask.h"
+
 #include "notes.h"
 
 typedef struct {
     Object super;
     int count;
     char c;
-	char buffer[50];  // buffer to store the user input
-	int three_num[3]; // buffer to store the user input when e is pressed
-	int storage;	  // determines how many user input values are stored
-	int key;
-    // user defined key
+	char buffer[50];	// buffer to store the user input
+	int three_num[3];	// buffer to store the user input when e is pressed
+	int storage;		// determines how many user input values are stored
+	int key;			// user defined key
 } App;
 
 App app = { initObject(), 0, 'X', {0}, {0}, 0 };
 SoundObject sound = initSound();
+Backgroundtask task = initBackgroundTask();
+
 void reader(App*, int);
 void receiver(App*, int);
 
 // Method to determine the median of one, two and three values.
 int parseMedian(App*,int);
-int volume_entered = 0;
 // 
 int period(int, int);
 
@@ -58,7 +60,9 @@ Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
 Can can0 = initCan(CAN_PORT0, &app, receiver);
 
-int volume1;
+int current_load;
+
+int current_volume = 0;
 
 void receiver(App *self, int unused) {
     CANMsg msg;
@@ -96,6 +100,7 @@ void reader(App *self, int c) {
 			
 		// Case where delimiter, e, is typed.
 		case 'e':
+
 			self->buffer[self->count] = '\0';
 			self->count = 0;
 			
@@ -185,111 +190,226 @@ void reader(App *self, int c) {
 				break;
 			}
 
-        case 'V':
-			snprintf(write_buf, 200, "Entered key mode. \n");
-			SCI_WRITE(&sci0,write_buf);
+		case 'V':
 
 			self->buffer[self->count] = '\0';
 			self->count = 0;
-            int Key;
             
-            //if (volume_entered = 0) {
-			self->key = atoi(self->buffer);
+			current_volume = atoi(self->buffer);
             
-           // }
-           // else if(volume_entered = 1 && atoi(self->buffer) != 0){
-           //   volume_entered = 0;  
-          //  }
-                
-            Key = self->key;
-                   // snprintf(write_buf, 200, "%d", (&sound, setLevel, Key));
-					//SCI_WRITE(&sci0, write_buf);
-
-        //Key = volume1;
-			snprintf(write_buf, 200, "%d   ", Key);
-			SCI_WRITE(&sci0, write_buf);
-			if(SYNC(&sound, setLevel, Key) == 0){
-				SCI_WRITE(&sci0, "NEW VOLUME \n");
-              //    int k =  (SYNC(&sound, setLevel, Key));
-				snprintf(write_buf, 200, "%d", SYNC(&sound, getSound, Key));
+			if (current_volume == 0)
+			{
+				SCI_WRITE(&sci0, "No volume entered.\n");
+				snprintf(write_buf, 200, "Current volume: %d\n", SYNC(&sound, getSound, NULL));
 				SCI_WRITE(&sci0, write_buf);
-				SCI_WRITE(&sci0, " current Key \n");
-            // snprintf(write_buf, 200, "%d", k);
-           //  SCI_WRITE(&sci0, write_buf);
-           // SCI_WRITE(&sci0, " current volume \n");
 				break;
 			}
-			else{
-          SCI_WRITE(&sci0, "OUT OF RANGE \n"); 
-                int k =  (SYNC(&sound, getSound, Key));
-             snprintf(write_buf, 200, "%d", k);
-             SCI_WRITE(&sci0, write_buf);
-            SCI_WRITE(&sci0, " current volume \n");
-           break;
-        }
-        ASYNC(&sound, toggle_DAC_output, NULL);
-       // int k = SYNC(&sound, setfrequency1Khz, period);
+	
+			if(SYNC(&sound, setLevel, current_volume) == current_volume)
+			{
+				snprintf(write_buf, 200, "New volume: %d", SYNC(&sound, getSound, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Volume out of range. \n");
+				snprintf(write_buf, 200, "%d", SYNC(&sound, getSound, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				SCI_WRITE(&sci0, " current volume \n");
+			break;
+			}
+			ASYNC(&sound, toggle_DAC_output, NULL);
+			// int k = SYNC(&sound, setfrequency1Khz, period);
 
-        break;
+			break;
 		
 		// Mute functionality
-        case 'M':
-		// Clear the buffer: prevent preloading values.
-		self->buffer[self->count] = '\0';
-		self->count = 0;
+		case 'M':
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
 		
-		// Sync with MUTE function in sound.c
-        SYNC(&sound, mute, NULL);
-        SCI_WRITE(&sci0, "MUTED \n");
-        break;
+			// Sync with MUTE function in sound.c
+			SYNC(&sound, mute, NULL);
+			SCI_WRITE(&sci0, "MUTED \n");
+			break;
 		
 		// Increase the volume by one step.
+		case 'X':
 		
-        case 'X':
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
 		
-		// Clear the buffer: prevent preloading values.
-		self->buffer[self->count] = '\0';
-		self->count = 0;
-		
-        int volymX = SYNC(&sound, getSound, Key);
-		// int x;
-        (SYNC(&sound, setLevel, volymX + 1));
-        self-> key = volymX;
-        //volume1 = volymX;
-        int AX = (SYNC(&sound, getSound, Key));
-        snprintf(write_buf, 200, "%d", AX);
-             SCI_WRITE(&sci0, write_buf);
-            SCI_WRITE(&sci0, " current Volume \n");
-        break; 
+			current_volume = SYNC(&sound, getSound, NULL);
+			
+			//snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
+			//SCI_WRITE(&sci0, write_buf);
+			
+			int incr_volume = current_volume + VOL_INCR;
+			
+			//snprintf(write_buf, 200, "Incr_volume %d \n", incr_volume);
+			//SCI_WRITE(&sci0, write_buf);
+			
+			if(incr_volume < MAX_VOLUME)
+			{
+				current_volume = SYNC(&sound, setLevel, incr_volume);
+				snprintf(write_buf, 200, "New volume: %d \n", current_volume);
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_VOLUME, MAX_VOLUME); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current volume: %d \n", current_volume);
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+		break; 
  
 		// Decrease the volume by one step.
 		case 'Z':
 		
-        int volyme = SYNC(&sound, getSound, Key);
-        SYNC(&sound, setLevel, volyme - 1);
-        self-> key = volyme;
-        //  volume1 = volyme;
-        int AZ = (SYNC(&sound, getSound, Key));
-        snprintf(write_buf, 200, "%d", AZ);
-		SCI_WRITE(&sci0, write_buf);
-		SCI_WRITE(&sci0, " current Volume \n");
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
 		
-		// Clear the buffer: prevent preloading values.
-		self->buffer[self->count] = '\0';
-		self->count = 0;
-        break;
+			current_volume = SYNC(&sound, getSound, NULL);
+			
+			snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
+			SCI_WRITE(&sci0, write_buf);
+			
+			int decr_volume = current_volume - VOL_INCR;
+			
+			//snprintf(write_buf, 200, "Decr_volume %d \n", decr_volume1);
+			//SCI_WRITE(&sci0, write_buf);
+			
+			if(decr_volume > 0)
+			{
+				current_volume = SYNC(&sound, setLevel, decr_volume);
+				snprintf(write_buf, 200, "New volume: %d \n", current_volume);
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_VOLUME, MAX_VOLUME); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current volume: %d \n", current_volume);
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+		break; 
 		
 		// Initialise the DAC to play a 1kHz signal
 		case 'P':
-		// Call 'setfrequency1Khz within sound.c
-        SYNC(&sound, setfrequency1Khz, period);
+			// Call 'setfrequency1Khz within sound.c
+			SYNC(&sound, setfrequency1Khz, period);
+		
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+			
+		break;
+			
+		/////////////////////////////////////////////////////////////////////
+		// BUSY CONTROLS
+		
+		
+		// User set load 
+		case 'L':
+
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+            
+			current_load = atoi(self->buffer);
+			
+			if (current_load == 0)
+			{
+				SCI_WRITE(&sci0, "No background load selected. \n");
+				snprintf(write_buf, 200, "Current background load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			
+			if(SYNC(&task, setLoopRange, current_load) == 0)
+			{
+				snprintf(write_buf, 200, "New background load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Load out of range \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_LOOP_RANGE, MAX_LOOP_RANGE); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current background load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+		break;
+		// Increase busy load by 500
+		case 'I':
 		
 		// Clear the buffer: prevent preloading values.
-		self->buffer[self->count] = '\0';
-		self->count = 0;
+			self->buffer[self->count] = '\0';
+			self->count = 0;
 		
-    break;
-        
+			current_load = SYNC(&task, getLoopRange, 0);
+			
+			if(SYNC(&task, setLoopRange, current_load+LOOP_INCR) == 0)
+			{
+				snprintf(write_buf, 200, "New background load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Load out of range \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_LOOP_RANGE, MAX_LOOP_RANGE); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			break; 
+
+		// Decrease busy load by 500
+		case 'U':
+			// Clear the buffer: prevent preloading values.
+			self->buffer[self->count] = '\0';
+			self->count = 0;
+		
+			current_load = SYNC(&task, getLoopRange, 0);
+			
+			if(SYNC(&task, setLoopRange, current_load-LOOP_INCR) == 0)
+			{
+				snprintf(write_buf, 200, "New background load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			else
+			{
+				SCI_WRITE(&sci0, "ERROR: Load out of range \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_LOOP_RANGE, MAX_LOOP_RANGE); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current load: %d \n", SYNC(&task, getLoopRange, NULL));
+				SCI_WRITE(&sci0, write_buf);
+				break;
+			}
+			break; 
+
+
+		//////////////////////////////////////////////////////////////////////////
 		default:
 			break;
 	}
@@ -371,21 +491,28 @@ void key_press(App* self, int key){
 
 void startApp(App *self, int arg) {
     CANMsg msg;
-  ASYNC(&sound, toggle_DAC_output, 0);
+	ASYNC(&sound, toggle_DAC_output, 0);
     CAN_INIT(&can0);
     SCI_INIT(&sci0);
     SCI_WRITE(&sci0, "Hello, hello...\n");
 	
 	// Instructions for the user
 	SCI_WRITE(&sci0, "Welcome to the audio player\n");
-	SCI_WRITE(&sci0, "INSTRUCTIONS: \n");
+	SCI_WRITE(&sci0, "//////////////////////////////////////////////////////////////////\n");
+	SCI_WRITE(&sci0, "AUDIO INSTRUCTIONS: \n");
 	SCI_WRITE(&sci0, "Type a value between -5 and 5, and press K to select the song key.\n");
 	SCI_WRITE(&sci0, "Press P to play the 1kHz audio through the speaker.\n");
-	SCI_WRITE(&sci0, "Type a value between 1 and 20, and press V to set the volume.\n");
-	SCI_WRITE(&sci0, "RECOMMENDED VOLUME RANGE: 1 to 5.\n");
+	SCI_WRITE(&sci0, "Type a value between 1 and 6, and press V to set the volume.\n");
+	SCI_WRITE(&sci0, "RECOMMENDED VOLUME RANGE: 1 to 6.\n");
 	SCI_WRITE(&sci0, "Press X to increase the volume by 1.\n");
 	SCI_WRITE(&sci0, "Press Z to decrease the volume by 1.\n");
 	SCI_WRITE(&sci0, "Press M to mute and unmute the volume.\n");
+	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
+	SCI_WRITE(&sci0, "BUSY TASK INSTRUCTIONS: \n");
+	SCI_WRITE(&sci0, "Type a value between 1000 and 8000, and press L to set the loop range.\n");
+	SCI_WRITE(&sci0, "Press I to increase the loop range by 500.\n");
+	SCI_WRITE(&sci0, "Press U to decrease the loop range by 500.\n");
+	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
 
     msg.msgId = 1;
     msg.nodeId = 1;
