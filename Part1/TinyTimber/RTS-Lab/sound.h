@@ -7,7 +7,7 @@
 #define DAC_Output (*((volatile uint8_t*) 0x4000741C))
 
 #define MIN_VOLUME 1
-#define MAX_VOLUME 6
+#define MAX_VOLUME 5
 
 #define VOL_INCR 1
 typedef struct {

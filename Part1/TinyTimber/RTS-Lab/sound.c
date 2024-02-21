@@ -10,7 +10,7 @@ int getSound(SoundObject* self, int unused)
 
 int setLevel(SoundObject* self, int volume)
 {
-    if((volume > 0) && (volume < 6))
+    if((volume > 0) && (volume < MAX_VOLUME+1))
 	{
 		self->volume = volume;
 		return volume;

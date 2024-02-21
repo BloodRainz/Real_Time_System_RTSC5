@@ -252,7 +252,7 @@ void reader(App *self, int c) {
 			//snprintf(write_buf, 200, "Incr_volume %d \n", incr_volume);
 			//SCI_WRITE(&sci0, write_buf);
 			
-			if(incr_volume < MAX_VOLUME)
+			if(incr_volume < MAX_VOLUME+1)
 			{
 				current_volume = SYNC(&sound, setLevel, incr_volume);
 				snprintf(write_buf, 200, "New volume: %d \n", current_volume);
@@ -288,7 +288,7 @@ void reader(App *self, int c) {
 			//snprintf(write_buf, 200, "Decr_volume %d \n", decr_volume1);
 			//SCI_WRITE(&sci0, write_buf);
 			
-			if(decr_volume > 0)
+			if(decr_volume > MIN_VOLUME-1)
 			{
 				current_volume = SYNC(&sound, setLevel, decr_volume);
 				snprintf(write_buf, 200, "New volume: %d \n", current_volume);
@@ -492,6 +492,9 @@ void key_press(App* self, int key){
 void startApp(App *self, int arg) {
     CANMsg msg;
 	ASYNC(&sound, toggle_DAC_output, 0);
+	
+	// Uncomment next line to add busy feature
+	// ASYNC(&task, beBusy, 0);
     CAN_INIT(&can0);
     SCI_INIT(&sci0);
     SCI_WRITE(&sci0, "Hello, hello...\n");
