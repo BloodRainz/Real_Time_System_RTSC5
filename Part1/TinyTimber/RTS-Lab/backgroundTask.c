@@ -4,32 +4,43 @@
 
 const Time loopPeriod = USEC(1300);
 
+// BeBusy task:
+// Creates an empty for loop, which completes background_loop_range iterations.
+
 void beBusy(Backgroundtask* self, int unused)
 {
-	Time dl = 0;
+	Time deadline = 0; // deadline variable
 	
-	if (self->enableDl == 0)
+	// If enable deadline is true, set the 
+	// deadline to loopPeriod
+	if (self->enableDl == 1)
 	{
-		dl = loopPeriod;
+		deadline = loopPeriod;
 	}
+	
+	// If not enabled, set deadline to 0.
 	else
 	{
-		dl = 0;
+		deadline = 0;
 	}
 	
 	for(int i = 0; i < self->background_loop_range; i++) 
-		{ 
-			// Busy for loop
-		}
-	SEND(loopPeriod, loopPeriod, self, beBusy, unused);
+	{ 
+		// Busy for loop
+	}
+
+	SEND(loopPeriod, deadline, self, beBusy, unused);
 
 }
 
+// Get the loop range value.
 int getLoopRange(Backgroundtask* self, int unused)
 {
 	return self->background_loop_range;
 }
 
+// Set the loop range value.
+// Ensures that it is within range, as set by the header file.
 int setLoopRange(Backgroundtask* self, int background_loop)
 {
 	if((background_loop >= MIN_LOOP_RANGE) && (background_loop <= MAX_LOOP_RANGE))
@@ -43,12 +54,13 @@ int setLoopRange(Backgroundtask* self, int background_loop)
     }
 }
 
-
+// Shows the status of enableDeadline
 int statusTaskDeadline(Backgroundtask* self, int unused)
 {
 	return self->enableDl;
 }
 
+// Flips the enabledeadline status.
 int enableTaskDeadline(Backgroundtask* self, int unused)
 {
 	self->enableDl = !self->enableDl;

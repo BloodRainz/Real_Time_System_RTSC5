@@ -7,7 +7,7 @@
 #define DAC_Output (*((volatile uint8_t*) 0x4000741C))
 
 #define MIN_VOLUME 1
-#define MAX_VOLUME 5
+#define MAX_VOLUME 20
 
 #define VOL_INCR 1
 
@@ -21,7 +21,7 @@ typedef struct {
 	int enableDl;
 } SoundObject;
 
-#define initSound() { initObject(), 0, 0, 0, 0};
+#define initSound() { initObject(), 0, 0, 500, 0};
 
 
 

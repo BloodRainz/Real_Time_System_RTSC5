@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// Return the current volume of the system
 int getSound(SoundObject* self, int unused)
 {    
 	return self->volume;
 }
+
+// Set the volume of the system, if it is within volume constraints.
+// If within constraints, return the new volume.
+// If not, do not change the volume, and return a -1.
 
 int setLevel(SoundObject* self, int volume)
 {
@@ -22,12 +27,16 @@ int setLevel(SoundObject* self, int volume)
 	}
 }
 
+// Set the 1kHz frequency
 int setfrequency1Khz(SoundObject* self, int unused)
 {
-	self->notePeriod = USEC(500);
+	self->notePeriod = 500;
 	return 0;
 }
 
+// Mute the DAC: essentially set the volume to zero, and save
+// the previous volume.
+// If unmuted, return to the original volume.
 int mute(SoundObject* self, int volume, int prev_sound)
  {
 	if(self-> volume == 0){
@@ -42,17 +51,20 @@ int mute(SoundObject* self, int volume, int prev_sound)
 
 void toggle_DAC_output(SoundObject* self, int state)
 {
-	Time deadline = 0;
+	Time deadline = 0; // Values used to change the deadline value
 	
-	// Enabling and disabling of DAC values
+	// If enableDl is true, set a deadline
 	if (self->enableDl == 1)
 	{
 		deadline = USEC(100);
 	}
+	// If enableDl is false, remove deadline
 	else
 	{
 		deadline = 0;
 	}
+	
+	SEND(USEC(self->notePeriod), deadline, self, toggle_DAC_output, !state);
 	
 	// Allows for changing of volume
 	static int DAC_value;
@@ -63,20 +75,18 @@ void toggle_DAC_output(SoundObject* self, int state)
 	{
 		DAC_value = self->volume;
 	}
-	
 	DAC_Output = DAC_value;
 	
-	SEND(USEC(self->notePeriod), deadline, self, toggle_DAC_output, !state);
 }
 
+// Gets the current status of the sound deadline bit.
 int statusSoundDeadline(SoundObject* self, int unused)
 {
 	return self->enableDl;
 }
 
 
-// Maybe an easier way to implement, like with a not statement 
-// to flip the bit
+// Flips the 'enable deadline' status
 int enableSoundDeadline(SoundObject* self, int unused)
 {
 	self->enableDl = !self->enableDl;

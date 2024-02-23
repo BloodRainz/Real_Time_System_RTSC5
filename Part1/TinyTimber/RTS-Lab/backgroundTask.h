@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 #define MIN_LOOP_RANGE 1000
-#define MAX_LOOP_RANGE 8000
+#define MAX_LOOP_RANGE 30000
 
 #define LOOP_INCR 500
 

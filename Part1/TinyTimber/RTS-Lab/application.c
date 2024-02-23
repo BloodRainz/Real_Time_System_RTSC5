@@ -1,23 +1,21 @@
 /*
- * Part 1 Submission: I/O interface
+ * Part 1 Section 3 Submission: Deadlines to the rescue
  * 
- * RTS-C5: 	Emil Johansson (emiuo@chalmers.se) 
+ * RTS-C5:	Emil Johansson (emiuo@chalmers.se) 
  * 		Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
  * 		Joshua Geraghty (joshuag@chalmers.se)
  * 
- * Verified by Lab TA, 
+ * Verified by Lab TA, Feb 21 19:30
  * 
- * - Allows the user to input multiple digits, and store the value to a three integer memory in FIFO style. 
- * - Use 'e' to store the entered digits as a number. 
- * - Allows the user to clear the memory, using F (MUST be capital F)
- * - Prints the sum of the memory, and the median of the memory.
+ * Bug fixes: Feb 21, 23:23
  * 
- * KNOWN BUGS:
- * - Typing in massive numbers to the buffer will go out of bounds - so please don't type 5 billion gazillion and press e.  
- * - No SYNC or ASYNC methods used: so theoretically possible to press 
- * 		two inputs in at the same time.
- * - Whitespace created after last character within period loop.
- * 
+ * 1. Attempted to fix problem by initialising soundObject with
+ *    a notePeriod of 500: noise is audible with headphones,
+ *    when system is muted and initially started up.
+ * 2. Changed setfrequency1Khz ->  self->notePeriod = USEC(500)
+ *    to self->notePeriod = 500.
+ *    Conversion to USEC happens within toggle_DAC_output -> SEND
+ *    statement. Older version caused double conversion.
  */
  
 #include "TinyTimber.h"
@@ -199,6 +197,7 @@ void reader(App *self, int c) {
 			self->buffer[self->count] = '\0';
 			self->count = 0;
             
+			// Take in the user defined volume
 			current_volume = atoi(self->buffer);
             
 			// If no volume is selected, print current volume.
@@ -227,7 +226,6 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, " current volume \n");
 			break;
 			}
-			ASYNC(&sound, toggle_DAC_output, NULL);
 		break;
 		
 		// Mute functionality
@@ -254,17 +252,9 @@ void reader(App *self, int c) {
 		
 			current_volume = SYNC(&sound, getSound, NULL);
 			
-			// TROUBLESHOOTING PRINT
-			//snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
-			//SCI_WRITE(&sci0, write_buf);
-			
 			int incr_volume = current_volume + VOL_INCR;
 			
-			// TROUBLESHOOTING PRINT
-			//snprintf(write_buf, 200, "Incr_volume %d \n", incr_volume);
-			//SCI_WRITE(&sci0, write_buf);
-			
-			// If new volume is less than MAX VOLUME
+			// Checks if new volume is outside of range
 			if(incr_volume < MAX_VOLUME+1)
 			{
 				current_volume = SYNC(&sound, setLevel, incr_volume);
@@ -273,7 +263,7 @@ void reader(App *self, int c) {
 				break;
 			}
 			
-			// If new volume is out of range
+			// If new volume is out of range, give out to the user
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
@@ -297,16 +287,13 @@ void reader(App *self, int c) {
 			self->buffer[self->count] = '\0';
 			self->count = 0;
 		
+			// Get the current volume of the system
 			current_volume = SYNC(&sound, getSound, NULL);
 			
-			//snprintf(write_buf, 200, "CUrrent_volume %d \n", current_volume);
-			//SCI_WRITE(&sci0, write_buf);
-			
+			// Decrease the current volume by an incremental value (found in sound.c)
 			int decr_volume = current_volume - VOL_INCR;
 			
-			//snprintf(write_buf, 200, "Decr_volume %d \n", decr_volume1);
-			//SCI_WRITE(&sci0, write_buf);
-			
+			// Check that the decreasement of volume is valid.
 			if(decr_volume > MIN_VOLUME-1)
 			{
 				current_volume = SYNC(&sound, setLevel, decr_volume);
@@ -314,6 +301,8 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+			
+			// Give out to the user if volume is out of range
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
@@ -353,8 +342,10 @@ void reader(App *self, int c) {
 			self->buffer[self->count] = '\0';
 			self->count = 0;
             
+			// Take user input
 			current_load = atoi(self->buffer);
 			
+			// If no input is entered, print the current load.
 			if (current_load == 0)
 			{
 				SCI_WRITE(&sci0, "No background load selected. \n");
@@ -363,12 +354,15 @@ void reader(App *self, int c) {
 				break;
 			}
 			
+			// If user set load is within range, change it and print the new load.
 			if(SYNC(&task, setLoopRange, current_load) == 0)
 			{
 				snprintf(write_buf, 200, "New background load: %d \n", SYNC(&task, getLoopRange, NULL));
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+			
+			// Give out to the user if load is outside of range.
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Load out of range \n"); 
@@ -384,18 +378,22 @@ void reader(App *self, int c) {
 		// Increase busy load by 500
 		case 'I':
 		
-		// Clear the buffer: prevent preloading values.
+			// Clear the buffer: prevent preloading values.
 			self->buffer[self->count] = '\0';
 			self->count = 0;
 		
+			// Get the current load
 			current_load = SYNC(&task, getLoopRange, 0);
 			
+			// If setLoopRange is successful, print the new load.
 			if(SYNC(&task, setLoopRange, current_load+LOOP_INCR) == 0)
 			{
 				snprintf(write_buf, 200, "New background load: %d \n", SYNC(&task, getLoopRange, NULL));
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+			
+			// Give out to the user for invalid load.
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Load out of range \n"); 
@@ -445,16 +443,15 @@ void reader(App *self, int c) {
 			self->buffer[self->count] = '\0';
 			self->count = 0;
 			
-			int soundDlStatus = SYNC(&sound, enableSoundDeadline, 0);
+			// Sync tasks for flipping 'enable deadline' values.
 			int taskDlStatus = SYNC(&task, enableTaskDeadline, 0);
+			int soundDlStatus = SYNC(&sound, enableSoundDeadline, 0);
 			
 			SCI_WRITE(&sci0, "Task deadlines changed. \n");
 			
-			snprintf(write_buf, 200, "Current sounddeadline: %d \n", soundDlStatus);
+			snprintf(write_buf, 200, "Task deadline set to: %d , sound deadline set to: %d\n",taskDlStatus, soundDlStatus);
 			SCI_WRITE(&sci0, write_buf);
-			
-			snprintf(write_buf, 200, "Current task deadline: %d \n", taskDlStatus);
-			SCI_WRITE(&sci0, write_buf);
+
 			break;
 		
 		default:
