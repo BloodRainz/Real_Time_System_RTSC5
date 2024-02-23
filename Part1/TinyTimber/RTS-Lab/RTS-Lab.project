@@ -52,6 +52,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="WCET.c"/>
+    <File Name="WCET.h"/>
     <File Name="backgroundTask.c"/>
     <File Name="backgroundTask.h"/>
     <File Name="sound.c"/>

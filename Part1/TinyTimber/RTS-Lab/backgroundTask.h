@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "WCET.h"
+
 #define MIN_LOOP_RANGE 1000
 #define MAX_LOOP_RANGE 30000
 
@@ -17,11 +19,11 @@ typedef struct{
 	Object super;
 	int background_loop_range;
 	int enableDl;
-
+	WCET wcet; // Comment this out, and the define section to remove the WCET object.
 } Backgroundtask;
-//Backgroundtask backgroundtask = {initObject(), 1000};
 
-#define initBackgroundTask() { initObject(), MIN_LOOP_RANGE, USEC(0)};
+//#define initBackgroundTask() { initObject(), MIN_LOOP_RANGE, USEC(0)};
+#define initBackgroundTask() { initObject(), MIN_LOOP_RANGE, USEC(0), initWCET()};
 
 void beBusy(Backgroundtask*, int);
 int getLoopRange(Backgroundtask*, int);

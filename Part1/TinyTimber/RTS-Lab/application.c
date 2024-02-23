@@ -29,6 +29,8 @@
 
 #include "notes.h"
 
+#include "WCET.h"
+
 typedef struct {
     Object super;
     int count;
@@ -46,12 +48,8 @@ Backgroundtask task = initBackgroundTask();
 void reader(App*, int);
 void receiver(App*, int);
 
-// Method to determine the median of one, two and three values.
-int parseMedian(App*,int);
-// 
 int period(int, int);
 
-// 
 
 Serial sci0 = initSerial(SCI_PORT0, &app, reader);
 
@@ -116,15 +114,9 @@ void reader(App *self, int c) {
 			{
 				self->storage++;
 			}
-		
-			// Get the sum of all number within the history.
-			int sum3 = self->three_num[0] + self->three_num[1] + self->three_num[2];
-			
-			// Get the median of all numbers within the history.
-			int median3 = parseMedian(self, 0);
 			
 			// Lab specified output. 
-			snprintf(write_buf, 200, "Entered integer: %d : sum = %d , median = %d \n", self->three_num[0], sum3, median3);
+			snprintf(write_buf, 200, "Entered integer: %d\n", self->three_num[0]);
 			SCI_WRITE(&sci0, write_buf);
 			break;
 			
@@ -454,64 +446,34 @@ void reader(App *self, int c) {
 
 			break;
 		
+		//////////////////////////////////////////////////////////////////////////////////
+		// WCET Controls
+		
+		// Print WCET of a task
+		
+		case 'W':
+		
+			// Get the values of the WCET average, and WCET max time
+			long WCETaverage = SYNC(&task.wcet, getWCETAverage, 0);
+			long WCETmaxTime = SYNC(&task.wcet, getWCETMaxTime, 0);
+			long WCETtotalTime = SYNC(&task.wcet, getWCETTotalTime, 0);
+			
+			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
+			
+			snprintf(write_buf, 200, "Average execution time: %ld \n", WCETaverage);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Worst case timing: %ld \n", WCETmaxTime);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "WCET Total time %ld \n", WCETtotalTime);
+			SCI_WRITE(&sci0, write_buf);
+			
+			break;
+			
 		default:
 			break;
 	}
-}
-
-int parseMedian(App* self, int unused)
-{
-	int med; 		// Median value output 
-	int i, j, t; 	// Integers for bubble sorting algorithm
-	int a[3]; 		// Array to store the sorted version of three_history
-	
-	// Obtain the median when one value is entered.
-	// its just the user entered value for one value.
-	if (self->storage == 1)
-	{
-		med = self->three_num[0];
-		return med;
-	}
-	
-	// Obtain the median when two values are entered.
-	// Essentially average of two values.
-	else if (self->storage == 2)
-	{
-		med = ((self->three_num[0] + self->three_num[1]) * 0.5);
-		return med;	
-	}
-	
-	// Obtain the median when three values are entered.
-	// Sort the array in order, then pick the middle value.
-	// However, don't change the position of the values within the three_history,
-	// so use a temporary array to store ordered three_history
-	else if (self->storage == 3)
-	{
-		a[0] = self->three_num[0];
-		a[1] = self->three_num[1];
-		a[2] = self->three_num[2];
-		
-		// Bubble sort algo: sorts the array from min to max.
-		// has a poor worst case time, so not applicable for large data sets - change in future.
-		for (i = 0 ; i <= self->storage-1 ; i++) 
-		{ 
-			for (j = 0 ; j <= self->storage-i ; j++) 
-			{
-				if (a[j] <= a[j+1])
-				{ 
-					t = a[j];
-					a[j] = a[j+1];
-					a[j+1] = t;
-				}
-				else
-					continue ;
-			}
-		}
-		med = a[1]; // Median is middle value of the sorted array.
-		return med;
-	}
-	else
-		return 0;
 }
 
 int period(int i, int Keynote){
@@ -535,7 +497,6 @@ void startApp(App *self, int arg) {
 	
 	// Uncomment next line to add busy feature
 	ASYNC(&task, beBusy, 0);
-	
 	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);

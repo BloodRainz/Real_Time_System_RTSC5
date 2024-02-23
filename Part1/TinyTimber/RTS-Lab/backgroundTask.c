@@ -1,6 +1,7 @@
 #include "backgroundTask.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "WCET.h"
 
 const Time loopPeriod = USEC(1300);
 
@@ -24,11 +25,15 @@ void beBusy(Backgroundtask* self, int unused)
 		deadline = 0;
 	}
 	
+	startRecording(&self->wcet, 0);
+	
 	for(int i = 0; i < self->background_loop_range; i++) 
 	{ 
 		// Busy for loop
 	}
-
+	
+	stopRecording(&self->wcet, 0);
+	
 	SEND(loopPeriod, deadline, self, beBusy, unused);
 
 }
