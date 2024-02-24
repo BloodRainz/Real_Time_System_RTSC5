@@ -11,6 +11,8 @@
 #define MIN_LOOP_RANGE 1000
 #define MAX_LOOP_RANGE 30000
 
+#define START_LOOP_RANGE 13500
+
 #define LOOP_INCR 500
 
 #define TASK_DEADLINE USEC(1300)
@@ -22,8 +24,8 @@ typedef struct{
 	WCET wcet; // Comment this out, and the define section to remove the WCET object.
 } Backgroundtask;
 
-//#define initBackgroundTask() { initObject(), MIN_LOOP_RANGE, USEC(0)};
-#define initBackgroundTask() { initObject(), MIN_LOOP_RANGE, USEC(0), initWCET()};
+//#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0)};
+#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0), initWCET()}; // Use this definition if performing WCET
 
 void beBusy(Backgroundtask*, int);
 int getLoopRange(Backgroundtask*, int);

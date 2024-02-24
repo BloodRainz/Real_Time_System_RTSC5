@@ -454,16 +454,28 @@ void reader(App *self, int c) {
 		case 'W':
 		
 			// Get the values of the WCET average, and WCET max time
+			long WCETstart   = SYNC(&task.wcet, getWCETStartTime, 0);
+			long WCETend     = SYNC(&task.wcet, getWCETEndTime, 0);
 			long WCETaverage = SYNC(&task.wcet, getWCETAverage, 0);
 			long WCETmaxTime = SYNC(&task.wcet, getWCETMaxTime, 0);
 			long WCETtotalTime = SYNC(&task.wcet, getWCETTotalTime, 0);
+			int WCETlargestRun = SYNC(&task.wcet, getWCETTotalTime, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
+			
+			snprintf(write_buf, 200, "Baseline start: %ld \n", WCETstart);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "End time: %ld \n", WCETend);
+			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "Average execution time: %ld \n", WCETaverage);
 			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "Worst case timing: %ld \n", WCETmaxTime);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Worst case run: %d \n", WCETlargestRun);
 			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "WCET Total time %ld \n", WCETtotalTime);
@@ -493,7 +505,7 @@ int period(int i, int Keynote){
 
 void startApp(App *self, int arg) {
     CANMsg msg;
-	ASYNC(&sound, toggle_DAC_output, 0);
+	//ASYNC(&sound, toggle_DAC_output, 0);
 	
 	// Uncomment next line to add busy feature
 	ASYNC(&task, beBusy, 0);
@@ -519,6 +531,9 @@ void startApp(App *self, int arg) {
 	SCI_WRITE(&sci0, "Press I to increase the loop range by 500.\n");
 	SCI_WRITE(&sci0, "Press U to decrease the loop range by 500.\n");
 	SCI_WRITE(&sci0, "Press D to enable/disable deadlines.\n");
+	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
+	SCI_WRITE(&sci0, "Press W to print values relating to WCET.\n");
+	SCI_WRITE(&sci0, "Please wait a few seconds from boot before pressing W to obtain valid values\n");
 	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
 
     msg.msgId = 1;

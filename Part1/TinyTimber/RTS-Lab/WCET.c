@@ -3,12 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int getStart(WCET* self, int)
-{
-	return self->start;
-}
-
-int getMaxTime(WCET* self, int)
+long getWCETMaxTime(WCET* self, int)
 {
 	return self->maxTime;
 }
@@ -18,9 +13,55 @@ long getWCETAverage(WCET* self, int)
 	return self->average;
 }
 
-long getWCETMaxTime(WCET* self, int)
+void startRecording(WCET* self, int)
 {
-	return self->maxTime;
+	// Set the starting point to the current baseline
+	self->start = CURRENT_OFFSET();
+}
+
+void stopRecording(WCET* self, int)
+{
+	// Set the end point to the current baseline
+	self->end = CURRENT_OFFSET();
+	
+	while(self->runs < RUNS)
+	{
+		self->runs += 1;
+		
+		// End points baseline - starting baseline
+		Time diff = self->end - self->start;
+		
+		// Accumulate time differences to get total time
+		self->totalTime += diff;
+		
+		// Getting the worst case execution time
+		// Replaces current WCET if new time difference is larger
+		if (diff > self->maxTime)
+		{
+			self->maxTime = diff;
+		}
+		
+		// When while loop is finished, assign end values as necessary
+		if (self->runs == RUNS)
+		{
+		self->average = USEC_OF(self->totalTime) / RUNS;
+		self->maxTime = USEC_OF(self->maxTime);
+
+		}
+	}
+ 
+}
+
+////////////////////////////////////////////////////////////////////////
+// Trouble shooting with getValues
+long getWCETStartTime(WCET* self, int)
+{
+	return USEC_OF(self->start);
+}
+
+long getWCETEndTime(WCET* self, int)
+{
+	return USEC_OF(self->end);
 }
 
 long getWCETTotalTime(WCET* self, int)
@@ -28,35 +69,7 @@ long getWCETTotalTime(WCET* self, int)
 	return USEC_OF(self->totalTime);
 }
 
-void startRecording(WCET* self, int)
+int getWCETLongRun(WCET* self, int)
 {
-	self->start = CURRENT_OFFSET();
-}
-
-void stopRecording(WCET* self, int)
-{
-	int i;
-	
-	Time end = CURRENT_OFFSET();
-	
-	Time diff = end - self->start;
-	
-	Time maxTimeHolder;
-	
-	for (i=0; i < self->runs; i++)
-	{
-		self->totalTime += diff;
-		
-		if (diff > maxTimeHolder)
-		{
-			maxTimeHolder = diff;
-		}
-	}
-	
-	if (i == self->runs)
-	{
-		self->average = USEC_OF(end) / self->runs;
-		self->maxTime = USEC_OF(maxTimeHolder);
-	}
- 
+	return self->runs;
 }

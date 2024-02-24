@@ -66,6 +66,8 @@ void toggle_DAC_output(SoundObject* self, int state)
 	
 	SEND(USEC(self->notePeriod), deadline, self, toggle_DAC_output, !state);
 	
+	//startRecording(&self->wcet, 0);
+	
 	// Allows for changing of volume
 	static int DAC_value;
 	if(state == 0){
@@ -77,6 +79,7 @@ void toggle_DAC_output(SoundObject* self, int state)
 	}
 	DAC_Output = DAC_value;
 	
+	//stopRecording(&self->wcet, 0);
 }
 
 // Gets the current status of the sound deadline bit.

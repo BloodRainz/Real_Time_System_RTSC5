@@ -9,20 +9,23 @@
 typedef struct {
 	Timer timer;
 	Time start;
+	Time end;
 	int runs;
 	Time totalTime;
-	int average;
-	int maxTime;
+	long average;
+	long maxTime;
 } WCET;
 
-#define initWCET() {initTimer(), 0, RUNS, 0, 0, 0}
+#define initWCET() {initTimer(), 0, 0, 0, 0, 0, 0}
 
-int getStart(WCET*, int unused);
-int getMaxTime(WCET*, int unused);
+long getWCETStartTime(WCET*, int unused);
+long getWCETEndTime(WCET*, int unused);
+long getWCETTotalTime(WCET*, int unused);
 
 long getWCETMaxTime(WCET*, int unused);
 long getWCETAverage(WCET*, int unused);
-long getWCETTotalTime(WCET*, int unused);
+
+int getWCETLongRun(WCET*, int unused);
 
 void startRecording(WCET*, int unused);
 void stopRecording(WCET*, int unused);
