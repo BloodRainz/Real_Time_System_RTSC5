@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES:
-
+int i = 0;
 //////////////////////////////////////////////////////////////////////////////////
 //
 // VOLUME CONTROLS:
@@ -112,7 +112,6 @@ int setKey(ToneGenObj* self, int key)
 
 void toggle_DAC_output(ToneGenObj* self, int state)
 {
-	int i = 0;
 	
 	// Note controls
 	int current_note = (self->key + f0_pos + song[i]);
@@ -134,15 +133,20 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	
 	int temp_tempo = ((beats[i] * self->tempo) / 2); 
 	int temp_tempo_us = USEC_MINUTE / temp_tempo;
+	
 	self->deadline = USEC(temp_tempo_us);
 	
-	if(T_SAMPLE(&self->timer) < self->deadline)
+	self->totalTime = T_SAMPLE(&self->timer);
+	if(self->totalTime < self->deadline)
 	{
-		SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
+		SEND(USEC(self->notePeriod), self->deadline, self, toggle_DAC_output, !state);
 	}
 	else
 	{
-		SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, 0);
+		i += 1;
+		SEND(USEC(self->notePeriod), self->deadline, self, toggle_DAC_output,0);
+		T_RESET(&self->timer);
+		self->maxTime = 0;
 	}
 	
 	startRecording(self, 0);
@@ -181,16 +185,10 @@ void stopRecording(ToneGenObj* self, int)
 	Time diff = self->end - self->start;
 		
 	// Accumulate time differences to get total time
-	self->totalTime += diff;
+	//self->totalTime += diff;
 		
 	// Getting the worst case execution time
 	// Replaces current WCET if new time difference is larger
-	if (diff > self->maxTime)
-	{
-		self->maxTime = diff;
-	}
-		
-		self->maxTime = USEC_OF(self->maxTime);
 }
 
 ////////////////////////////////////////////////////////////////////////
