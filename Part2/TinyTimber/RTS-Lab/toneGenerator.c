@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int i = 0;
+//////////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES:
+
 //////////////////////////////////////////////////////////////////////////////////
 //
 // VOLUME CONTROLS:
@@ -111,6 +113,14 @@ int setKey(ToneGenObj* self, int key)
 void toggle_DAC_output(ToneGenObj* self, int state)
 {
 	int i = 0;
+	
+	int current_note = (self->key + f0_pos + song[i]);
+	self->notePeriod = notes[current_note][1];
+	self->deadline = ((beats[i] * self->tempo) - 50);
+	
+	SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
+	
+	startRecording(&self->wcet, 0);
 	// Allows for changing of volume
 	static int DAC_value;
 	if(state == 0){
@@ -122,18 +132,22 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	}
 	DAC_Output = DAC_value;
 	
-	//while(i < SONG_LENGTH)
-	//{
-		int current_note = (self->key + f0_pos + song[i]);
-		self->notePeriod = notes[current_note][1];
-		self->deadline = ((beats[i] * self->tempo) - 50);
-		
-		SEND(USEC(self->notePeriod), USEC(self->deadline), self, toggle_DAC_output, !state); 
-		//i++;
-		
-		//if (i == SONG_LENGTH)
-		//{
-		//	i = 0;
-		//}
-	//}
+	stopRecording(&self->wcet, 0);
+	
 }
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+//
+//
+// TROUBLESHOOTING METHODS
+
+long getDeadline(ToneGenObj* self, int unused)
+{    
+	return self->deadline;
+}
+
+

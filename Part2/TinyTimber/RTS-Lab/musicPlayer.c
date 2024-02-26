@@ -26,6 +26,8 @@
 
 #include "toneGenerator.h"
 
+#include "WCET.h"
+
 
 typedef struct {
     Object super;
@@ -143,7 +145,7 @@ void reader(App *self, int c) {
 			if(incr_key < MAX_KEY+1)
 			{
 				self->current_key = SYNC(&toneGenerator, setKey, incr_key);
-				snprintf(write_buf, 200, "New volume: %d \n", self->current_key);
+				snprintf(write_buf, 200, "New key: %d \n", self->current_key);
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
@@ -450,6 +452,43 @@ void reader(App *self, int c) {
 			}
 		break; 
 		
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		//
+		// TROUBLESHOOTING METHODS
+		case 'D' : 
+		
+			// Get the values of the WCET average, and WCET max time
+			long WCETstart   = SYNC(&toneGenerator.wcet, getWCETStartTime, 0);
+			long WCETend     = SYNC(&toneGenerator.wcet, getWCETEndTime, 0);
+			long WCETaverage = SYNC(&toneGenerator.wcet, getWCETAverage, 0);
+			long WCETmaxTime = SYNC(&toneGenerator.wcet, getWCETMaxTime, 0);
+			long WCETtotalTime = SYNC(&toneGenerator.wcet, getWCETTotalTime, 0);
+			int WCETlargestRun = SYNC(&toneGenerator.wcet, getWCETTotalTime, 0);
+			
+			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
+			
+			snprintf(write_buf, 200, "Baseline start: %ld \n", WCETstart);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "End time: %ld \n", WCETend);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Average execution time: %ld \n", WCETaverage);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Worst case timing: %ld \n", WCETmaxTime);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Worst case run: %d \n", WCETlargestRun);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "WCET Total time %ld \n", WCETtotalTime);
+			SCI_WRITE(&sci0, write_buf);
+				
+				
+		break;
+				
 		default:
 			break;
 	}

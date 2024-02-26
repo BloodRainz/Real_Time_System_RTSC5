@@ -5,29 +5,43 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/musicPlayer.c" Name="FileName"/>
-      <int Value="378" Name="FirstVisibleLine"/>
-      <int Value="400" Name="CurrentLine"/>
+      <int Value="141" Name="FirstVisibleLine"/>
+      <int Value="463" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/toneGenerator.c" Name="FileName"/>
-      <int Value="86" Name="FirstVisibleLine"/>
-      <int Value="105" Name="CurrentLine"/>
+      <int Value="112" Name="FirstVisibleLine"/>
+      <int Value="123" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/toneGenerator.h" Name="FileName"/>
-      <int Value="15" Name="FirstVisibleLine"/>
-      <int Value="29" Name="CurrentLine"/>
+      <int Value="1" Name="FirstVisibleLine"/>
+      <int Value="5" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/brotherJohn.h" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="6" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/WCET.c" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
       <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/WCET.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="6" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

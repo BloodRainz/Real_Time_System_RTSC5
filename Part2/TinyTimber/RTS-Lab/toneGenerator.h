@@ -3,6 +3,7 @@
 
 #include "TinyTimber.h"
 #include <stdint.h>
+#include "WCET.h"
 
 #define DAC_Output (*((volatile uint8_t*) 0x4000741C))
 
@@ -24,6 +25,8 @@
 
 #define KEY_INCR 1
 
+#define SILENCE_TIME 50
+
 typedef struct {
     Object super;
     uint8_t volume;
@@ -32,9 +35,11 @@ typedef struct {
 	int key;
     int notePeriod;
 	int deadline;
+	int runs;
+	WCET wcet;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 0, 0, 120, 0, 0, 0}
+#define initToneGen() { initObject(), 0, 0, 120, 0, 0, 0, 0, initWCET()}
 
 // Volume controls
 int getVolume(ToneGenObj*, int);
@@ -49,9 +54,18 @@ int setTempo(ToneGenObj*, int);
 int getKey(ToneGenObj*, int);
 int setKey(ToneGenObj*, int);
 
+
+
 void toggle_DAC_output(ToneGenObj*, int);
 
+void startToneTiming(ToneGenObj*, int);
+void timingControls(ToneGenObj*, int);
+void stopToneTiming(ToneGenObj*, int);
+
 int setNote(ToneGenObj*, int);
-
-
+// TROUBLESHOOT METHODS
+long getDeadline(ToneGenObj*, int);
+long getStart(ToneGenObj*, int);
+long getEnd(ToneGenObj*, int);
+long getTotalTime(ToneGenObj*, int);
 #endif
