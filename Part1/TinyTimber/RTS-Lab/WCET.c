@@ -41,19 +41,13 @@ void stopRecording(WCET* self, int)
 			self->maxTime = diff;
 		}
 		
-		// When while loop is finished, assign end values as necessary
-	}
-	else
-	{
 		if (self->runs == RUNS)
-
 		{
 		self->average = USEC_OF(self->totalTime) / RUNS;
 		self->maxTime = USEC_OF(self->maxTime);
 		self->runs += 1;
 		}
 	}
- 
 }
 
 ////////////////////////////////////////////////////////////////////////
