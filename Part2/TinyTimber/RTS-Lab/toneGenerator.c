@@ -114,9 +114,28 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 {
 	int i = 0;
 	
+	// Note controls
 	int current_note = (self->key + f0_pos + song[i]);
 	self->notePeriod = notes[current_note][1];
-	self->deadline = ((beats[i] * self->tempo) - 50);
+	
+	// Tempo controls
+	
+	// Converting bpm to microseconds
+	// NOTES:
+	// - Beats are doubled, to ensure that fractions aren't present
+	//   i.e. half beat = 1, single beat = 2, double beat = 4.
+	// - Tempo is user set: for example, 120 bpm
+	// - (Beat * tempo) / 2 converts to the correct beat, and accounts
+	//   for beats being double.
+	// - 60s / 120bpm = 0.5s period of a sound, however can't have fractions.
+	//   To prevent this, USEC_MINUTE is the amount of microseconds in
+	//   a minute, 60,000,000.
+	// - 60,000,000us / 120bpm = 500,000us
+	
+	int temp_tempo = ((beats[i] * self->tempo) / 2); 
+	int temp_tempo_us = USEC_MINUTE / temp_tempo;
+	self->deadline = USEC(temp_tempo_us);
+	
 	
 	SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
 	
@@ -140,16 +159,6 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 ///////////////////////////////////////////////////////////////////////////////////
 // TIMING
 
-long getWCETMaxTime(ToneGenObj* self, int)
-{
-	return self->maxTime;
-}
-
-long getWCETAverage(ToneGenObj* self, int)
-{
-	return self->average;
-}
-
 void startRecording(ToneGenObj* self, int)
 {
 	// Set the starting point to the current baseline
@@ -161,30 +170,21 @@ void stopRecording(ToneGenObj* self, int)
 	// Set the end point to the current baseline
 	self->end = CURRENT_OFFSET();
 	
-	if(self->runs < RUNS)
+
+	// End points baseline - starting baseline
+	Time diff = self->end - self->start;
+		
+	// Accumulate time differences to get total time
+	self->totalTime += diff;
+		
+	// Getting the worst case execution time
+	// Replaces current WCET if new time difference is larger
+	if (diff > self->maxTime)
 	{
-		self->runs += 1;
-		
-		// End points baseline - starting baseline
-		Time diff = self->end - self->start;
-		
-		// Accumulate time differences to get total time
-		self->totalTime += diff;
-		
-		// Getting the worst case execution time
-		// Replaces current WCET if new time difference is larger
-		if (diff > self->maxTime)
-		{
-			self->maxTime = diff;
-		}
-		
-		if (self->runs == RUNS)
-		{
-		self->average = USEC_OF(self->totalTime) / RUNS;
-		self->maxTime = USEC_OF(self->maxTime);
-		self->runs += 1;
-		}
+		self->maxTime = diff;
 	}
+		
+		self->maxTime = USEC_OF(self->maxTime);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -204,20 +204,15 @@ long getWCETTotalTime(ToneGenObj* self, int)
 	return USEC_OF(self->totalTime);
 }
 
-int getWCETLongRun(ToneGenObj* self, int)
+long getWCETMaxTime(ToneGenObj* self, int)
 {
-	return self->runs;
+	return self->maxTime;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////
-//
-//
-// TROUBLESHOOTING METHODS
 
 long getDeadline(ToneGenObj* self, int unused)
 {    
-	return self->deadline;
+	return USEC_OF(self->deadline);
 }
+
 
 

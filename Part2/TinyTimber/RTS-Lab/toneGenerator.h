@@ -25,6 +25,7 @@
 
 #define KEY_INCR 1
 
+#define USEC_MINUTE 60000000
 #define SILENCE_TIME 50
 
 #define RUNS 20000
@@ -36,7 +37,7 @@ typedef struct {
 	uint8_t tempo;
 	int key;
     int notePeriod;
-	int deadline;
+	Time deadline;
 
 	Timer timer;
 	Time start;
