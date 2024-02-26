@@ -120,7 +120,7 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	
 	SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
 	
-	startRecording(&self->wcet, 0);
+	startRecording(self, 0);
 	// Allows for changing of volume
 	static int DAC_value;
 	if(state == 0){
@@ -132,12 +132,82 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	}
 	DAC_Output = DAC_value;
 	
-	stopRecording(&self->wcet, 0);
+	stopRecording(self, 0);
 	
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////
+// TIMING
 
+long getWCETMaxTime(ToneGenObj* self, int)
+{
+	return self->maxTime;
+}
+
+long getWCETAverage(ToneGenObj* self, int)
+{
+	return self->average;
+}
+
+void startRecording(ToneGenObj* self, int)
+{
+	// Set the starting point to the current baseline
+	self->start = CURRENT_OFFSET();
+}
+
+void stopRecording(ToneGenObj* self, int)
+{
+	// Set the end point to the current baseline
+	self->end = CURRENT_OFFSET();
+	
+	if(self->runs < RUNS)
+	{
+		self->runs += 1;
+		
+		// End points baseline - starting baseline
+		Time diff = self->end - self->start;
+		
+		// Accumulate time differences to get total time
+		self->totalTime += diff;
+		
+		// Getting the worst case execution time
+		// Replaces current WCET if new time difference is larger
+		if (diff > self->maxTime)
+		{
+			self->maxTime = diff;
+		}
+		
+		if (self->runs == RUNS)
+		{
+		self->average = USEC_OF(self->totalTime) / RUNS;
+		self->maxTime = USEC_OF(self->maxTime);
+		self->runs += 1;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+// Trouble shooting with getValues
+long getWCETStartTime(ToneGenObj* self, int)
+{
+	return USEC_OF(self->start);
+}
+
+long getWCETEndTime(ToneGenObj* self, int)
+{
+	return USEC_OF(self->end);
+}
+
+long getWCETTotalTime(ToneGenObj* self, int)
+{
+	return USEC_OF(self->totalTime);
+}
+
+int getWCETLongRun(ToneGenObj* self, int)
+{
+	return self->runs;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////

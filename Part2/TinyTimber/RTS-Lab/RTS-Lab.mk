@@ -60,8 +60,8 @@ AS       := /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/driver_src_stm32f4xx_syscfg.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_exti.c$(ObjectSuffix) $(IntermediateDirectory)/dispatch.s$(ObjectSuffix) $(IntermediateDirectory)/sciTinyTimber.c$(ObjectSuffix) $(IntermediateDirectory)/TinyTimber.c$(ObjectSuffix) $(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IntermediateDirectory)/musicPlayer.c$(ObjectSuffix) $(IntermediateDirectory)/WCET.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_usart.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_rcc.c$(ObjectSuffix) \
-	$(IntermediateDirectory)/canTinyTimber.c$(ObjectSuffix) $(IntermediateDirectory)/toneGenerator.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_can.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_gpio.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_dac.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_tim.c$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/driver_src_stm32f4xx_syscfg.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_exti.c$(ObjectSuffix) $(IntermediateDirectory)/dispatch.s$(ObjectSuffix) $(IntermediateDirectory)/sciTinyTimber.c$(ObjectSuffix) $(IntermediateDirectory)/TinyTimber.c$(ObjectSuffix) $(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IntermediateDirectory)/musicPlayer.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_usart.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_rcc.c$(ObjectSuffix) $(IntermediateDirectory)/canTinyTimber.c$(ObjectSuffix) \
+	$(IntermediateDirectory)/toneGenerator.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_can.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_gpio.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_dac.c$(ObjectSuffix) $(IntermediateDirectory)/driver_src_stm32f4xx_tim.c$(ObjectSuffix) 
 
 
 
@@ -138,12 +138,6 @@ $(IntermediateDirectory)/musicPlayer.c$(ObjectSuffix): musicPlayer.c
 	$(CC) $(SourceSwitch) "/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/musicPlayer.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/musicPlayer.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/musicPlayer.c$(PreprocessSuffix): musicPlayer.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/musicPlayer.c$(PreprocessSuffix) musicPlayer.c
-
-$(IntermediateDirectory)/WCET.c$(ObjectSuffix): WCET.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/WCET.c$(ObjectSuffix) -MF$(IntermediateDirectory)/WCET.c$(DependSuffix) -MM WCET.c
-	$(CC) $(SourceSwitch) "/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/WCET.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/WCET.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/WCET.c$(PreprocessSuffix): WCET.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/WCET.c$(PreprocessSuffix) WCET.c
 
 $(IntermediateDirectory)/driver_src_stm32f4xx_usart.c$(ObjectSuffix): driver/src/stm32f4xx_usart.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/driver_src_stm32f4xx_usart.c$(ObjectSuffix) -MF$(IntermediateDirectory)/driver_src_stm32f4xx_usart.c$(DependSuffix) -MM driver/src/stm32f4xx_usart.c

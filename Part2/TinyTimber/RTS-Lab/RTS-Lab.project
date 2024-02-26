@@ -52,8 +52,6 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="WCET.h"/>
-    <File Name="WCET.c"/>
     <File Name="brotherJohn.h"/>
     <File Name="toneGenerator.h"/>
     <File Name="toneGenerator.c"/>

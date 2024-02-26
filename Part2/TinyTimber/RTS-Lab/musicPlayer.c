@@ -26,7 +26,6 @@
 
 #include "toneGenerator.h"
 
-#include "WCET.h"
 
 
 typedef struct {
@@ -459,12 +458,12 @@ void reader(App *self, int c) {
 		case 'D' : 
 		
 			// Get the values of the WCET average, and WCET max time
-			long WCETstart   = SYNC(&toneGenerator.wcet, getWCETStartTime, 0);
-			long WCETend     = SYNC(&toneGenerator.wcet, getWCETEndTime, 0);
-			long WCETaverage = SYNC(&toneGenerator.wcet, getWCETAverage, 0);
-			long WCETmaxTime = SYNC(&toneGenerator.wcet, getWCETMaxTime, 0);
-			long WCETtotalTime = SYNC(&toneGenerator.wcet, getWCETTotalTime, 0);
-			int WCETlargestRun = SYNC(&toneGenerator.wcet, getWCETTotalTime, 0);
+			long WCETstart   = SYNC(&toneGenerator, getWCETStartTime, 0);
+			long WCETend     = SYNC(&toneGenerator, getWCETEndTime, 0);
+			long WCETaverage = SYNC(&toneGenerator, getWCETAverage, 0);
+			long WCETmaxTime = SYNC(&toneGenerator, getWCETMaxTime, 0);
+			long WCETtotalTime = SYNC(&toneGenerator, getWCETTotalTime, 0);
+			int WCETlargestRun = SYNC(&toneGenerator, getWCETTotalTime, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
