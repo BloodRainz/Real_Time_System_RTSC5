@@ -48,7 +48,7 @@ typedef struct {
 	long maxTime;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 0, 0, 120, 0, 0, 0, initTimer(), 0, 0, 0, 0, 0, 0}
+#define initToneGen() { initObject(), 2, 0, 120, 0, 0, 0, initTimer(), 0, 0, 0, 0, 0, 0}
 
 // Volume controls
 int getVolume(ToneGenObj*, int);

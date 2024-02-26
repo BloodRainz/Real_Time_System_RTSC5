@@ -136,8 +136,14 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	int temp_tempo_us = USEC_MINUTE / temp_tempo;
 	self->deadline = USEC(temp_tempo_us);
 	
-	
-	SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
+	if(T_SAMPLE(&self->timer) < self->deadline)
+	{
+		SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
+	}
+	else
+	{
+		SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, 0);
+	}
 	
 	startRecording(self, 0);
 	// Allows for changing of volume
