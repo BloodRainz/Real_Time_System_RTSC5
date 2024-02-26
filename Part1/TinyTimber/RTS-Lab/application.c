@@ -454,12 +454,12 @@ void reader(App *self, int c) {
 		case 'W':
 		
 			// Get the values of the WCET average, and WCET max time
-			long WCETstart   = SYNC(&task.wcet, getWCETStartTime, 0);
-			long WCETend     = SYNC(&task.wcet, getWCETEndTime, 0);
-			long WCETaverage = SYNC(&task.wcet, getWCETAverage, 0);
-			long WCETmaxTime = SYNC(&task.wcet, getWCETMaxTime, 0);
-			long WCETtotalTime = SYNC(&task.wcet, getWCETTotalTime, 0);
-			int WCETlargestRun = SYNC(&task.wcet, getWCETTotalTime, 0);
+			long WCETstart   = SYNC(&sound.wcet, getWCETStartTime, 0);
+			long WCETend     = SYNC(&sound.wcet, getWCETEndTime, 0);
+			long WCETaverage = SYNC(&sound.wcet, getWCETAverage, 0);
+			long WCETmaxTime = SYNC(&sound.wcet, getWCETMaxTime, 0);
+			long WCETtotalTime = SYNC(&sound.wcet, getWCETTotalTime, 0);
+			int WCETlargestRun = SYNC(&sound.wcet, getWCETTotalTime, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
@@ -505,10 +505,11 @@ int period(int i, int Keynote){
 
 void startApp(App *self, int arg) {
     CANMsg msg;
-	//ASYNC(&sound, toggle_DAC_output, 0);
+	
+	ASYNC(&sound, toggle_DAC_output, 0);
 	
 	// Uncomment next line to add busy feature
-	ASYNC(&task, beBusy, 0);
+	//ASYNC(&task, beBusy, 0);
 	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);

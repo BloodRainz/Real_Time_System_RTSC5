@@ -22,13 +22,13 @@ typedef struct {
     int notePeriod;
 	int enableDl;
 	
-	//WCET wcet; // Comment this out, and the define section to remove the WCET object.
+	WCET wcet; // Comment this out, and the define section to remove the WCET object.
 	
 } SoundObject;
 
-#define initSound() { initObject(), 0, 0, 500, 0};
+//#define initSound() { initObject(), 0, 0, 500, 0};
 
-//#define initSound() { initObject(), 0, 0, 500, 0, initWCET()}; // Use this definition if performing WCET
+#define initSound() { initObject(), 0, 0, 500, 0, initWCET()}; // Use this definition if performing WCET
 
 
 

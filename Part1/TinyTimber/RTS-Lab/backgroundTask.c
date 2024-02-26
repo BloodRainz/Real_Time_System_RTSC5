@@ -27,7 +27,7 @@ void beBusy(Backgroundtask* self, int unused)
 	
 	// WCET RELATED METHOD:
 	// UNCOMMENT IF PERFORMING WCET
-	startRecording(&self->wcet, 0);
+	//startRecording(&self->wcet, 0);
 	
 	for(int i = 0; i < self->background_loop_range; i++) 
 	{ 
@@ -36,7 +36,7 @@ void beBusy(Backgroundtask* self, int unused)
 	
 	// WCET RELATED METHOD:
 	// UNCOMMENT IF PERFORMING WCET
-	stopRecording(&self->wcet, 0);
+	//stopRecording(&self->wcet, 0);
 	
 	SEND(loopPeriod, deadline, self, beBusy, unused);
 

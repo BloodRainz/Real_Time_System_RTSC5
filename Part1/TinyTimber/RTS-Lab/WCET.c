@@ -24,7 +24,7 @@ void stopRecording(WCET* self, int)
 	// Set the end point to the current baseline
 	self->end = CURRENT_OFFSET();
 	
-	while(self->runs < RUNS)
+	if(self->runs < RUNS)
 	{
 		self->runs += 1;
 		
@@ -42,11 +42,15 @@ void stopRecording(WCET* self, int)
 		}
 		
 		// When while loop is finished, assign end values as necessary
+	}
+	else
+	{
 		if (self->runs == RUNS)
+
 		{
 		self->average = USEC_OF(self->totalTime) / RUNS;
 		self->maxTime = USEC_OF(self->maxTime);
-
+		self->runs += 1;
 		}
 	}
  

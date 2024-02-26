@@ -21,11 +21,11 @@ typedef struct{
 	Object super;
 	int background_loop_range;
 	int enableDl;
-	WCET wcet; // Comment this out, and the define section to remove the WCET object.
+	//WCET wcet; // Comment this out, and the define section to remove the WCET object.
 } Backgroundtask;
 
-//#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0)};
-#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0), initWCET()}; // Use this definition if performing WCET
+#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0)};
+//#define initBackgroundTask() { initObject(), START_LOOP_RANGE, USEC(0), initWCET()}; // Use this definition if performing WCET
 
 void beBusy(Backgroundtask*, int);
 int getLoopRange(Backgroundtask*, int);
