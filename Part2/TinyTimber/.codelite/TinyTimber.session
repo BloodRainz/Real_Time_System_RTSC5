@@ -5,22 +5,22 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/musicPlayer.c" Name="FileName"/>
-      <int Value="141" Name="FirstVisibleLine"/>
-      <int Value="463" Name="CurrentLine"/>
+      <int Value="465" Name="FirstVisibleLine"/>
+      <int Value="476" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/toneGenerator.c" Name="FileName"/>
-      <int Value="112" Name="FirstVisibleLine"/>
-      <int Value="123" Name="CurrentLine"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="150" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/toneGenerator.h" Name="FileName"/>
-      <int Value="1" Name="FirstVisibleLine"/>
-      <int Value="5" Name="CurrentLine"/>
+      <int Value="24" Name="FirstVisibleLine"/>
+      <int Value="37" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
@@ -32,16 +32,9 @@
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/WCET.c" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="0" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/WCET.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="6" Name="CurrentLine"/>
+      <wxString Value="/home/jger/EDA223/Real_Time_System_RTSC5/Part2/TinyTimber/RTS-Lab/TinyTimber.h" Name="FileName"/>
+      <int Value="135" Name="FirstVisibleLine"/>
+      <int Value="142" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

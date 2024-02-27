@@ -5,10 +5,15 @@
 
 #define f0_pos 10
 
+
+#define a 2		// Full beat
+#define b a/2	// Double beat
+#define c a*2	// half beat
+
 const int song[SONG_LENGTH] = {0, 2, 4, 0, 0, 2, 4, 0, 4, 5, 7, 4, 5, 7, 7, 9, 7, 5, 4, 0, 7, 9, 7, 5, 4, 0, 0, -5, 0, 0, -5, 0};
 
 // All beats got doubled: prevents us from having to use 0.5 values, which cause issues when declared as an int
-const int beats[SONG_LENGTH] = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 4, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 4, 2, 2, 4};
+const int beats[SONG_LENGTH] = {a, a, a, a, a, a, a, a, a, a, b, a, a, b, c, c, c, c, a, a, c, c, c, c, a, a, a, a, b, a, a, b};
 
 const int notes[25][2] = {
  // frequency left and period right(in us)  

@@ -110,14 +110,13 @@ int setKey(ToneGenObj* self, int key)
 	}
 }
 
-void toggle_DAC_output(ToneGenObj* self, int state)
+void nextNote(ToneGenObj* self, int i)
 {
-	
 	// Note controls
 	int current_note = (self->key + f0_pos + song[i]);
 	self->notePeriod = notes[current_note][1];
 	
-	// Tempo controls
+		// Tempo controls
 	
 	// Converting bpm to microseconds
 	// NOTES:
@@ -132,9 +131,15 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	// - 60,000,000us / 120bpm = 500,000us
 	
 	int temp_tempo = ((beats[i] * self->tempo) / 2); 
-	int temp_tempo_us = USEC_MINUTE / temp_tempo;
+	int temp_tempo_us = (MSEC_MINUTE / temp_tempo) - 50;
 	
-	self->deadline = USEC(temp_tempo_us);
+	self->deadline = MSEC(temp_tempo_us);
+	
+	// This maths is very funky: so need to think of a better way to perform this
+}
+
+void toggle_DAC_output(ToneGenObj* self, int state)
+{
 	
 	self->totalTime = T_SAMPLE(&self->timer);
 	if(self->totalTime < self->deadline)
@@ -143,13 +148,27 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	}
 	else
 	{
-		i += 1;
-		SEND(USEC(self->notePeriod), self->deadline, self, toggle_DAC_output,0);
-		T_RESET(&self->timer);
-		self->maxTime = 0;
+		if(i < SONG_LENGTH)
+		{
+			i += 1;
+		}
+		else
+		{
+			i = 0;
+		}
+		// Should include processing of new values in this location to
+		// prevent processing happening where it matters
+		if(self->totalTime < (self->deadline + MSEC(SILENCE_TIME)))
+		{
+			BEFORE(MSEC(25), self, nextNote, i);
+			BEFORE(MSEC(50), self, toggle_DAC_output,0);
+
+			T_RESET(&self->timer);
+			self->maxTime = 0;
+		}
 	}
 	
-	startRecording(self, 0);
+	//startRecording(self, 0);
 	// Allows for changing of volume
 	static int DAC_value;
 	if(state == 0){
@@ -161,7 +180,7 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	}
 	DAC_Output = DAC_value;
 	
-	stopRecording(self, 0);
+	//stopRecording(self, 0);
 	
 }
 
@@ -179,16 +198,6 @@ void stopRecording(ToneGenObj* self, int)
 {
 	// Set the end point to the current baseline
 	self->end = CURRENT_OFFSET();
-	
-
-	// End points baseline - starting baseline
-	Time diff = self->end - self->start;
-		
-	// Accumulate time differences to get total time
-	//self->totalTime += diff;
-		
-	// Getting the worst case execution time
-	// Replaces current WCET if new time difference is larger
 }
 
 ////////////////////////////////////////////////////////////////////////

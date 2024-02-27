@@ -26,6 +26,7 @@
 #define KEY_INCR 1
 
 #define USEC_MINUTE 60000000
+#define MSEC_MINUTE 60000
 #define SILENCE_TIME 50
 
 #define RUNS 20000
@@ -89,5 +90,7 @@ int getWCETLongRun(ToneGenObj*, int unused);
 
 void startRecording(ToneGenObj*, int unused);
 void stopRecording(ToneGenObj*, int unused);
+
+void nextNote(ToneGenObj*, int);
 
 #endif
