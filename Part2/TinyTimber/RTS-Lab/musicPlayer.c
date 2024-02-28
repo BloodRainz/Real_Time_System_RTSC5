@@ -523,9 +523,9 @@ void startApp(App *self, int arg) {
 	SCI_WRITE(&sci0, "Press G to decrease the key by 1.\n");
 	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
 	SCI_WRITE(&sci0, "TEMPO INSTRUCTIONS: \n");
-	SCI_WRITE(&sci0, "Type a value between 60 and 240, and press T to select the song key.\n");
-	SCI_WRITE(&sci0, "Press E to increase the key by 1.\n");
-	SCI_WRITE(&sci0, "Press W to decrease the key by 1.\n");
+	SCI_WRITE(&sci0, "Type a value between 60 and 240, and press T to select the song tempo.\n");
+	SCI_WRITE(&sci0, "Press E to increase the tempo by 10.\n");
+	SCI_WRITE(&sci0, "Press W to decrease the tempo by 10.\n");
 	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
     msg.msgId = 1;
     msg.nodeId = 1;
