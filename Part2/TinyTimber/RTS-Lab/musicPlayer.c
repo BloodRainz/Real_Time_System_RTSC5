@@ -1,21 +1,25 @@
 /*
- * Part 1 Section 3 Submission: Deadlines to the rescue
+ * Part 2 Section 2: Music generator
  * 
  * RTS-C5:	Emil Johansson (emiuo@chalmers.se) 
- * 		Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
- * 		Joshua Geraghty (joshuag@chalmers.se)
+ * 			Kavineshver Sivaraman Kathiresan (kavkat@chalmers.se) 
+ * 			Joshua Geraghty (joshuag@chalmers.se)
  * 
- * Verified by Lab TA, Feb 21 19:30
+ * Verified by Lab TA
  * 
- * Bug fixes: Feb 21, 23:23
+ * Current bugs:
  * 
- * 1. Attempted to fix problem by initialising toneGeneratorObject with
- *    a notePeriod of 500: noise is audible with headphones,
- *    when system is muted and initially started up.
- * 2. Changed setfrequency1Khz ->  self->notePeriod = USEC(500)
- *    to self->notePeriod = 500.
- *    Conversion to USEC happens within toggle_DAC_output -> SEND
- *    statement. Older version caused double conversion.
+ * 1. toneGenerator.c skips the first iteration of Brother John upon
+ *    the first loop of the program. 
+ *    - Seems like its bypassing the if statements upon initialisation
+ *    - Possibly change the if-else statements within toneGenerator.c
+ *    - Initialiasng i to -1 works as a 'bandage' solution: but doesn't really fix problem
+ * 2. Deadline arithmetic doesn't seem to calculate correctly:
+ *    - Double check the maths, and possible change the order of operations
+ *    - Turn it to microseconds to get a higher resolution?
+ *    - SOLVED: Looking at it again, I think its correct?
+ * 3. Find a better way to understand the timing requirements of the system.
+ *    - Derive WCET of player at extreme conditions
  */
  
 #include "TinyTimber.h"
@@ -458,8 +462,8 @@ void reader(App *self, int c) {
 		case 'D' : 
 		
 			// Get the values of the WCET average, and WCET max time
-			long WCETstart   = SYNC(&toneGenerator, getWCETStartTime, 0);
-			long WCETend     = SYNC(&toneGenerator, getWCETEndTime, 0);
+			int WCETstart   = SYNC(&toneGenerator, getI, 0);
+			//long WCETend     = SYNC(&toneGenerator, getWCETEndTime, 0);
 			long WCETmaxTime = SYNC(&toneGenerator, getWCETMaxTime, 0);
 			long WCETtotalTime = SYNC(&toneGenerator, getWCETTotalTime, 0);
 			int WCETlargestRun = SYNC(&toneGenerator, getWCETTotalTime, 0);
@@ -467,11 +471,11 @@ void reader(App *self, int c) {
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
-			snprintf(write_buf, 200, "Baseline start: %ld \n", WCETstart);
+			snprintf(write_buf, 200, "I value: %d \n", WCETstart);
 			SCI_WRITE(&sci0, write_buf);
 			
-			snprintf(write_buf, 200, "End time: %ld \n", WCETend);
-			SCI_WRITE(&sci0, write_buf);
+			//snprintf(write_buf, 200, "End time: %ld \n", WCETend);
+			//SCI_WRITE(&sci0, write_buf);
 			
 			
 			snprintf(write_buf, 200, "Worst case timing: %ld \n", WCETmaxTime);
@@ -497,7 +501,7 @@ void reader(App *self, int c) {
 void startApp(App *self, int arg) {
     CANMsg msg;
 	
-	ASYNC(&toneGenerator, toggle_DAC_output, 0);
+	ASYNC(&toneGenerator, toggle_DAC_output, 1);
 	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);

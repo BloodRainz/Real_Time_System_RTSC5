@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES:
-int i = 0;
+
 //////////////////////////////////////////////////////////////////////////////////
 //
 // VOLUME CONTROLS:
@@ -110,10 +110,10 @@ int setKey(ToneGenObj* self, int key)
 	}
 }
 
-void nextNote(ToneGenObj* self, int i)
+void nextNote(ToneGenObj* self, int unused)
 {
 	// Note controls
-	int current_note = (self->key + f0_pos + song[i]);
+	int current_note = (self->key + f0_pos + song[self->i]);
 	self->notePeriod = notes[current_note][1];
 	
 		// Tempo controls
@@ -130,43 +130,22 @@ void nextNote(ToneGenObj* self, int i)
 	//   a minute, 60,000,000.
 	// - 60,000,000us / 120bpm = 500,000us
 	
-	int temp_tempo = ((beats[i] * self->tempo) / 2); 
-	int temp_tempo_us = (MSEC_MINUTE / temp_tempo) - 50;
+	int temp_tempo = ((beats[self->i] * self->tempo) / 2); 
+	int temp_tempo_us = (MSEC_MINUTE / temp_tempo);
+	int temp_tempo_minus50 = temp_tempo_us - 50;
 	
-	self->deadline = MSEC(temp_tempo_us);
+	self->deadline = MSEC(temp_tempo_minus50);
 	
 	// This maths is very funky: so need to think of a better way to perform this
 }
-
+void startTotalTime(ToneGenObj* self, int unused)
+{
+	self->totalTime = T_SAMPLE(&self->timer);
+}
 void toggle_DAC_output(ToneGenObj* self, int state)
 {
-	
-	self->totalTime = T_SAMPLE(&self->timer);
-	if(self->totalTime < self->deadline)
-	{
-		SEND(USEC(self->notePeriod), self->deadline, self, toggle_DAC_output, !state);
-	}
-	else
-	{
-		if(i < SONG_LENGTH)
-		{
-			i += 1;
-		}
-		else
-		{
-			i = 0;
-		}
-		// Should include processing of new values in this location to
-		// prevent processing happening where it matters
-		if(self->totalTime < (self->deadline + MSEC(SILENCE_TIME)))
-		{
-			BEFORE(MSEC(25), self, nextNote, i);
-			BEFORE(MSEC(50), self, toggle_DAC_output,0);
 
-			T_RESET(&self->timer);
-			self->maxTime = 0;
-		}
-	}
+	startTotalTime(self, 0);
 	
 	//startRecording(self, 0);
 	// Allows for changing of volume
@@ -182,30 +161,37 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	
 	//stopRecording(self, 0);
 	
-}
+	if(self->totalTime < self->deadline)
+	{
+		SEND(USEC(self->notePeriod), USEC(100), self, toggle_DAC_output, !state);
+	}
+	else
+	{
 
+		// Should include processing of new values in this location to
+		// prevent processing happening where it matters
 
-///////////////////////////////////////////////////////////////////////////////////
-// TIMING
-
-void startRecording(ToneGenObj* self, int)
-{
-	// Set the starting point to the current baseline
-	self->start = CURRENT_OFFSET();
-}
-
-void stopRecording(ToneGenObj* self, int)
-{
-	// Set the end point to the current baseline
-	self->end = CURRENT_OFFSET();
+		if(self->totalTime < (self->deadline + MSEC(SILENCE_TIME)))
+		{
+			if(self->i < SONG_LENGTH)
+			{
+				self->i += 1;
+			}
+			else
+			{
+				self->i = 0;
+			}
+			BEFORE(MSEC(25), self, nextNote, 0);
+			SEND(USEC(self->notePeriod), MSEC(50), self, toggle_DAC_output, 0);
+			T_RESET(&self->timer);
+			self->maxTime = 0;
+		}
+	}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
 // Trouble shooting with getValues
-long getWCETStartTime(ToneGenObj* self, int)
-{
-	return USEC_OF(self->start);
-}
 
 long getWCETEndTime(ToneGenObj* self, int)
 {
@@ -225,6 +211,11 @@ long getWCETMaxTime(ToneGenObj* self, int)
 long getDeadline(ToneGenObj* self, int unused)
 {    
 	return USEC_OF(self->deadline);
+}
+
+int getI(ToneGenObj* self, int unusued)
+{
+	return self->i;
 }
 
 

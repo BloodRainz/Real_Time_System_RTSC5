@@ -39,7 +39,7 @@ typedef struct {
 	int key;
     int notePeriod;
 	Time deadline;
-
+	int i;
 	Timer timer;
 	Time start;
 	Time end;
@@ -49,7 +49,7 @@ typedef struct {
 	long maxTime;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 2, 0, 120, 0, 0, 0, initTimer(), 0, 0, 0, 0, 0, 0}
+#define initToneGen() { initObject(), 2, 0, 120, 0, 0, 0, 0, initTimer(), 0, 0, 0, 0, 0, 0}
 
 // Volume controls
 int getVolume(ToneGenObj*, int);
@@ -92,5 +92,7 @@ void startRecording(ToneGenObj*, int unused);
 void stopRecording(ToneGenObj*, int unused);
 
 void nextNote(ToneGenObj*, int);
+
+int getI(ToneGenObj*, int);
 
 #endif
