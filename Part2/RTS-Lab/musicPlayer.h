@@ -21,9 +21,12 @@ typedef struct {
 	Object super;
 	uint8_t tempo;
 	int key;
+	Time deadline;
+	int i;
+	int notePeriod;
 }musicPlayerObj;
 
-#define initmusicPlayer() { initObject(), 120, 0};
+#define initmusicPlayer() { initObject(), 120, 0, MSEC(50), -1, 0};
 
 // Tempo controls
 int getTempo(musicPlayerObj*, int);
@@ -32,6 +35,14 @@ int setTempo(musicPlayerObj*, int);
 // Key controls
 int getKey(musicPlayerObj*, int);
 int setKey(musicPlayerObj*, int);
+
+void toneControls(musicPlayerObj*, int);
+
+void nextNote(musicPlayerObj*, int);
+
+int getI(musicPlayerObj*, int);
+
+long getDeadline(musicPlayerObj*, int);
 
 
 

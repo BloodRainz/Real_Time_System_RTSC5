@@ -41,11 +41,12 @@ typedef struct {
 	int current_key;			// user defined key
 	int current_volume;			// Holder for the current volume: will help reduce SYNCS
 	int current_tempo;			// Holder for the current tempo: will help reduce SYNCs
+	int user_mute;
 } App;
 
 App app = { initObject(), 0, 'X', {0}, 0, 0, 0 };
 
-ToneGenObj toneGenerator = initToneGen();
+//ToneGenObj toneGenerator = initToneGen();
 musicPlayerObj musicPlay = initmusicPlayer();
 
 void reader(App*, int);
@@ -60,6 +61,7 @@ void receiver(App *self, int unused) {
     CAN_RECEIVE(&can0, &msg);
     SCI_WRITE(&sci0, "Can msg received: ");
     SCI_WRITE(&sci0, msg.buff);
+	
 }
 
 void reader(App *self, int c) {
@@ -116,7 +118,6 @@ void reader(App *self, int c) {
 			// If SYNC setlevel is successful, print new volume
 			if(SYNC(&musicPlay, setKey, self->current_key) == self->current_key)
 			{
-				SYNC(&toneGenerator, updateKey, self->current_key);
 				snprintf(write_buf, 200, "New key: %d \n", SYNC(&musicPlay, getKey, NULL));
 				SCI_WRITE(&sci0, write_buf);
 				break;
@@ -151,7 +152,6 @@ void reader(App *self, int c) {
 			if(incr_key < MAX_KEY+1)
 			{
 				self->current_key = SYNC(&musicPlay, setKey, incr_key);
-				SYNC(&toneGenerator, updateKey, self->current_key);
 				snprintf(write_buf, 200, "New key: %d \n", self->current_key);
 				SCI_WRITE(&sci0, write_buf);
 				break;
@@ -191,7 +191,6 @@ void reader(App *self, int c) {
 			if(decr_key > MIN_KEY-1)
 			{
 				self->current_key = SYNC(&musicPlay, setKey, decr_key);
-				SYNC(&toneGenerator, updateKey, self->current_key);
 				snprintf(write_buf, 200, "New key: %d \n", self->current_key);
 				SCI_WRITE(&sci0, write_buf);
 				break;
@@ -256,8 +255,11 @@ void reader(App *self, int c) {
 			// Clear the buffer: prevent preloading values.
 			self->buffer[self->count] = '\0';
 			self->count = 0;
-		
+			
+			self->user_mute = !(self->user_mute);
+			
 			// Fixed comment from Jan, about MUTED always being printed
+			SYNC(&toneGenerator, set_user_mute, self->user_mute);
 			if(SYNC(&toneGenerator, mute, NULL) == 0)
 			{
 				SCI_WRITE(&sci0, "Volume muted \n");
@@ -278,8 +280,9 @@ void reader(App *self, int c) {
 			// Clear the buffer: prevent preloading values.
 			self->buffer[self->count] = '\0';
 			self->count = 0;
-		
+						
 			self->current_volume = SYNC(&toneGenerator, getVolume, NULL);
+			
 			
 			int incr_volume = self->current_volume + VOL_INCR;
 			
@@ -470,29 +473,21 @@ void reader(App *self, int c) {
 		case 'D' : ;  // remove the semicolon if error araises -> ; is the bandage to error on WCET
 		
 			// Get the values of the WCET average, and WCET max time
-			int WCETstart   = SYNC(&toneGenerator, getI, 0);
+			int WCETstart   = SYNC(&musicPlay, getI, 0);
 			//long WCETend     = SYNC(&toneGenerator, getWCETEndTime, 0);
-			long WCETmaxTime = SYNC(&toneGenerator, getWCETMaxTime, 0);
-			long WCETtotalTime = SYNC(&toneGenerator, getWCETTotalTime, 0);
-			int WCETlargestRun = SYNC(&toneGenerator, getWCETTotalTime, 0);
-			long WCETDeadline = SYNC(&toneGenerator, getDeadline, 0);
+			int newKey = SYNC(&toneGenerator, getKeyTG, 0);
+			int newTempo = SYNC(&toneGenerator, getTempoTG, 0);
+			long WCETDeadline = SYNC(&musicPlay, getDeadline, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
 			snprintf(write_buf, 200, "I value: %d \n", WCETstart);
 			SCI_WRITE(&sci0, write_buf);
 			
-			//snprintf(write_buf, 200, "End time: %ld \n", WCETend);
-			//SCI_WRITE(&sci0, write_buf);
-			
-			
-			snprintf(write_buf, 200, "Worst case timing: %ld \n", WCETmaxTime);
+			snprintf(write_buf, 200, "Key from toneGenerator: %d \n", newKey);
 			SCI_WRITE(&sci0, write_buf);
 			
-			snprintf(write_buf, 200, "Worst case run: %d \n", WCETlargestRun);
-			SCI_WRITE(&sci0, write_buf);
-			
-			snprintf(write_buf, 200, "WCET Total time %ld \n", WCETtotalTime);
+			snprintf(write_buf, 200, "Tempo from toneGenerator: %d \n", newTempo);
 			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "WCET Deadline %ld \n", WCETDeadline);
@@ -509,7 +504,9 @@ void reader(App *self, int c) {
 void startApp(App *self, int arg) {
     CANMsg msg;
 	
-	ASYNC(&toneGenerator, toggle_DAC_output, 1);
+	ASYNC(&toneGenerator, toggle_DAC_output, 0);
+	
+	ASYNC(&musicPlay, nextNote, 0);
 	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);

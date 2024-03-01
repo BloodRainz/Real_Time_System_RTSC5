@@ -54,10 +54,10 @@
   <VirtualDirectory Name="src">
     <File Name="musicPlayer.h"/>
     <File Name="application.c"/>
+    <File Name="brotherJohn.h"/>
     <File Name="toneGenerator.h"/>
     <File Name="toneGenerator.c"/>
     <File Name="musicPlayer.c"/>
-    <File Name="brotherJohn.h"/>
     <File Name="sciTinyTimber.c"/>
     <File Name="sciTinyTimber.h"/>
     <File Name="startup.c"/>
@@ -164,6 +164,4 @@ monitor restart</PostConnectCommands>
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

@@ -19,6 +19,8 @@
 #define MSEC_MINUTE 60000
 #define SILENCE_TIME 50
 
+#define PULSE_DL 100
+
 #define RUNS 20000
 
 typedef struct {
@@ -29,7 +31,7 @@ typedef struct {
 	int key;
     int notePeriod;
 	Time deadline;
-	int i;
+
 	Timer timer;
 	Time start;
 	Time end;
@@ -37,14 +39,17 @@ typedef struct {
 	Time totalTime;
 	long average;
 	long maxTime;
+	int u_mute;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 2, 0,120, 0, 0, 0, 0, initTimer(), 0, 0, 0, 0, 0, 0}
+#define initToneGen() { initObject(), 2, 0,120, 0, 0,0,  initTimer(), 0, 0, 0, 0, 0, 0}
 
+extern ToneGenObj toneGenerator;
 // Volume controls
 int getVolume(ToneGenObj*, int);
 int setVolume(ToneGenObj*, int);
-int mute(ToneGenObj*, int);
+void set_user_mute(ToneGenObj*, int user_mute);
+int mute(ToneGenObj*, int user_mute);
 
 void updateTempo(ToneGenObj*, int newtempo);
 void updateKey(ToneGenObj*, int newkey); 
@@ -57,7 +62,6 @@ void stopToneTiming(ToneGenObj*, int);
 
 int setNote(ToneGenObj*, int);
 // TROUBLESHOOT METHODS
-long getDeadline(ToneGenObj*, int);
 long getStart(ToneGenObj*, int);
 long getEnd(ToneGenObj*, int);
 long getTotalTime(ToneGenObj*, int);
@@ -74,8 +78,12 @@ int getWCETLongRun(ToneGenObj*, int unused);
 void startRecording(ToneGenObj*, int unused);
 void stopRecording(ToneGenObj*, int unused);
 
-void nextNote(ToneGenObj*, int);
+void updateDeadline(ToneGenObj*, Time newDeadline);
+void updateNotePeriod(ToneGenObj*, int newNotePeriod);
 
-int getI(ToneGenObj*, int);
+int getKeyTG(ToneGenObj*, int newKey);
+int getTempoTG(ToneGenObj*, int newTempo);
+
+
 
 #endif

@@ -1,10 +1,9 @@
 #include "TinyTimber.h"
 #include "musicPlayer.h"
+#include "brotherJohn.h"
+#include "toneGenerator.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-
-
 
 
 /////////////////////////////////////////////////////////////////
@@ -26,6 +25,7 @@ int setTempo(musicPlayerObj* self, int tempo)
     if((tempo > MIN_TEMPO - 1) && (tempo < MAX_TEMPO+1))
 	{
 		self->tempo = tempo;
+		SYNC(&toneGenerator, updateTempo, self->tempo);
 		return tempo;
     }
     else
@@ -56,6 +56,7 @@ int setKey(musicPlayerObj* self, int key)
     if((key > MIN_KEY-1) && (key < MAX_KEY+1))
 	{
 		self->key = key;
+		SYNC(&toneGenerator, updateKey, self->key);
 		return key;
     }
     else
@@ -63,4 +64,69 @@ int setKey(musicPlayerObj* self, int key)
 		self->key = self->key; // Line may not be necessary
 		return MAX_KEY+1;
 	}
+}
+
+void toneControls(musicPlayerObj* self, int unused)
+{
+	
+	//BEFORE(USEC(100), &toneGenerator, mute, 0);
+
+	//AFTER(self->deadline, self, nextNote, 0);
+	
+	//BEFORE(USEC(200), &toneGenerator, mute, 0);
+	
+}
+
+void nextNote(musicPlayerObj* self, int unused)
+{
+	if (self->i < SONG_LENGTH)
+	{
+		self->i += 1;
+	}
+	else
+	{
+		self->i = 0;
+	}
+	// Note controls
+	int current_note = (self->key + f0_pos + song[self->i]);
+	self->notePeriod = notes[current_note][1];
+	
+		// Tempo controls
+	
+	// Converting bpm to microseconds
+	// NOTES:
+	// - Beats are doubled, to ensure that fractions aren't present
+	//   i.e. half beat = 1, single beat = 2, double beat = 4.
+	// - Tempo is user set: for example, 120 bpm
+	// - (Beat * tempo) / 2 converts to the correct beat, and accounts
+	//   for beats being double.
+	// - 60s / 120bpm = 0.5s period of a sound, however can't have fractions.
+	//   To prevent this, USEC_MINUTE is the amount of microseconds in
+	//   a minute, 60,000,000.
+	// - 60,000,000us / 120bpm = 500,000us
+	
+	int temp_tempo = ((beats[self->i] * self->tempo) / 2); 
+	int temp_tempo_us = (MSEC_MINUTE / temp_tempo);
+	int temp_tempo_minus50 = temp_tempo_us - 50;
+	
+	self->deadline = MSEC(temp_tempo_minus50);
+	
+	SYNC(&toneGenerator, updateNotePeriod, self->notePeriod);
+	SYNC(&toneGenerator, updateDeadline, self->deadline);
+	
+	
+	SEND(self->deadline,self->deadline + MSEC(10),&toneGenerator, mute, NULL);
+	SEND(self->deadline+MSEC(20), self->deadline+MSEC(45),self, nextNote, 0);
+	SEND(self->deadline + MSEC(45), self->deadline+MSEC(50), &toneGenerator, mute, NULL); 
+	// This maths is very funky: so need to think of a better way to perform this
+}
+
+long getDeadline(musicPlayerObj* self, int unused)
+{    
+	return USEC_OF(self->deadline);
+}
+
+int getI(musicPlayerObj* self, int unusued)
+{
+	return self->i;
 }
