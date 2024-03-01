@@ -19,6 +19,8 @@
 #define MSEC_MINUTE 60000
 #define SILENCE_TIME 50
 
+#define PULSE_DL 100
+
 #define RUNS 20000
 
 typedef struct {
@@ -39,7 +41,7 @@ typedef struct {
 	long maxTime;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 2, 0,120, 0, 500,0,  initTimer(), 0, 0, 0, 0, 0, 0}
+#define initToneGen() { initObject(), 2, 0,120, 0, 0,0,  initTimer(), 0, 0, 0, 0, 0, 0}
 
 extern ToneGenObj toneGenerator;
 // Volume controls
@@ -77,7 +79,8 @@ void stopRecording(ToneGenObj*, int unused);
 void updateDeadline(ToneGenObj*, Time newDeadline);
 void updateNotePeriod(ToneGenObj*, int newNotePeriod);
 
-int getKeyTG(ToneGenObj*, int unused);
+int getKeyTG(ToneGenObj*, int newKey);
+int getTempoTG(ToneGenObj*, int newTempo);
 
 
 

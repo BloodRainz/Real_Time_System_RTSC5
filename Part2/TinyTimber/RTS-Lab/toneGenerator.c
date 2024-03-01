@@ -91,7 +91,7 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 	
 	//stopRecording(self, 0);
 
-	SEND(USEC(self->notePeriod), USEC(100), self, toggle_DAC_output, !state);
+	SEND(USEC(self->notePeriod), 0, self, toggle_DAC_output, !state);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -115,5 +115,11 @@ long getWCETMaxTime(ToneGenObj* self, int unused)
 int getKeyTG(ToneGenObj* self, int newkey)
 {
 	return self->key;
+	
+}
+
+int getTempoTG(ToneGenObj* self, int newTempo)
+{
+	return self->tempo;
 	
 }

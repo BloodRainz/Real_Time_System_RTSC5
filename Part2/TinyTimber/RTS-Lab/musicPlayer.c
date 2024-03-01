@@ -25,6 +25,7 @@ int setTempo(musicPlayerObj* self, int tempo)
     if((tempo > MIN_TEMPO - 1) && (tempo < MAX_TEMPO+1))
 	{
 		self->tempo = tempo;
+		SYNC(&toneGenerator, updateTempo, self->tempo);
 		return tempo;
     }
     else
@@ -67,9 +68,17 @@ int setKey(musicPlayerObj* self, int key)
 
 void toneControls(musicPlayerObj* self, int unused)
 {
-	BEFORE(self->deadline - MSEC(50), &toneGenerator, toggle_DAC_output, 1);
-	AFTER(self->deadline - MSEC(50), &toneGenerator, mute, 0);
-	//BEFORE(self->deadline, self, nextNote, 0);
+	
+	//BEFORE(USEC(100), &toneGenerator, mute, 0);
+
+	//AFTER(self->deadline, self, nextNote, 0);
+	
+	//BEFORE(USEC(200), &toneGenerator, mute, 0);
+	
+}
+
+void nextNote(musicPlayerObj* self, int unused)
+{
 	if (self->i < SONG_LENGTH)
 	{
 		self->i += 1;
@@ -78,16 +87,9 @@ void toneControls(musicPlayerObj* self, int unused)
 	{
 		self->i = 0;
 	}
-	
-}
-
-void nextNote(musicPlayerObj* self, int temp_incr)
-{
-	int incr = temp_incr + 1;
 	// Note controls
-	int current_note = (self->key + f0_pos + song[incr]);
+	int current_note = (self->key + f0_pos + song[self->i]);
 	self->notePeriod = notes[current_note][1];
-	SYNC(&toneGenerator, updateNotePeriod, 500);
 	
 		// Tempo controls
 	
@@ -103,13 +105,19 @@ void nextNote(musicPlayerObj* self, int temp_incr)
 	//   a minute, 60,000,000.
 	// - 60,000,000us / 120bpm = 500,000us
 	
-	int temp_tempo = ((beats[incr] * self->tempo) / 2); 
+	int temp_tempo = ((beats[self->i] * self->tempo) / 2); 
 	int temp_tempo_us = (MSEC_MINUTE / temp_tempo);
 	int temp_tempo_minus50 = temp_tempo_us - 50;
 	
 	self->deadline = MSEC(temp_tempo_minus50);
+	
+	SYNC(&toneGenerator, updateNotePeriod, self->notePeriod);
 	SYNC(&toneGenerator, updateDeadline, self->deadline);
 	
+	
+	AFTER(self->deadline,&toneGenerator, mute, 0);
+	AFTER(self->deadline,self, nextNote, 0);
+	AFTER(self->deadline + MSEC(50), &toneGenerator, mute, 0); 
 	// This maths is very funky: so need to think of a better way to perform this
 }
 

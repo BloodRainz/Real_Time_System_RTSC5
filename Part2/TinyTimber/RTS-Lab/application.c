@@ -470,6 +470,7 @@ void reader(App *self, int c) {
 			int WCETstart   = SYNC(&musicPlay, getI, 0);
 			//long WCETend     = SYNC(&toneGenerator, getWCETEndTime, 0);
 			int newKey = SYNC(&toneGenerator, getKeyTG, 0);
+			int newTempo = SYNC(&toneGenerator, getTempoTG, 0);
 			long WCETDeadline = SYNC(&musicPlay, getDeadline, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
@@ -478,6 +479,9 @@ void reader(App *self, int c) {
 			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "Key from toneGenerator: %d \n", newKey);
+			SCI_WRITE(&sci0, write_buf);
+			
+			snprintf(write_buf, 200, "Tempo from toneGenerator: %d \n", newTempo);
 			SCI_WRITE(&sci0, write_buf);
 			
 			snprintf(write_buf, 200, "WCET Deadline %ld \n", WCETDeadline);
@@ -495,6 +499,8 @@ void startApp(App *self, int arg) {
     CANMsg msg;
 	
 	ASYNC(&toneGenerator, toggle_DAC_output, 0);
+	
+	ASYNC(&musicPlay, nextNote, 0);
 	
     CAN_INIT(&can0);
     SCI_INIT(&sci0);
