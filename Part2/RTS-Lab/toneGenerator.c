@@ -13,8 +13,16 @@ ToneGenObj toneGenerator = initToneGen();
 //
 // Return the current volume of the system
 int getVolume(ToneGenObj* self, int unused)
-{    
-	return self->volume;
+{   
+	// Safeguard to prevent muted volume printing
+	if(self->volume == 0)
+	{
+		return self->prev_volume;
+	}
+	else
+	{
+		return self->volume;
+	}
 }
 
 // Set the volume of the system, if it is within volume constraints.
@@ -23,16 +31,24 @@ int getVolume(ToneGenObj* self, int unused)
 
 int setVolume(ToneGenObj* self, int volume)
 {
-    if((volume > MIN_VOLUME - 1) && (volume < MAX_VOLUME+1))
+	// Safeguard to ensure that setting the volume does not 
+	// cause the mute function to inverse
+	if(self->volume == 0)
 	{
-		self->volume = volume;
+		self->prev_volume = volume;
 		return volume;
-    }
-    else
-	{
-		self->volume = self->volume; // Line may not be necessary?
-		return -1;
 	}
+	else
+		if((volume > MIN_VOLUME - 1) && (volume < MAX_VOLUME+1))
+		{
+			self->volume = volume;
+			return volume;
+		}
+		else
+		{
+			self->volume = self->volume; // Line may not be necessary?
+			return -1;
+		}
 }
 
 // Mute the DAC: essentially set the volume to zero, and save
@@ -42,6 +58,11 @@ int setVolume(ToneGenObj* self, int volume)
 void set_user_mute(ToneGenObj* self, int user_mute)
 {
 	self->u_mute = user_mute;
+}
+
+int getUserMute(ToneGenObj* self, int unusued)
+{
+	return self->u_mute;
 }
 
 
@@ -84,11 +105,6 @@ void updateNotePeriod(ToneGenObj* self, int newNotePeriod)
 	self->notePeriod = newNotePeriod;
 }
 
-void updateDeadline(ToneGenObj* self, Time newDeadline)
-{
-	self->deadline = newDeadline;
-}
-
 void toggle_DAC_output(ToneGenObj* self, int state)
 {
 
@@ -110,21 +126,6 @@ void toggle_DAC_output(ToneGenObj* self, int state)
 
 ////////////////////////////////////////////////////////////////////////
 // Trouble shooting with getValues
-
-long getWCETEndTime(ToneGenObj* self, int unused)
-{
-	return USEC_OF(self->end);
-}
-
-long getWCETTotalTime(ToneGenObj* self, int unused)
-{
-	return USEC_OF(self->totalTime);
-}
-
-long getWCETMaxTime(ToneGenObj* self, int unused)
-{
-	return self->maxTime;
-}
 
 int getKeyTG(ToneGenObj* self, int newkey)
 {

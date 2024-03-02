@@ -9,7 +9,7 @@
 
 // Volume constants
 #define MIN_VOLUME 1
-#define MAX_VOLUME 20
+#define MAX_VOLUME 5
 
 #define VOL_INCR 1
 
@@ -30,25 +30,17 @@ typedef struct {
 	uint8_t tempo;
 	int key;
     int notePeriod;
-	Time deadline;
-
-	Timer timer;
-	Time start;
-	Time end;
-	int runs;
-	Time totalTime;
-	long average;
-	long maxTime;
 	int u_mute;
 } ToneGenObj;
 
-#define initToneGen() { initObject(), 2, 0,120, 0, 0,0,  initTimer(), 0, 0, 0, 0, 0, 0}
+#define initToneGen() { initObject(), 2, 2, 120, 0, 0, 0}
 
 extern ToneGenObj toneGenerator;
 // Volume controls
 int getVolume(ToneGenObj*, int);
 int setVolume(ToneGenObj*, int);
 void set_user_mute(ToneGenObj*, int user_mute);
+int getUserMute(ToneGenObj*, int);
 int mute(ToneGenObj*, int user_mute);
 
 void updateTempo(ToneGenObj*, int newtempo);
@@ -62,23 +54,8 @@ void stopToneTiming(ToneGenObj*, int);
 
 int setNote(ToneGenObj*, int);
 // TROUBLESHOOT METHODS
-long getStart(ToneGenObj*, int);
-long getEnd(ToneGenObj*, int);
 long getTotalTime(ToneGenObj*, int);
 
-long getWCETStartTime(ToneGenObj*, int unused);
-long getWCETEndTime(ToneGenObj*, int unused);
-long getWCETTotalTime(ToneGenObj*, int unused);
-
-long getWCETMaxTime(ToneGenObj*, int unused);
-long getWCETAverage(ToneGenObj*, int unused);
-
-int getWCETLongRun(ToneGenObj*, int unused);
-
-void startRecording(ToneGenObj*, int unused);
-void stopRecording(ToneGenObj*, int unused);
-
-void updateDeadline(ToneGenObj*, Time newDeadline);
 void updateNotePeriod(ToneGenObj*, int newNotePeriod);
 
 int getKeyTG(ToneGenObj*, int newKey);

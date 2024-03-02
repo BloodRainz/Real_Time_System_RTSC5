@@ -105,16 +105,7 @@ void reader(App *self, int c) {
             
 			// Take in the user defined volume
 			self->current_key = atoi(self->buffer);
-            
-			// If no volume is selected, print current volume.
-			if (self->current_key == 0)
-			{
-				SCI_WRITE(&sci0, "No key entered.\n");
-				snprintf(write_buf, 200, "Current key: %d\n", SYNC(&musicPlay, getKey, NULL));
-				SCI_WRITE(&sci0, write_buf);
-				break;
-			}
-	
+
 			// If SYNC setlevel is successful, print new volume
 			if(SYNC(&musicPlay, setKey, self->current_key) == self->current_key)
 			{
@@ -127,6 +118,10 @@ void reader(App *self, int c) {
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Key out of range. \n");
+				
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_KEY, MAX_KEY); 
+				SCI_WRITE(&sci0, write_buf);
+				
 				snprintf(write_buf, 200, "Current key is: %d", SYNC(&musicPlay, getKey, NULL));
 				SCI_WRITE(&sci0, write_buf);
 			break;
@@ -160,7 +155,7 @@ void reader(App *self, int c) {
 			// If new key is out of range, give out to the user
 			else
 			{
-				SCI_WRITE(&sci0, "ERROR: Key out of range \n"); 
+				SCI_WRITE(&sci0, "ERROR: Key out of range. \n"); 
 				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_KEY, MAX_KEY); 
 				SCI_WRITE(&sci0, write_buf);
 				
@@ -199,7 +194,7 @@ void reader(App *self, int c) {
 			// Give out to the user if key is out of range
 			else
 			{
-				SCI_WRITE(&sci0, "ERROR: Key out of range \n"); 
+				SCI_WRITE(&sci0, "ERROR: Key out of range. \n"); 
 				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_KEY, MAX_KEY); 
 				SCI_WRITE(&sci0, write_buf);
 				
@@ -221,10 +216,10 @@ void reader(App *self, int c) {
 			self->count = 0;
             
 			// Take in the user defined volume
-			self->current_volume = atoi(self->buffer);
+			int newVolume = atoi(self->buffer);
             
 			// If no volume is selected, print current volume.
-			if (self->current_volume == 0)
+			if (newVolume == 0)
 			{
 				SCI_WRITE(&sci0, "No volume entered.\n");
 				snprintf(write_buf, 200, "Current volume: %d\n", SYNC(&toneGenerator, getVolume, NULL));
@@ -233,9 +228,9 @@ void reader(App *self, int c) {
 			}
 	
 			// If SYNC setlevel is successful, print new volume
-			if(SYNC(&toneGenerator, setVolume, self->current_volume) == self->current_volume)
+			if((newVolume < MAX_VOLUME+1) && (newVolume > MIN_VOLUME-1))
 			{
-				snprintf(write_buf, 200, "New volume: %d \n", SYNC(&toneGenerator, getVolume, NULL));
+				snprintf(write_buf, 200, "New volume: %d \n", SYNC(&toneGenerator, setVolume, newVolume));
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
@@ -243,8 +238,11 @@ void reader(App *self, int c) {
 			// If user defined volume is out of range
 			else
 			{
-				SCI_WRITE(&sci0, "ERROR: Volume out of range. \n");
-				snprintf(write_buf, 200, "Current volume is: %d", SYNC(&toneGenerator, getVolume, NULL));
+				SCI_WRITE(&sci0, "ERROR: Volume out of range. \n"); 
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_VOLUME, MAX_VOLUME); 
+				SCI_WRITE(&sci0, write_buf);
+				
+				snprintf(write_buf, 200, "Current volume is: %d \n", SYNC(&toneGenerator, getVolume, NULL));
 				SCI_WRITE(&sci0, write_buf);
 			break;
 			}
@@ -260,6 +258,7 @@ void reader(App *self, int c) {
 			
 			// Fixed comment from Jan, about MUTED always being printed
 			SYNC(&toneGenerator, set_user_mute, self->user_mute);
+			
 			if(SYNC(&toneGenerator, mute, NULL) == 0)
 			{
 				SCI_WRITE(&sci0, "Volume muted \n");
@@ -337,7 +336,7 @@ void reader(App *self, int c) {
 			// Give out to the user if volume is out of range
 			else
 			{
-				SCI_WRITE(&sci0, "ERROR: Volume out of range \n"); 
+				SCI_WRITE(&sci0, "ERROR: Volume out of range. \n"); 
 				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_VOLUME, MAX_VOLUME); 
 				SCI_WRITE(&sci0, write_buf);
 				
@@ -382,6 +381,8 @@ void reader(App *self, int c) {
 			else
 			{
 				SCI_WRITE(&sci0, "ERROR: Tempo out of range. \n");
+				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_TEMPO, MAX_TEMPO); 
+				SCI_WRITE(&sci0, write_buf);
 				snprintf(write_buf, 200, "Current tempo: %d", SYNC(&musicPlay, getTempo, NULL));
 				SCI_WRITE(&sci0, write_buf);
 			break;

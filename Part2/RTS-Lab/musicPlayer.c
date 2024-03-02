@@ -111,14 +111,23 @@ void nextNote(musicPlayerObj* self, int unused)
 	
 	self->deadline = MSEC(temp_tempo_minus50);
 	
-	SYNC(&toneGenerator, updateNotePeriod, self->notePeriod);
-	SYNC(&toneGenerator, updateDeadline, self->deadline);
+	BEFORE(USEC(100), &toneGenerator, updateNotePeriod, self->notePeriod);
 	
+	// Mutes tone generator
+	if(SYNC(&toneGenerator, getUserMute, 0) == 0)
+	{
+		SEND(self->deadline, USEC(50),&toneGenerator, mute, NULL);
+		SEND(self->deadline + MSEC(SILENCE_TIME), USEC(50) , &toneGenerator, mute, NULL);
+	}
 	
-	SEND(self->deadline,self->deadline + MSEC(10),&toneGenerator, mute, NULL);
-	SEND(self->deadline+MSEC(20), self->deadline+MSEC(45),self, nextNote, 0);
-	SEND(self->deadline + MSEC(45), self->deadline+MSEC(50), &toneGenerator, mute, NULL); 
+	SEND(self->deadline, USEC(100) ,self, silence, 0);
 	// This maths is very funky: so need to think of a better way to perform this
+}
+
+void silence(musicPlayerObj* self, int unusued)
+{
+	SEND(MSEC(SILENCE_TIME), 0, self, nextNote, 0);
+
 }
 
 long getDeadline(musicPlayerObj* self, int unused)
