@@ -61,6 +61,7 @@ void receiver(App *self, int unused) {
     CAN_RECEIVE(&can0, &msg);
     SCI_WRITE(&sci0, "Can msg received: ");
     SCI_WRITE(&sci0, msg.buff);
+
 	
 }
 
@@ -259,13 +260,22 @@ void reader(App *self, int c) {
 			// Fixed comment from Jan, about MUTED always being printed
 			SYNC(&toneGenerator, set_user_mute, self->user_mute);
 			
-			if(SYNC(&toneGenerator, mute, NULL) == 0)
+			if(self->user_mute == 1)
 			{
-				SCI_WRITE(&sci0, "Volume muted \n");
+				if(SYNC(&toneGenerator, mute, 1) == 0)
+				{
+					SCI_WRITE(&sci0, "Volume muted \n");
+				}
 			}
-			else
+			else if (self->user_mute == 0)
 			{
-				SCI_WRITE(&sci0, "Volume unmuted \n");
+				if(SYNC(&toneGenerator, unmute, NULL) > 0)
+				{
+					SCI_WRITE(&sci0, "Volume unmuted \n");
+					
+				}
+				snprintf(write_buf, 200, "Unmute volume: %d \n", SYNC(&toneGenerator, unmute, NULL));
+				SCI_WRITE(&sci0, write_buf);
 			}
 			break;
 		
@@ -479,6 +489,8 @@ void reader(App *self, int c) {
 			int newKey = SYNC(&toneGenerator, getKeyTG, 0);
 			int newTempo = SYNC(&toneGenerator, getTempoTG, 0);
 			long WCETDeadline = SYNC(&musicPlay, getDeadline, 0);
+			int actual_volume = SYNC(&toneGenerator, get_volume_debug, 0);
+			int actual_prev_volume = SYNC(&toneGenerator, get_volume_debug, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
@@ -493,6 +505,15 @@ void reader(App *self, int c) {
 			
 			snprintf(write_buf, 200, "WCET Deadline %ld \n", WCETDeadline);
 			SCI_WRITE(&sci0, write_buf);
+			
+			//snprintf(write_buf, 200, "User Mute: %d \n", self->user_mute);
+			//SCI_WRITE(&sci0, write_buf);
+			
+			//snprintf(write_buf, 200, "current volume: %d \n", actual_volume);
+			//SCI_WRITE(&sci0, write_buf);
+			
+			//snprintf(write_buf, 200, "Prev volume: %d \n", actual_prev_volume);
+			//SCI_WRITE(&sci0, write_buf);
 				
 				
 		break;

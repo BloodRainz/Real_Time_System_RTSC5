@@ -41,7 +41,9 @@ int getVolume(ToneGenObj*, int);
 int setVolume(ToneGenObj*, int);
 void set_user_mute(ToneGenObj*, int user_mute);
 int getUserMute(ToneGenObj*, int);
-int mute(ToneGenObj*, int user_mute);
+int mute(ToneGenObj*, int unused);
+int unmute(ToneGenObj*, int unused);
+
 
 void updateTempo(ToneGenObj*, int newtempo);
 void updateKey(ToneGenObj*, int newkey); 
@@ -62,5 +64,7 @@ int getKeyTG(ToneGenObj*, int newKey);
 int getTempoTG(ToneGenObj*, int newTempo);
 
 
+int get_volume_debug(ToneGenObj*, int unused);
+int get_prev_volume_debug(ToneGenObj* self, int unused);
 
 #endif

@@ -108,16 +108,17 @@ void nextNote(musicPlayerObj* self, int unused)
 	int temp_tempo = ((beats[self->i] * self->tempo) / 2); 
 	int temp_tempo_us = (MSEC_MINUTE / temp_tempo);
 	int temp_tempo_minus50 = temp_tempo_us - 50;
-	
+	int user_mute;
 	self->deadline = MSEC(temp_tempo_minus50);
+	user_mute=SYNC(&toneGenerator, getUserMute, 0);
 	
 	BEFORE(USEC(100), &toneGenerator, updateNotePeriod, self->notePeriod);
 	
 	// Mutes tone generator
-	if(SYNC(&toneGenerator, getUserMute, 0) == 0)
+	if( user_mute== 0)
 	{
-		SEND(self->deadline, USEC(50),&toneGenerator, mute, NULL);
-		SEND(self->deadline + MSEC(SILENCE_TIME), USEC(50) , &toneGenerator, mute, NULL);
+		SEND(self->deadline, USEC(50),&toneGenerator, mute, 0);
+		SEND(self->deadline + MSEC(SILENCE_TIME), USEC(50) , &toneGenerator, unmute, NULL);
 	}
 	
 	SEND(self->deadline, USEC(100) ,self, silence, 0);

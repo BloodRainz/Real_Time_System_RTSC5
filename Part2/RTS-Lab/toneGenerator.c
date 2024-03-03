@@ -66,23 +66,27 @@ int getUserMute(ToneGenObj* self, int unusued)
 }
 
 
-int mute(ToneGenObj* self, int unused)
+int mute(ToneGenObj* self, int user_mute)
  {
-	 if(self->u_mute == 0)
+	 if((user_mute == 1) && (self->volume != 0))
 	 {
-		if(self->volume == 0)
-		{
-			self->volume = self->prev_volume;
-		}
-		else
-		{
-			self->prev_volume = self->volume;
-			self->volume = 0;
-		}
+		self->prev_volume = self->volume;
+		self->volume = 0;
 	 }
 	 else
 	 {
-		 self->volume = 0;
+		 self->volume =0;
+	 }
+	return self->volume;
+ }
+ 
+ 
+ int unmute(ToneGenObj* self, int unused)
+ {
+	 if(self->u_mute == 0)
+	 {
+		self->volume = self->prev_volume;
+	
 	 }
 	return self->volume;
  }
@@ -137,4 +141,14 @@ int getTempoTG(ToneGenObj* self, int newTempo)
 {
 	return self->tempo;
 	
+}
+
+int get_volume_debug(ToneGenObj* self, int unused)
+{
+	return self->volume;
+}
+
+int get_prev_volume_debug(ToneGenObj* self, int unused)
+{
+	return self->prev_volume;
 }
