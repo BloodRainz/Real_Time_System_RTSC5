@@ -31,7 +31,7 @@
 #include "toneGenerator.h"
 #include "musicPlayer.h"
 
-
+#include "CANComms.h"
 
 typedef struct {
     Object super;
@@ -42,12 +42,14 @@ typedef struct {
 	int current_volume;			// Holder for the current volume: will help reduce SYNCS
 	int current_tempo;			// Holder for the current tempo: will help reduce SYNCs
 	int user_mute;
+	int CANMode;				// Makes the device aware of the CAN modes: 0 = Conductor, 1 = Musician
+	CANMsg transmit_msg[CAN_BUFSIZE];		// CAN Message to transmit
 } App;
 
-App app = { initObject(), 0, 'X', {0}, 0, 0, 0 };
+App app = { initObject(), 0, 'X', {0}, 0, 0, 0 ,0, 0};
 
 //ToneGenObj toneGenerator = initToneGen();
-musicPlayerObj musicPlay = initmusicPlayer();
+//musicPlayerObj musicPlay = initmusicPlayer();
 
 void reader(App*, int);
 void receiver(App*, int);
@@ -59,14 +61,26 @@ Can can0 = initCan(CAN_PORT0, &app, receiver);
 void receiver(App *self, int unused) {
     CANMsg msg;
     CAN_RECEIVE(&can0, &msg);
+	
     SCI_WRITE(&sci0, "Can msg received: ");
     SCI_WRITE(&sci0, msg.buff);
+	
+	int temp = (int)(msg.msgId);
+
+	SCI_WRITE(&sci0, "\n Can msgId: ");
+	SCI_WRITE(&sci0, temp);
+
 
 	
+	// If set to musician, send the message to CANComms CANReceive
+	if(self->CANMode == 1)
+	{
+		SYNC(&canComms, CANReceive, &msg);
+	}
 }
 
 void reader(App *self, int c) {
-	
+
 	// Create a char to print text and value together
 	SCI_WRITE(&sci0, "Rcv: \'");
 	SCI_WRITECHAR(&sci0, c);
@@ -89,6 +103,8 @@ void reader(App *self, int c) {
 		case '9':
 		case '-':
 			// Add valid value into buffer
+			
+			self->transmit_msg->buff[self->count] = c;
 			self->buffer[self->count++] = c;
 			break;
 			
@@ -102,32 +118,47 @@ void reader(App *self, int c) {
 			
 			// Delimiter
 			self->buffer[self->count] = '\0';
+			self->transmit_msg->buff[self->count] = '\0';
+			// Set the length of the CAN Message to transmit
+			self->transmit_msg->length = self->count;
+			
+			// Set the message Id for the CAN Bus
+			self->transmit_msg->msgId = CAN_KEY;
+			
+			// Revert buffer count to zero
 			self->count = 0;
             
 			// Take in the user defined volume
 			self->current_key = atoi(self->buffer);
-
-			// If SYNC setlevel is successful, print new volume
-			if(SYNC(&musicPlay, setKey, self->current_key) == self->current_key)
+			
+			// Checks the current CANMode:
+			// If in Conductor mode, allow for normal operation
+			if(self->CANMode == 0)
 			{
-				snprintf(write_buf, 200, "New key: %d \n", SYNC(&musicPlay, getKey, NULL));
-				SCI_WRITE(&sci0, write_buf);
-				break;
+				// If SYNC setlevel is successful, print new volume
+				if(SYNC(&musicPlay, setKey, self->current_key) == self->current_key)
+				{
+					snprintf(write_buf, 200, "New key: %d \n", SYNC(&musicPlay, getKey, NULL));
+					SCI_WRITE(&sci0, write_buf);
+					//break;
+				}
+			
+				// If user defined volume is out of range
+				else
+				{
+					SCI_WRITE(&sci0, "ERROR: Key out of range. \n");
+				
+					snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_KEY, MAX_KEY); 
+					SCI_WRITE(&sci0, write_buf);
+				
+					snprintf(write_buf, 200, "Current key is: %d", SYNC(&musicPlay, getKey, NULL));
+					SCI_WRITE(&sci0, write_buf);
+					//break;
+				}
 			}
 			
-			// If user defined volume is out of range
-			else
-			{
-				SCI_WRITE(&sci0, "ERROR: Key out of range. \n");
-				
-				snprintf(write_buf, 200, "Please select a value between %d and %d \n", MIN_KEY, MAX_KEY); 
-				SCI_WRITE(&sci0, write_buf);
-				
-				snprintf(write_buf, 200, "Current key is: %d", SYNC(&musicPlay, getKey, NULL));
-				SCI_WRITE(&sci0, write_buf);
+			CAN_SEND(&can0, &self->transmit_msg);
 			break;
-			}
-		break;
 		
 		// Increase the key by one step.
 		
@@ -203,6 +234,7 @@ void reader(App *self, int c) {
 				SCI_WRITE(&sci0, write_buf);
 				break;
 			}
+
 		break;
 			
 
@@ -274,11 +306,9 @@ void reader(App *self, int c) {
 					SCI_WRITE(&sci0, "Volume unmuted \n");
 					
 				}
-				snprintf(write_buf, 200, "Unmute volume: %d \n", SYNC(&toneGenerator, unmute, NULL));
-				SCI_WRITE(&sci0, write_buf);
 			}
 			break;
-		
+			
 		// Increase the volume by one step.
 		
 		// Notes: this method was being very fussy: would prefer to remove incr_volume values
@@ -489,8 +519,6 @@ void reader(App *self, int c) {
 			int newKey = SYNC(&toneGenerator, getKeyTG, 0);
 			int newTempo = SYNC(&toneGenerator, getTempoTG, 0);
 			long WCETDeadline = SYNC(&musicPlay, getDeadline, 0);
-			int actual_volume = SYNC(&toneGenerator, get_volume_debug, 0);
-			int actual_prev_volume = SYNC(&toneGenerator, get_volume_debug, 0);
 			
 			SCI_WRITE(&sci0, "Worst Case Execution Time analysis: \n");
 			
@@ -505,15 +533,6 @@ void reader(App *self, int c) {
 			
 			snprintf(write_buf, 200, "WCET Deadline %ld \n", WCETDeadline);
 			SCI_WRITE(&sci0, write_buf);
-			
-			//snprintf(write_buf, 200, "User Mute: %d \n", self->user_mute);
-			//SCI_WRITE(&sci0, write_buf);
-			
-			//snprintf(write_buf, 200, "current volume: %d \n", actual_volume);
-			//SCI_WRITE(&sci0, write_buf);
-			
-			//snprintf(write_buf, 200, "Prev volume: %d \n", actual_prev_volume);
-			//SCI_WRITE(&sci0, write_buf);
 				
 				
 		break;
@@ -554,7 +573,7 @@ void startApp(App *self, int arg) {
 	SCI_WRITE(&sci0, "Press E to increase the tempo by 10.\n");
 	SCI_WRITE(&sci0, "Press W to decrease the tempo by 10.\n");
 	SCI_WRITE(&sci0, "/////////////////////////////////////////////////////////////////\n");
-    msg.msgId = 1;
+    msg.msgId = 40;
     msg.nodeId = 1;
     msg.length = 6;
     msg.buff[0] = 'H';

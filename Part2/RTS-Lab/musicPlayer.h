@@ -28,6 +28,7 @@ typedef struct {
 
 #define initmusicPlayer() { initObject(), 120, 0, 0, -1, 0};
 
+extern musicPlayerObj musicPlay;
 // Tempo controls
 int getTempo(musicPlayerObj*, int);
 int setTempo(musicPlayerObj*, int);

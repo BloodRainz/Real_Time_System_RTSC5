@@ -52,6 +52,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="CANComms.c"/>
+    <File Name="CANComms.h"/>
     <File Name="musicPlayer.h"/>
     <File Name="application.c"/>
     <File Name="brotherJohn.h"/>
