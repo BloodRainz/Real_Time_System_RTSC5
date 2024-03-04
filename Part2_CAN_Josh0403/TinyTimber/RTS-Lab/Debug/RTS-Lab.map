@@ -77,7 +77,7 @@ LOAD /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-
 LOAD /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
 END GROUP
 
-.text           0x20000000     0x978c
+.text           0x20000000     0x97cc
                 0x20000000                        . = ALIGN (0x4)
  *(.start_section)
  .start_section
@@ -201,579 +201,578 @@ END GROUP
                 0x20003432                sci_write
                 0x20003488                sci_writechar
                 0x200034be                sci_interrupt
- .text          0x20003598      0x2d0 ./Debug/musicPlayer.c.o
+ .text          0x20003598      0x314 ./Debug/musicPlayer.c.o
                 0x20003598                getTempo
                 0x200035b2                setTempo
                 0x20003600                getKey
                 0x2000361a                setKey
                 0x20003664                nextNote
-                0x20003778                silence
-                0x200037a8                startStopPlayer
-                0x200037f4                getPlayerStatus
-                0x2000380e                getDeadline
-                0x2000384c                getI
- .text          0x20003868      0xcb0 ./Debug/driver_src_stm32f4xx_rcc.c.o
-                0x20003868                RCC_DeInit
-                0x200038d8                RCC_HSEConfig
-                0x20003900                RCC_WaitForHSEStartUp
-                0x20003950                RCC_AdjustHSICalibrationValue
-                0x2000398c                RCC_HSICmd
-                0x200039ac                RCC_LSEConfig
-                0x200039f0                RCC_LSICmd
-                0x20003a10                RCC_PLLConfig
-                0x20003a50                RCC_PLLCmd
-                0x20003a70                RCC_PLLI2SConfig
-                0x20003a9c                RCC_PLLI2SCmd
-                0x20003abc                RCC_PLLSAIConfig
-                0x20003af0                RCC_PLLSAICmd
-                0x20003b10                RCC_ClockSecuritySystemCmd
-                0x20003b30                RCC_MCO1Config
-                0x20003b70                RCC_MCO2Config
-                0x20003bb0                RCC_SYSCLKConfig
-                0x20003be8                RCC_GetSYSCLKSource
-                0x20003c08                RCC_HCLKConfig
-                0x20003c40                RCC_PCLK1Config
-                0x20003c78                RCC_PCLK2Config
-                0x20003cb4                RCC_GetClocksFreq
-                0x20003e10                RCC_RTCCLKConfig
-                0x20003e6c                RCC_RTCCLKCmd
-                0x20003e8c                RCC_BackupResetCmd
-                0x20003eac                RCC_I2SCLKConfig
-                0x20003ecc                RCC_SAIPLLI2SClkDivConfig
-                0x20003f0c                RCC_SAIPLLSAIClkDivConfig
-                0x20003f4c                RCC_SAIBlockACLKConfig
-                0x20003f88                RCC_SAIBlockBCLKConfig
-                0x20003fc4                RCC_LTDCCLKDivConfig
-                0x20004000                RCC_TIMCLKPresConfig
-                0x20004020                RCC_AHB1PeriphClockCmd
-                0x20004060                RCC_AHB2PeriphClockCmd
-                0x200040a0                RCC_AHB3PeriphClockCmd
-                0x200040e0                RCC_APB1PeriphClockCmd
-                0x20004120                RCC_APB2PeriphClockCmd
-                0x20004160                RCC_AHB1PeriphResetCmd
-                0x200041a0                RCC_AHB2PeriphResetCmd
-                0x200041e0                RCC_AHB3PeriphResetCmd
-                0x20004220                RCC_APB1PeriphResetCmd
-                0x20004260                RCC_APB2PeriphResetCmd
-                0x200042a0                RCC_AHB1PeriphClockLPModeCmd
-                0x200042e0                RCC_AHB2PeriphClockLPModeCmd
-                0x20004320                RCC_AHB3PeriphClockLPModeCmd
-                0x20004360                RCC_APB1PeriphClockLPModeCmd
-                0x200043a0                RCC_APB2PeriphClockLPModeCmd
-                0x200043e0                RCC_ITConfig
-                0x2000442c                RCC_GetFlagStatus
-                0x200044a0                RCC_ClearFlag
-                0x200044c0                RCC_GetITStatus
-                0x200044f8                RCC_ClearITPendingBit
- .text          0x20004518      0xf30 ./Debug/application.c.o
-                0x20004518                receiver
-                0x2000459c                reader
-                0x200051f4                startApp
-                0x20005408                main
- .text          0x20005448      0x444 ./Debug/canTinyTimber.c.o
-                0x200054d0                can_init
-                0x20005590                can_interrupt
-                0x20005718                can_receive
-                0x200057e2                can_send
- .text          0x2000588c      0x24c ./Debug/toneGenerator.c.o
-                0x2000588c                getVolume
-                0x200058b4                setVolume
-                0x2000590a                set_user_mute
-                0x2000592a                getUserMute
-                0x20005944                mute
-                0x20005982                unmute
-                0x200059ac                updateKey
-                0x200059c8                updateTempo
-                0x200059e6                updateNotePeriod
-                0x20005a02                toggle_DAC_output
-                0x20005a70                getKeyTG
-                0x20005a8a                getTempoTG
-                0x20005aa4                get_volume_debug
-                0x20005abe                get_prev_volume_debug
- .text          0x20005ad8      0x4d8 ./Debug/driver_src_stm32f4xx_gpio.c.o
-                0x20005ad8                GPIO_DeInit
-                0x20005c3c                GPIO_Init
-                0x20005d5a                GPIO_StructInit
-                0x20005d8e                GPIO_PinLockConfig
-                0x20005dd2                GPIO_ReadInputDataBit
-                0x20005e06                GPIO_ReadInputData
-                0x20005e20                GPIO_ReadOutputDataBit
-                0x20005e54                GPIO_ReadOutputData
-                0x20005e6e                GPIO_SetBits
-                0x20005e8c                GPIO_ResetBits
-                0x20005eaa                GPIO_WriteBit
-                0x20005eda                GPIO_Write
-                0x20005ef8                GPIO_ToggleBits
-                0x20005f1c                GPIO_PinAFConfig
- .text          0x20005fb0      0x450 ./Debug/driver_src_stm32f4xx_dac.c.o
-                0x20005fb0                DAC_DeInit
-                0x20005fcc                DAC_Init
-                0x20006034                DAC_StructInit
-                0x20006060                DAC_Cmd
-                0x200060ac                DAC_SoftwareTriggerCmd
-                0x200060fc                DAC_DualSoftwareTriggerCmd
-                0x20006138                DAC_WaveGenerationCmd
-                0x20006184                DAC_SetChannel1Data
-                0x200061bc                DAC_SetChannel2Data
-                0x200061f4                DAC_SetDualChannelData
-                0x2000624c                DAC_GetDataOutputValue
-                0x20006280                DAC_DMACmd
-                0x200062d0                DAC_ITConfig
-                0x2000631c                DAC_GetFlagStatus
-                0x20006358                DAC_ClearFlag
-                0x20006380                DAC_GetITStatus
-                0x200063d8                DAC_ClearITPendingBit
- .text          0x20006400     0x1c1c ./Debug/driver_src_stm32f4xx_tim.c.o
-                0x20006400                TIM_DeInit
-                0x200065c0                TIM_TimeBaseInit
-                0x20006698                TIM_TimeBaseStructInit
-                0x200066cc                TIM_PrescalerConfig
-                0x200066f4                TIM_CounterModeConfig
-                0x2000672c                TIM_SetCounter
-                0x20006748                TIM_SetAutoreload
-                0x20006764                TIM_GetCounter
-                0x2000677c                TIM_GetPrescaler
-                0x20006796                TIM_UpdateDisableConfig
-                0x200067d6                TIM_UpdateRequestConfig
-                0x20006816                TIM_ARRPreloadConfig
-                0x20006856                TIM_SelectOnePulseMode
-                0x2000688e                TIM_SetClockDivision
-                0x200068c6                TIM_Cmd
-                0x20006906                TIM_OC1Init
-                0x200069fc                TIM_OC2Init
-                0x20006b0c                TIM_OC3Init
-                0x20006c18                TIM_OC4Init
-                0x20006ce8                TIM_OCStructInit
-                0x20006d2c                TIM_SelectOCxM
-                0x20006de2                TIM_SetCompare1
-                0x20006dfe                TIM_SetCompare2
-                0x20006e1a                TIM_SetCompare3
-                0x20006e36                TIM_SetCompare4
-                0x20006e52                TIM_ForcedOC1Config
-                0x20006e8a                TIM_ForcedOC2Config
-                0x20006ec6                TIM_ForcedOC3Config
-                0x20006efe                TIM_ForcedOC4Config
-                0x20006f3a                TIM_OC1PreloadConfig
-                0x20006f72                TIM_OC2PreloadConfig
-                0x20006fae                TIM_OC3PreloadConfig
-                0x20006fe6                TIM_OC4PreloadConfig
-                0x20007022                TIM_OC1FastConfig
-                0x2000705a                TIM_OC2FastConfig
-                0x20007096                TIM_OC3FastConfig
-                0x200070ce                TIM_OC4FastConfig
-                0x2000710a                TIM_ClearOC1Ref
-                0x20007142                TIM_ClearOC2Ref
-                0x2000717e                TIM_ClearOC3Ref
-                0x200071b6                TIM_ClearOC4Ref
-                0x200071f2                TIM_OC1PolarityConfig
-                0x2000722a                TIM_OC1NPolarityConfig
-                0x20007262                TIM_OC2PolarityConfig
-                0x2000729e                TIM_OC2NPolarityConfig
-                0x200072da                TIM_OC3PolarityConfig
-                0x20007316                TIM_OC3NPolarityConfig
-                0x20007352                TIM_OC4PolarityConfig
-                0x2000738e                TIM_CCxCmd
-                0x200073e4                TIM_CCxNCmd
-                0x2000743a                TIM_ICInit
-                0x200074e2                TIM_ICStructInit
-                0x20007514                TIM_PWMIConfig
-                0x200075cc                TIM_GetCapture1
-                0x200075e4                TIM_GetCapture2
-                0x200075fc                TIM_GetCapture3
-                0x20007614                TIM_GetCapture4
-                0x2000762c                TIM_SetIC1Prescaler
-                0x20007664                TIM_SetIC2Prescaler
-                0x200076a0                TIM_SetIC3Prescaler
-                0x200076d8                TIM_SetIC4Prescaler
-                0x20007714                TIM_BDTRConfig
-                0x20007764                TIM_BDTRStructInit
-                0x200077a2                TIM_CtrlPWMOutputs
-                0x200077ee                TIM_SelectCOM
-                0x2000782e                TIM_CCPreloadControl
-                0x2000786e                TIM_ITConfig
-                0x200078b6                TIM_GenerateEvent
-                0x200078d4                TIM_GetFlagStatus
-                0x2000790c                TIM_ClearFlag
-                0x2000792e                TIM_GetITStatus
-                0x20007982                TIM_ClearITPendingBit
-                0x200079a4                TIM_DMAConfig
-                0x200079ce                TIM_DMACmd
-                0x20007a16                TIM_SelectCCDMA
-                0x20007a56                TIM_InternalClockConfig
-                0x20007a7a                TIM_ITRxExternalClockConfig
-                0x20007aa8                TIM_TIxExternalClockConfig
-                0x20007b04                TIM_ETRClockMode1Config
-                0x20007b62                TIM_ETRClockMode2Config
-                0x20007ba0                TIM_SelectInputTrigger
-                0x20007bd8                TIM_SelectOutputTrigger
-                0x20007c10                TIM_SelectSlaveMode
-                0x20007c48                TIM_SelectMasterSlaveMode
-                0x20007c80                TIM_ETRConfig
-                0x20007cd4                TIM_EncoderInterfaceConfig
-                0x20007d6c                TIM_SelectHallSensor
-                0x20007dac                TIM_RemapConfig
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
- .text          0x2000801c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
- *fill*         0x2000801c        0x4 
- .text          0x20008020       0xa0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
-                0x20008020                memchr
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
- .text          0x200080c0        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
+                0x20003760                silence
+                0x200037b8                startStopPlayer
+                0x20003838                getPlayerStatus
+                0x20003852                getDeadline
+                0x20003890                getI
+ .text          0x200038ac      0xcb0 ./Debug/driver_src_stm32f4xx_rcc.c.o
+                0x200038ac                RCC_DeInit
+                0x2000391c                RCC_HSEConfig
+                0x20003944                RCC_WaitForHSEStartUp
+                0x20003994                RCC_AdjustHSICalibrationValue
+                0x200039d0                RCC_HSICmd
+                0x200039f0                RCC_LSEConfig
+                0x20003a34                RCC_LSICmd
+                0x20003a54                RCC_PLLConfig
+                0x20003a94                RCC_PLLCmd
+                0x20003ab4                RCC_PLLI2SConfig
+                0x20003ae0                RCC_PLLI2SCmd
+                0x20003b00                RCC_PLLSAIConfig
+                0x20003b34                RCC_PLLSAICmd
+                0x20003b54                RCC_ClockSecuritySystemCmd
+                0x20003b74                RCC_MCO1Config
+                0x20003bb4                RCC_MCO2Config
+                0x20003bf4                RCC_SYSCLKConfig
+                0x20003c2c                RCC_GetSYSCLKSource
+                0x20003c4c                RCC_HCLKConfig
+                0x20003c84                RCC_PCLK1Config
+                0x20003cbc                RCC_PCLK2Config
+                0x20003cf8                RCC_GetClocksFreq
+                0x20003e54                RCC_RTCCLKConfig
+                0x20003eb0                RCC_RTCCLKCmd
+                0x20003ed0                RCC_BackupResetCmd
+                0x20003ef0                RCC_I2SCLKConfig
+                0x20003f10                RCC_SAIPLLI2SClkDivConfig
+                0x20003f50                RCC_SAIPLLSAIClkDivConfig
+                0x20003f90                RCC_SAIBlockACLKConfig
+                0x20003fcc                RCC_SAIBlockBCLKConfig
+                0x20004008                RCC_LTDCCLKDivConfig
+                0x20004044                RCC_TIMCLKPresConfig
+                0x20004064                RCC_AHB1PeriphClockCmd
+                0x200040a4                RCC_AHB2PeriphClockCmd
+                0x200040e4                RCC_AHB3PeriphClockCmd
+                0x20004124                RCC_APB1PeriphClockCmd
+                0x20004164                RCC_APB2PeriphClockCmd
+                0x200041a4                RCC_AHB1PeriphResetCmd
+                0x200041e4                RCC_AHB2PeriphResetCmd
+                0x20004224                RCC_AHB3PeriphResetCmd
+                0x20004264                RCC_APB1PeriphResetCmd
+                0x200042a4                RCC_APB2PeriphResetCmd
+                0x200042e4                RCC_AHB1PeriphClockLPModeCmd
+                0x20004324                RCC_AHB2PeriphClockLPModeCmd
+                0x20004364                RCC_AHB3PeriphClockLPModeCmd
+                0x200043a4                RCC_APB1PeriphClockLPModeCmd
+                0x200043e4                RCC_APB2PeriphClockLPModeCmd
+                0x20004424                RCC_ITConfig
+                0x20004470                RCC_GetFlagStatus
+                0x200044e4                RCC_ClearFlag
+                0x20004504                RCC_GetITStatus
+                0x2000453c                RCC_ClearITPendingBit
+ .text          0x2000455c      0xf30 ./Debug/application.c.o
+                0x2000455c                receiver
+                0x200045e0                reader
+                0x20005238                startApp
+                0x2000544c                main
+ .text          0x2000548c      0x444 ./Debug/canTinyTimber.c.o
+                0x20005514                can_init
+                0x200055d4                can_interrupt
+                0x2000575c                can_receive
+                0x20005826                can_send
+ .text          0x200058d0      0x24c ./Debug/toneGenerator.c.o
+                0x200058d0                getVolume
+                0x200058f8                setVolume
+                0x2000594e                set_user_mute
+                0x2000596e                getUserMute
+                0x20005988                mute
+                0x200059c6                unmute
+                0x200059f0                updateKey
+                0x20005a0c                updateTempo
+                0x20005a2a                updateNotePeriod
+                0x20005a46                toggle_DAC_output
+                0x20005ab4                getKeyTG
+                0x20005ace                getTempoTG
+                0x20005ae8                get_volume_debug
+                0x20005b02                get_prev_volume_debug
+ .text          0x20005b1c      0x4d8 ./Debug/driver_src_stm32f4xx_gpio.c.o
+                0x20005b1c                GPIO_DeInit
+                0x20005c80                GPIO_Init
+                0x20005d9e                GPIO_StructInit
+                0x20005dd2                GPIO_PinLockConfig
+                0x20005e16                GPIO_ReadInputDataBit
+                0x20005e4a                GPIO_ReadInputData
+                0x20005e64                GPIO_ReadOutputDataBit
+                0x20005e98                GPIO_ReadOutputData
+                0x20005eb2                GPIO_SetBits
+                0x20005ed0                GPIO_ResetBits
+                0x20005eee                GPIO_WriteBit
+                0x20005f1e                GPIO_Write
+                0x20005f3c                GPIO_ToggleBits
+                0x20005f60                GPIO_PinAFConfig
+ .text          0x20005ff4      0x450 ./Debug/driver_src_stm32f4xx_dac.c.o
+                0x20005ff4                DAC_DeInit
+                0x20006010                DAC_Init
+                0x20006078                DAC_StructInit
+                0x200060a4                DAC_Cmd
+                0x200060f0                DAC_SoftwareTriggerCmd
+                0x20006140                DAC_DualSoftwareTriggerCmd
+                0x2000617c                DAC_WaveGenerationCmd
+                0x200061c8                DAC_SetChannel1Data
+                0x20006200                DAC_SetChannel2Data
+                0x20006238                DAC_SetDualChannelData
+                0x20006290                DAC_GetDataOutputValue
+                0x200062c4                DAC_DMACmd
+                0x20006314                DAC_ITConfig
+                0x20006360                DAC_GetFlagStatus
+                0x2000639c                DAC_ClearFlag
+                0x200063c4                DAC_GetITStatus
+                0x2000641c                DAC_ClearITPendingBit
+ .text          0x20006444     0x1c1c ./Debug/driver_src_stm32f4xx_tim.c.o
+                0x20006444                TIM_DeInit
+                0x20006604                TIM_TimeBaseInit
+                0x200066dc                TIM_TimeBaseStructInit
+                0x20006710                TIM_PrescalerConfig
+                0x20006738                TIM_CounterModeConfig
+                0x20006770                TIM_SetCounter
+                0x2000678c                TIM_SetAutoreload
+                0x200067a8                TIM_GetCounter
+                0x200067c0                TIM_GetPrescaler
+                0x200067da                TIM_UpdateDisableConfig
+                0x2000681a                TIM_UpdateRequestConfig
+                0x2000685a                TIM_ARRPreloadConfig
+                0x2000689a                TIM_SelectOnePulseMode
+                0x200068d2                TIM_SetClockDivision
+                0x2000690a                TIM_Cmd
+                0x2000694a                TIM_OC1Init
+                0x20006a40                TIM_OC2Init
+                0x20006b50                TIM_OC3Init
+                0x20006c5c                TIM_OC4Init
+                0x20006d2c                TIM_OCStructInit
+                0x20006d70                TIM_SelectOCxM
+                0x20006e26                TIM_SetCompare1
+                0x20006e42                TIM_SetCompare2
+                0x20006e5e                TIM_SetCompare3
+                0x20006e7a                TIM_SetCompare4
+                0x20006e96                TIM_ForcedOC1Config
+                0x20006ece                TIM_ForcedOC2Config
+                0x20006f0a                TIM_ForcedOC3Config
+                0x20006f42                TIM_ForcedOC4Config
+                0x20006f7e                TIM_OC1PreloadConfig
+                0x20006fb6                TIM_OC2PreloadConfig
+                0x20006ff2                TIM_OC3PreloadConfig
+                0x2000702a                TIM_OC4PreloadConfig
+                0x20007066                TIM_OC1FastConfig
+                0x2000709e                TIM_OC2FastConfig
+                0x200070da                TIM_OC3FastConfig
+                0x20007112                TIM_OC4FastConfig
+                0x2000714e                TIM_ClearOC1Ref
+                0x20007186                TIM_ClearOC2Ref
+                0x200071c2                TIM_ClearOC3Ref
+                0x200071fa                TIM_ClearOC4Ref
+                0x20007236                TIM_OC1PolarityConfig
+                0x2000726e                TIM_OC1NPolarityConfig
+                0x200072a6                TIM_OC2PolarityConfig
+                0x200072e2                TIM_OC2NPolarityConfig
+                0x2000731e                TIM_OC3PolarityConfig
+                0x2000735a                TIM_OC3NPolarityConfig
+                0x20007396                TIM_OC4PolarityConfig
+                0x200073d2                TIM_CCxCmd
+                0x20007428                TIM_CCxNCmd
+                0x2000747e                TIM_ICInit
+                0x20007526                TIM_ICStructInit
+                0x20007558                TIM_PWMIConfig
+                0x20007610                TIM_GetCapture1
+                0x20007628                TIM_GetCapture2
+                0x20007640                TIM_GetCapture3
+                0x20007658                TIM_GetCapture4
+                0x20007670                TIM_SetIC1Prescaler
+                0x200076a8                TIM_SetIC2Prescaler
+                0x200076e4                TIM_SetIC3Prescaler
+                0x2000771c                TIM_SetIC4Prescaler
+                0x20007758                TIM_BDTRConfig
+                0x200077a8                TIM_BDTRStructInit
+                0x200077e6                TIM_CtrlPWMOutputs
+                0x20007832                TIM_SelectCOM
+                0x20007872                TIM_CCPreloadControl
+                0x200078b2                TIM_ITConfig
+                0x200078fa                TIM_GenerateEvent
+                0x20007918                TIM_GetFlagStatus
+                0x20007950                TIM_ClearFlag
+                0x20007972                TIM_GetITStatus
+                0x200079c6                TIM_ClearITPendingBit
+                0x200079e8                TIM_DMAConfig
+                0x20007a12                TIM_DMACmd
+                0x20007a5a                TIM_SelectCCDMA
+                0x20007a9a                TIM_InternalClockConfig
+                0x20007abe                TIM_ITRxExternalClockConfig
+                0x20007aec                TIM_TIxExternalClockConfig
+                0x20007b48                TIM_ETRClockMode1Config
+                0x20007ba6                TIM_ETRClockMode2Config
+                0x20007be4                TIM_SelectInputTrigger
+                0x20007c1c                TIM_SelectOutputTrigger
+                0x20007c54                TIM_SelectSlaveMode
+                0x20007c8c                TIM_SelectMasterSlaveMode
+                0x20007cc4                TIM_ETRConfig
+                0x20007d18                TIM_EncoderInterfaceConfig
+                0x20007db0                TIM_SelectHallSensor
+                0x20007df0                TIM_RemapConfig
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+ .text          0x20008060        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
+ .text          0x20008060       0xa0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+                0x20008060                memchr
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
+ .text          0x20008100        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
  *(.text.*)
  .text._snprintf_r
-                0x200080c0       0x5e /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
-                0x200080c0                _sniprintf_r
-                0x200080c0                _snprintf_r
- *fill*         0x2000811e        0x2 
+                0x20008100       0x5e /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
+                0x20008100                _sniprintf_r
+                0x20008100                _snprintf_r
+ *fill*         0x2000815e        0x2 
  .text.snprintf
-                0x20008120       0x68 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
-                0x20008120                snprintf
-                0x20008120                sniprintf
- .text.atoi     0x20008188        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
-                0x20008188                atoi
- .text._atoi_r  0x20008190        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
-                0x20008190                _atoi_r
+                0x20008160       0x68 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
+                0x20008160                snprintf
+                0x20008160                sniprintf
+ .text.atoi     0x200081c8        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
+                0x200081c8                atoi
+ .text._atoi_r  0x200081d0        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
+                0x200081d0                _atoi_r
  .text._strtol_l.isra.0
-                0x20008198       0xf4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+                0x200081d8       0xf4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
  .text._strtol_r
-                0x2000828c        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
-                0x2000828c                _strtol_r
+                0x200082cc        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+                0x200082cc                _strtol_r
  .text.strtol_l
-                0x20008290       0x14 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
-                0x20008290                strtol_l
- .text.strtol   0x200082a4       0x14 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
-                0x200082a4                strtol
+                0x200082d0       0x14 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+                0x200082d0                strtol_l
+ .text.strtol   0x200082e4       0x14 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+                0x200082e4                strtol
  .text.__ssputs_r
-                0x200082b8       0xb6 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
-                0x200082b8                __ssputs_r
+                0x200082f8       0xb6 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+                0x200082f8                __ssputs_r
  .text.__ssprint_r
-                0x2000836e       0xfa /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
-                0x2000836e                __ssprint_r
+                0x200083ae       0xfa /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+                0x200083ae                __ssprint_r
  .text._svfprintf_r
-                0x20008468      0x1f8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
-                0x20008468                _svfprintf_r
-                0x20008468                _svfiprintf_r
+                0x200084a8      0x1f8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+                0x200084a8                _svfprintf_r
+                0x200084a8                _svfiprintf_r
  .text._printf_common
-                0x20008660       0xda /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
-                0x20008660                _printf_common
- *fill*         0x2000873a        0x2 
+                0x200086a0       0xda /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+                0x200086a0                _printf_common
+ *fill*         0x2000877a        0x2 
  .text._printf_i
-                0x2000873c      0x23c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
-                0x2000873c                _printf_i
- .text.memcpy   0x20008978       0x1c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
-                0x20008978                memcpy
+                0x2000877c      0x23c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+                0x2000877c                _printf_i
+ .text.memcpy   0x200089b8       0x1c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
+                0x200089b8                memcpy
  .text.sbrk_aligned
-                0x20008994       0x44 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+                0x200089d4       0x44 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
  .text._malloc_r
-                0x200089d8      0x100 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
-                0x200089d8                _malloc_r
+                0x20008a18      0x100 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+                0x20008a18                _malloc_r
  .text.__malloc_lock
-                0x20008ad8        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
-                0x20008ad8                __malloc_lock
+                0x20008b18        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
+                0x20008b18                __malloc_lock
  .text.__malloc_unlock
-                0x20008ae4        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
-                0x20008ae4                __malloc_unlock
- .text._sbrk_r  0x20008af0       0x20 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
-                0x20008af0                _sbrk_r
- .text.__errno  0x20008b10        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
-                0x20008b10                __errno
- .text.memmove  0x20008b1c       0x34 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
-                0x20008b1c                memmove
+                0x20008b24        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
+                0x20008b24                __malloc_unlock
+ .text._sbrk_r  0x20008b30       0x20 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
+                0x20008b30                _sbrk_r
+ .text.__errno  0x20008b50        0xc /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
+                0x20008b50                __errno
+ .text.memmove  0x20008b5c       0x34 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
+                0x20008b5c                memmove
  .text._realloc_r
-                0x20008b50       0x5c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
-                0x20008b50                _realloc_r
- .text._free_r  0x20008bac       0x94 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
-                0x20008bac                _free_r
+                0x20008b90       0x5c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
+                0x20008b90                _realloc_r
+ .text._free_r  0x20008bec       0x94 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
+                0x20008bec                _free_r
  .text.__retarget_lock_init
-                0x20008c40        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c40                __retarget_lock_init
+                0x20008c80        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c80                __retarget_lock_init
  .text.__retarget_lock_init_recursive
-                0x20008c42        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c42                __retarget_lock_init_recursive
+                0x20008c82        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c82                __retarget_lock_init_recursive
  .text.__retarget_lock_close
-                0x20008c44        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c44                __retarget_lock_close
+                0x20008c84        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c84                __retarget_lock_close
  .text.__retarget_lock_close_recursive
-                0x20008c46        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c46                __retarget_lock_close_recursive
+                0x20008c86        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c86                __retarget_lock_close_recursive
  .text.__retarget_lock_acquire
-                0x20008c48        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c48                __retarget_lock_acquire
+                0x20008c88        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c88                __retarget_lock_acquire
  .text.__retarget_lock_acquire_recursive
-                0x20008c4a        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c4a                __retarget_lock_acquire_recursive
+                0x20008c8a        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c8a                __retarget_lock_acquire_recursive
  .text.__retarget_lock_try_acquire
-                0x20008c4c        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c4c                __retarget_lock_try_acquire
+                0x20008c8c        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c8c                __retarget_lock_try_acquire
  .text.__retarget_lock_try_acquire_recursive
-                0x20008c50        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c50                __retarget_lock_try_acquire_recursive
+                0x20008c90        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c90                __retarget_lock_try_acquire_recursive
  .text.__retarget_lock_release
-                0x20008c54        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c54                __retarget_lock_release
+                0x20008c94        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c94                __retarget_lock_release
  .text.__retarget_lock_release_recursive
-                0x20008c56        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x20008c56                __retarget_lock_release_recursive
+                0x20008c96        0x2 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20008c96                __retarget_lock_release_recursive
  .text._reclaim_reent
-                0x20008c58       0xac /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
-                0x20008c58                _reclaim_reent
+                0x20008c98       0xac /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
+                0x20008c98                _reclaim_reent
  .text._malloc_usable_size_r
-                0x20008d04       0x10 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
-                0x20008d04                _malloc_usable_size_r
+                0x20008d44       0x10 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
+                0x20008d44                _malloc_usable_size_r
  *(.rodata)
- .rodata        0x20008d14       0x81 ./Debug/TinyTimber.c.o
- *fill*         0x20008d95        0x3 
- .rodata        0x20008d98      0x1c8 ./Debug/musicPlayer.c.o
-                0x20008d98                song
-                0x20008e18                beats
-                0x20008e98                notes
- .rodata        0x20008f60       0x10 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .rodata        0x20008f70      0x631 ./Debug/application.c.o
- *fill*         0x200095a1        0x3 
- .rodata        0x200095a4       0xb2 ./Debug/canTinyTimber.c.o
+ .rodata        0x20008d54       0x81 ./Debug/TinyTimber.c.o
+ *fill*         0x20008dd5        0x3 
+ .rodata        0x20008dd8      0x1c8 ./Debug/musicPlayer.c.o
+                0x20008dd8                song
+                0x20008e58                beats
+                0x20008ed8                notes
+ .rodata        0x20008fa0       0x10 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .rodata        0x20008fb0      0x631 ./Debug/application.c.o
+ *fill*         0x200095e1        0x3 
+ .rodata        0x200095e4       0xb2 ./Debug/canTinyTimber.c.o
  *(.rodata*)
  .rodata._svfprintf_r.str1.1
-                0x20009656       0x33 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+                0x20009696       0x33 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
                                  0x11 (size before relaxing)
  .rodata._printf_i.str1.1
-                0x20009689       0x22 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+                0x200096c9       0x22 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
  .rodata._ctype_
-                0x20009689      0x101 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
-                0x20009689                _ctype_
+                0x200096c9      0x101 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
+                0x200096c9                _ctype_
  *(.glue_7)
- .glue_7        0x2000978a        0x0 linker stubs
+ .glue_7        0x200097ca        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x2000978a        0x0 linker stubs
-                0x2000978c                        . = ALIGN (0x4)
- *fill*         0x2000978a        0x2 
+ .glue_7t       0x200097ca        0x0 linker stubs
+                0x200097cc                        . = ALIGN (0x4)
+ *fill*         0x200097ca        0x2 
 
-.ARM.extab      0x2000978c        0x0
- .ARM.extab     0x2000978c        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+.ARM.extab      0x200097cc        0x0
+ .ARM.extab     0x200097cc        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
 
-.ARM.exidx      0x2000978c        0x8
- .ARM.exidx     0x2000978c        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+.ARM.exidx      0x200097cc        0x8
+ .ARM.exidx     0x200097cc        0x8 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
 
-.eh_frame       0x20009794       0x50
- .eh_frame      0x20009794       0x50 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+.eh_frame       0x200097d4       0x50
+ .eh_frame      0x200097d4       0x50 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
 
-.vfp11_veneer   0x200097e4        0x0
- .vfp11_veneer  0x200097e4        0x0 linker stubs
+.vfp11_veneer   0x20009824        0x0
+ .vfp11_veneer  0x20009824        0x0 linker stubs
 
-.v4_bx          0x200097e4        0x0
- .v4_bx         0x200097e4        0x0 linker stubs
+.v4_bx          0x20009824        0x0
+ .v4_bx         0x20009824        0x0 linker stubs
 
-.iplt           0x200097e4        0x0
- .iplt          0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
+.iplt           0x20009824        0x0
+ .iplt          0x20009824        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
 
-.rel.dyn        0x200097e4        0x0
- .rel.iplt      0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
+.rel.dyn        0x20009824        0x0
+ .rel.iplt      0x20009824        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
 
-.data           0x200097e4      0x674
-                0x200097e4                        . = ALIGN (0x4)
+.data           0x20009824      0x67c
+                0x20009824                        . = ALIGN (0x4)
  *(.data)
- .data          0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
- .data          0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_exti.c.o
- .data          0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_can.c.o
- .data          0x200097e4        0x0 ./Debug/driver_src_stm32f4xx_usart.c.o
- .data          0x200097e4       0x24 ./Debug/TinyTimber.c.o
-                0x200097e4                hex
-                0x200097f8                msgPool
-                0x200097fc                threadPool
-                0x20009800                activeStack
-                0x20009804                current
- .data          0x20009808        0x0 ./Debug/startup.c.o
- .data          0x20009808        0x0 ./Debug/CANComms.c.o
- .data          0x20009808       0x84 ./Debug/dispatch.s.o
- .data          0x2000988c        0x0 ./Debug/sciTinyTimber.c.o
- .data          0x2000988c       0x20 ./Debug/musicPlayer.c.o
-                0x2000988c                musicPlay
- .data          0x200098ac        0x0 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .data          0x200098ac      0x544 ./Debug/application.c.o
-                0x200098ac                app
-                0x20009958                sci0
-                0x20009d78                can0
- .data          0x20009df0        0x0 ./Debug/canTinyTimber.c.o
- .data          0x20009df0       0x18 ./Debug/toneGenerator.c.o
-                0x20009df0                toneGenerator
- .data          0x20009e08        0x0 ./Debug/driver_src_stm32f4xx_gpio.c.o
- .data          0x20009e08        0x0 ./Debug/driver_src_stm32f4xx_dac.c.o
- .data          0x20009e08        0x0 ./Debug/driver_src_stm32f4xx_tim.c.o
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
- .data          0x20009e08        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
+ .data          0x20009824        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
+ .data          0x20009824        0x0 ./Debug/driver_src_stm32f4xx_exti.c.o
+ .data          0x20009824        0x0 ./Debug/driver_src_stm32f4xx_can.c.o
+ .data          0x20009824        0x0 ./Debug/driver_src_stm32f4xx_usart.c.o
+ .data          0x20009824       0x24 ./Debug/TinyTimber.c.o
+                0x20009824                hex
+                0x20009838                msgPool
+                0x2000983c                threadPool
+                0x20009840                activeStack
+                0x20009844                current
+ .data          0x20009848        0x0 ./Debug/startup.c.o
+ .data          0x20009848        0x0 ./Debug/CANComms.c.o
+ .data          0x20009848       0x84 ./Debug/dispatch.s.o
+ .data          0x200098cc        0x0 ./Debug/sciTinyTimber.c.o
+ .data          0x200098cc       0x28 ./Debug/musicPlayer.c.o
+                0x200098cc                musicPlay
+ .data          0x200098f4        0x0 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .data          0x200098f4      0x544 ./Debug/application.c.o
+                0x200098f4                app
+                0x200099a0                sci0
+                0x20009dc0                can0
+ .data          0x20009e38        0x0 ./Debug/canTinyTimber.c.o
+ .data          0x20009e38       0x18 ./Debug/toneGenerator.c.o
+                0x20009e38                toneGenerator
+ .data          0x20009e50        0x0 ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .data          0x20009e50        0x0 ./Debug/driver_src_stm32f4xx_dac.c.o
+ .data          0x20009e50        0x0 ./Debug/driver_src_stm32f4xx_tim.c.o
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
+ .data          0x20009e50        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
  *(.data.*)
  .data._impure_ptr
-                0x20009e08        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
-                0x20009e08                _impure_ptr
+                0x20009e50        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
+                0x20009e50                _impure_ptr
  .data._impure_data
-                0x20009e0c       0x4c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
-                0x20009e0c                _impure_data
-                0x20009e58                        . = ALIGN (0x4)
+                0x20009e54       0x4c /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
+                0x20009e54                _impure_data
+                0x20009ea0                        . = ALIGN (0x4)
 
-.igot.plt       0x20009e58        0x0
- .igot.plt      0x20009e58        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
+.igot.plt       0x20009ea0        0x0
+ .igot.plt      0x20009ea0        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
 
-.bss            0x20009e58     0x8394
-                0x20009e58                        . = ALIGN (0x4)
-                0x20009e58                        _sbss = .
+.bss            0x20009ea0     0x8394
+                0x20009ea0                        . = ALIGN (0x4)
+                0x20009ea0                        _sbss = .
  *(.bss)
- .bss           0x20009e58        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
- .bss           0x20009e58        0x0 ./Debug/driver_src_stm32f4xx_exti.c.o
- .bss           0x20009e58        0x0 ./Debug/driver_src_stm32f4xx_can.c.o
- .bss           0x20009e58        0x0 ./Debug/driver_src_stm32f4xx_usart.c.o
- .bss           0x20009e58     0x8370 ./Debug/TinyTimber.c.o
-                0x20009e58                __heap_end
-                0x20009e5c                messages
-                0x2000a12c                threads
-                0x2000a180                stacks
-                0x20012180                thread0
-                0x20012194                msgQ
-                0x20012198                timerQ
-                0x2001219c                runAsHardware
-                0x200121a0                doIRQSchedule
-                0x200121a4                timestamp
-                0x200121a8                overflows
-                0x200121ac                upcoming
-                0x200121b0                mtable
-                0x200121bc                otable
- .bss           0x200121c8        0x0 ./Debug/startup.c.o
- .bss           0x200121c8        0xc ./Debug/CANComms.c.o
-                0x200121c8                canComms
- .bss           0x200121d4        0x0 ./Debug/dispatch.s.o
- .bss           0x200121d4        0x0 ./Debug/sciTinyTimber.c.o
- .bss           0x200121d4        0x0 ./Debug/musicPlayer.c.o
- .bss           0x200121d4        0x0 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .bss           0x200121d4        0x0 ./Debug/application.c.o
- .bss           0x200121d4        0x0 ./Debug/canTinyTimber.c.o
- .bss           0x200121d4        0x4 ./Debug/toneGenerator.c.o
- .bss           0x200121d8        0x0 ./Debug/driver_src_stm32f4xx_gpio.c.o
- .bss           0x200121d8        0x0 ./Debug/driver_src_stm32f4xx_dac.c.o
- .bss           0x200121d8        0x0 ./Debug/driver_src_stm32f4xx_tim.c.o
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
- .bss           0x200121d8        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
+ .bss           0x20009ea0        0x0 ./Debug/driver_src_stm32f4xx_syscfg.c.o
+ .bss           0x20009ea0        0x0 ./Debug/driver_src_stm32f4xx_exti.c.o
+ .bss           0x20009ea0        0x0 ./Debug/driver_src_stm32f4xx_can.c.o
+ .bss           0x20009ea0        0x0 ./Debug/driver_src_stm32f4xx_usart.c.o
+ .bss           0x20009ea0     0x8370 ./Debug/TinyTimber.c.o
+                0x20009ea0                __heap_end
+                0x20009ea4                messages
+                0x2000a174                threads
+                0x2000a1c8                stacks
+                0x200121c8                thread0
+                0x200121dc                msgQ
+                0x200121e0                timerQ
+                0x200121e4                runAsHardware
+                0x200121e8                doIRQSchedule
+                0x200121ec                timestamp
+                0x200121f0                overflows
+                0x200121f4                upcoming
+                0x200121f8                mtable
+                0x20012204                otable
+ .bss           0x20012210        0x0 ./Debug/startup.c.o
+ .bss           0x20012210        0xc ./Debug/CANComms.c.o
+                0x20012210                canComms
+ .bss           0x2001221c        0x0 ./Debug/dispatch.s.o
+ .bss           0x2001221c        0x0 ./Debug/sciTinyTimber.c.o
+ .bss           0x2001221c        0x0 ./Debug/musicPlayer.c.o
+ .bss           0x2001221c        0x0 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .bss           0x2001221c        0x0 ./Debug/application.c.o
+ .bss           0x2001221c        0x0 ./Debug/canTinyTimber.c.o
+ .bss           0x2001221c        0x4 ./Debug/toneGenerator.c.o
+ .bss           0x20012220        0x0 ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .bss           0x20012220        0x0 ./Debug/driver_src_stm32f4xx_dac.c.o
+ .bss           0x20012220        0x0 ./Debug/driver_src_stm32f4xx_tim.c.o
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-snprintf.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-atoi.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-strtol.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-svfprintf.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-nano-vfprintf_i.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-impure.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memchr.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memcpy-stub.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mlock.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-ctype_.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-sbrkr.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-errno.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-memmove.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reallocr.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-freer.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
+ .bss           0x20012220        0x0 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-msizer.o)
  *(.bss.*)
  .bss.__malloc_sbrk_start
-                0x200121d8        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
-                0x200121d8                __malloc_sbrk_start
+                0x20012220        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+                0x20012220                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x200121dc        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
-                0x200121dc                __malloc_free_list
+                0x20012224        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-mallocr.o)
+                0x20012224                __malloc_free_list
  .bss.__lock___arc4random_mutex
-                0x200121e0        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e0                __lock___arc4random_mutex
+                0x20012228        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20012228                __lock___arc4random_mutex
  .bss.__lock___dd_hash_mutex
-                0x200121e1        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e1                __lock___dd_hash_mutex
+                0x20012229        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x20012229                __lock___dd_hash_mutex
  .bss.__lock___tz_mutex
-                0x200121e2        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e2                __lock___tz_mutex
+                0x2001222a        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222a                __lock___tz_mutex
  .bss.__lock___env_recursive_mutex
-                0x200121e3        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e3                __lock___env_recursive_mutex
+                0x2001222b        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222b                __lock___env_recursive_mutex
  .bss.__lock___malloc_recursive_mutex
-                0x200121e4        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e4                __lock___malloc_recursive_mutex
+                0x2001222c        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222c                __lock___malloc_recursive_mutex
  .bss.__lock___at_quick_exit_mutex
-                0x200121e5        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e5                __lock___at_quick_exit_mutex
+                0x2001222d        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222d                __lock___at_quick_exit_mutex
  .bss.__lock___atexit_recursive_mutex
-                0x200121e6        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e6                __lock___atexit_recursive_mutex
+                0x2001222e        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222e                __lock___atexit_recursive_mutex
  .bss.__lock___sfp_recursive_mutex
-                0x200121e7        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
-                0x200121e7                __lock___sfp_recursive_mutex
- .bss.errno     0x200121e8        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
-                0x200121e8                errno
+                0x2001222f        0x1 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-lock.o)
+                0x2001222f                __lock___sfp_recursive_mutex
+ .bss.errno     0x20012230        0x4 /home/jger/EDA223/Arm_GNU_Toolchain/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(libc_a-reent.o)
+                0x20012230                errno
  *(COMMON)
-                0x200121ec                        . = ALIGN (0x4)
-                0x200121ec                        _ebss = .
-                0x200121ec                        PROVIDE (end = _ebss)
+                0x20012234                        . = ALIGN (0x4)
+                0x20012234                        _ebss = .
+                0x20012234                        PROVIDE (end = _ebss)
                 [!provide]                        PROVIDE (_end = _ebss)
 OUTPUT(./Debug/RTS-Lab.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0xaa33
+.debug_info     0x00000000     0xaa94
  .debug_info    0x00000000      0x284 ./Debug/driver_src_stm32f4xx_syscfg.c.o
  .debug_info    0x00000284      0x31b ./Debug/driver_src_stm32f4xx_exti.c.o
  .debug_info    0x0000059f      0xb71 ./Debug/driver_src_stm32f4xx_can.c.o
  .debug_info    0x00001110      0x9be ./Debug/driver_src_stm32f4xx_usart.c.o
  .debug_info    0x00001ace     0x18b3 ./Debug/TinyTimber.c.o
  .debug_info    0x00003381      0xc29 ./Debug/startup.c.o
- .debug_info    0x00003faa      0x3ea ./Debug/CANComms.c.o
- .debug_info    0x00004394      0xa14 ./Debug/sciTinyTimber.c.o
- .debug_info    0x00004da8      0x5cd ./Debug/musicPlayer.c.o
- .debug_info    0x00005375      0xda3 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .debug_info    0x00006118      0xdb5 ./Debug/application.c.o
- .debug_info    0x00006ecd      0xe78 ./Debug/canTinyTimber.c.o
- .debug_info    0x00007d45      0x4da ./Debug/toneGenerator.c.o
- .debug_info    0x0000821f      0x608 ./Debug/driver_src_stm32f4xx_gpio.c.o
- .debug_info    0x00008827      0x61b ./Debug/driver_src_stm32f4xx_dac.c.o
- .debug_info    0x00008e42     0x1bf1 ./Debug/driver_src_stm32f4xx_tim.c.o
+ .debug_info    0x00003faa      0x41a ./Debug/CANComms.c.o
+ .debug_info    0x000043c4      0xa14 ./Debug/sciTinyTimber.c.o
+ .debug_info    0x00004dd8      0x5e4 ./Debug/musicPlayer.c.o
+ .debug_info    0x000053bc      0xda3 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .debug_info    0x0000615f      0xdcf ./Debug/application.c.o
+ .debug_info    0x00006f2e      0xe78 ./Debug/canTinyTimber.c.o
+ .debug_info    0x00007da6      0x4da ./Debug/toneGenerator.c.o
+ .debug_info    0x00008280      0x608 ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .debug_info    0x00008888      0x61b ./Debug/driver_src_stm32f4xx_dac.c.o
+ .debug_info    0x00008ea3     0x1bf1 ./Debug/driver_src_stm32f4xx_tim.c.o
 
-.debug_abbrev   0x00000000     0x2365
+.debug_abbrev   0x00000000     0x236a
  .debug_abbrev  0x00000000      0x161 ./Debug/driver_src_stm32f4xx_syscfg.c.o
  .debug_abbrev  0x00000161      0x1d1 ./Debug/driver_src_stm32f4xx_exti.c.o
  .debug_abbrev  0x00000332      0x240 ./Debug/driver_src_stm32f4xx_can.c.o
  .debug_abbrev  0x00000572      0x1af ./Debug/driver_src_stm32f4xx_usart.c.o
  .debug_abbrev  0x00000721      0x536 ./Debug/TinyTimber.c.o
  .debug_abbrev  0x00000c57      0x2c3 ./Debug/startup.c.o
- .debug_abbrev  0x00000f1a      0x140 ./Debug/CANComms.c.o
- .debug_abbrev  0x0000105a      0x2c0 ./Debug/sciTinyTimber.c.o
- .debug_abbrev  0x0000131a      0x1d3 ./Debug/musicPlayer.c.o
- .debug_abbrev  0x000014ed      0x1df ./Debug/driver_src_stm32f4xx_rcc.c.o
- .debug_abbrev  0x000016cc      0x2ed ./Debug/application.c.o
- .debug_abbrev  0x000019b9      0x2c8 ./Debug/canTinyTimber.c.o
- .debug_abbrev  0x00001c81      0x16c ./Debug/toneGenerator.c.o
- .debug_abbrev  0x00001ded      0x1ec ./Debug/driver_src_stm32f4xx_gpio.c.o
- .debug_abbrev  0x00001fd9      0x1c0 ./Debug/driver_src_stm32f4xx_dac.c.o
- .debug_abbrev  0x00002199      0x1cc ./Debug/driver_src_stm32f4xx_tim.c.o
+ .debug_abbrev  0x00000f1a      0x14f ./Debug/CANComms.c.o
+ .debug_abbrev  0x00001069      0x2c0 ./Debug/sciTinyTimber.c.o
+ .debug_abbrev  0x00001329      0x1c9 ./Debug/musicPlayer.c.o
+ .debug_abbrev  0x000014f2      0x1df ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .debug_abbrev  0x000016d1      0x2ed ./Debug/application.c.o
+ .debug_abbrev  0x000019be      0x2c8 ./Debug/canTinyTimber.c.o
+ .debug_abbrev  0x00001c86      0x16c ./Debug/toneGenerator.c.o
+ .debug_abbrev  0x00001df2      0x1ec ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .debug_abbrev  0x00001fde      0x1c0 ./Debug/driver_src_stm32f4xx_dac.c.o
+ .debug_abbrev  0x0000219e      0x1cc ./Debug/driver_src_stm32f4xx_tim.c.o
 
 .debug_aranges  0x00000000      0x208
  .debug_aranges
@@ -809,7 +808,7 @@ LOAD linker stubs
  .debug_aranges
                 0x000001e8       0x20 ./Debug/driver_src_stm32f4xx_tim.c.o
 
-.debug_line     0x00000000     0x5b0b
+.debug_line     0x00000000     0x5b48
  .debug_line    0x00000000      0x2e2 ./Debug/driver_src_stm32f4xx_syscfg.c.o
  .debug_line    0x000002e2      0x389 ./Debug/driver_src_stm32f4xx_exti.c.o
  .debug_line    0x0000066b      0xa46 ./Debug/driver_src_stm32f4xx_can.c.o
@@ -818,33 +817,33 @@ LOAD linker stubs
  .debug_line    0x0000225f      0x431 ./Debug/startup.c.o
  .debug_line    0x00002690      0x21b ./Debug/CANComms.c.o
  .debug_line    0x000028ab      0x39b ./Debug/sciTinyTimber.c.o
- .debug_line    0x00002c46      0x2a7 ./Debug/musicPlayer.c.o
- .debug_line    0x00002eed      0x859 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .debug_line    0x00003746      0x6d5 ./Debug/application.c.o
- .debug_line    0x00003e1b      0x479 ./Debug/canTinyTimber.c.o
- .debug_line    0x00004294      0x27a ./Debug/toneGenerator.c.o
- .debug_line    0x0000450e      0x4b5 ./Debug/driver_src_stm32f4xx_gpio.c.o
- .debug_line    0x000049c3      0x472 ./Debug/driver_src_stm32f4xx_dac.c.o
- .debug_line    0x00004e35      0xcd6 ./Debug/driver_src_stm32f4xx_tim.c.o
+ .debug_line    0x00002c46      0x2e4 ./Debug/musicPlayer.c.o
+ .debug_line    0x00002f2a      0x859 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .debug_line    0x00003783      0x6d5 ./Debug/application.c.o
+ .debug_line    0x00003e58      0x479 ./Debug/canTinyTimber.c.o
+ .debug_line    0x000042d1      0x27a ./Debug/toneGenerator.c.o
+ .debug_line    0x0000454b      0x4b5 ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .debug_line    0x00004a00      0x472 ./Debug/driver_src_stm32f4xx_dac.c.o
+ .debug_line    0x00004e72      0xcd6 ./Debug/driver_src_stm32f4xx_tim.c.o
 
-.debug_str      0x00000000     0x380a
- .debug_str     0x00000000     0x380a ./Debug/driver_src_stm32f4xx_syscfg.c.o
+.debug_str      0x00000000     0x3815
+ .debug_str     0x00000000     0x3815 ./Debug/driver_src_stm32f4xx_syscfg.c.o
                                 0x344 (size before relaxing)
- .debug_str     0x0000380a      0x36b ./Debug/driver_src_stm32f4xx_exti.c.o
- .debug_str     0x0000380a      0x774 ./Debug/driver_src_stm32f4xx_can.c.o
- .debug_str     0x0000380a      0x6ee ./Debug/driver_src_stm32f4xx_usart.c.o
- .debug_str     0x0000380a      0xd74 ./Debug/TinyTimber.c.o
- .debug_str     0x0000380a      0x8f1 ./Debug/startup.c.o
- .debug_str     0x0000380a      0x30c ./Debug/CANComms.c.o
- .debug_str     0x0000380a      0x913 ./Debug/sciTinyTimber.c.o
- .debug_str     0x0000380a      0x383 ./Debug/musicPlayer.c.o
- .debug_str     0x0000380a      0x9b4 ./Debug/driver_src_stm32f4xx_rcc.c.o
- .debug_str     0x0000380a      0x6a3 ./Debug/application.c.o
- .debug_str     0x0000380a      0xaba ./Debug/canTinyTimber.c.o
- .debug_str     0x0000380a      0x348 ./Debug/toneGenerator.c.o
- .debug_str     0x0000380a      0x4e9 ./Debug/driver_src_stm32f4xx_gpio.c.o
- .debug_str     0x0000380a      0x489 ./Debug/driver_src_stm32f4xx_dac.c.o
- .debug_str     0x0000380a      0xe1d ./Debug/driver_src_stm32f4xx_tim.c.o
+ .debug_str     0x00003815      0x36b ./Debug/driver_src_stm32f4xx_exti.c.o
+ .debug_str     0x00003815      0x774 ./Debug/driver_src_stm32f4xx_can.c.o
+ .debug_str     0x00003815      0x6ee ./Debug/driver_src_stm32f4xx_usart.c.o
+ .debug_str     0x00003815      0xd74 ./Debug/TinyTimber.c.o
+ .debug_str     0x00003815      0x8f1 ./Debug/startup.c.o
+ .debug_str     0x00003815      0x32b ./Debug/CANComms.c.o
+ .debug_str     0x00003815      0x913 ./Debug/sciTinyTimber.c.o
+ .debug_str     0x00003815      0x394 ./Debug/musicPlayer.c.o
+ .debug_str     0x00003815      0x9b4 ./Debug/driver_src_stm32f4xx_rcc.c.o
+ .debug_str     0x00003815      0x6ae ./Debug/application.c.o
+ .debug_str     0x00003815      0xaba ./Debug/canTinyTimber.c.o
+ .debug_str     0x00003815      0x348 ./Debug/toneGenerator.c.o
+ .debug_str     0x00003815      0x4e9 ./Debug/driver_src_stm32f4xx_gpio.c.o
+ .debug_str     0x00003815      0x489 ./Debug/driver_src_stm32f4xx_dac.c.o
+ .debug_str     0x00003815      0xe1d ./Debug/driver_src_stm32f4xx_tim.c.o
 
 .comment        0x00000000       0x44
  .comment       0x00000000       0x44 ./Debug/driver_src_stm32f4xx_syscfg.c.o
@@ -988,6 +987,7 @@ Cross Reference Table
 
 Symbol                                            File
 ABORT                                             ./Debug/TinyTimber.c.o
+                                                  ./Debug/musicPlayer.c.o
 CANReceive                                        ./Debug/CANComms.c.o
                                                   ./Debug/application.c.o
 CAN_CancelTransmit                                ./Debug/driver_src_stm32f4xx_can.c.o

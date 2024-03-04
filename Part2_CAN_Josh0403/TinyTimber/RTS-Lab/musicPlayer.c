@@ -72,20 +72,20 @@ int setKey(musicPlayerObj* self, int key)
 
 void nextNote(musicPlayerObj* self, int unused)
 {
-	if(self->startStop == 0)
+	// Try to break the nextNote loop if the system is not playing
+	
+	if (self->i < SONG_LENGTH)
 	{
-		if (self->i < SONG_LENGTH)
-		{
-			self->i += 1;
-		}
-		else
-		{
-			self->i = 0;
-		}
+		self->i += 1;
+	}
+	else
+	{
+		self->i = 0;
+	}
 		// Note controls
 		int current_note = (self->key + f0_pos + song[self->i]);
 		self->notePeriod = notes[current_note][1];
-	
+
 		// Tempo controls
 	
 		// Converting bpm to microseconds
@@ -103,49 +103,62 @@ void nextNote(musicPlayerObj* self, int unused)
 		int temp_tempo = ((beats[self->i] * self->tempo) / 2); 
 		int temp_tempo_us = (MSEC_MINUTE / temp_tempo);
 		int temp_tempo_minus50 = temp_tempo_us - 50;
-		int user_mute;
+
 		self->deadline = MSEC(temp_tempo_minus50);
-		user_mute=SYNC(&toneGenerator, getUserMute, 0);
+		self->user_mute=SYNC(&toneGenerator, getUserMute, 0);
 	
 		BEFORE(USEC(100), &toneGenerator, updateNotePeriod, self->notePeriod);
 	
-		// Mutes tone generator
-		// If user has already muted the program, do not mute/unmute
-		if( user_mute== 0)
+	// Mutes tone generator
+	// If user has already muted the program, do not mute/unmute
+		if(self->user_mute== 0)
 		{
 			SEND(self->deadline, USEC(50),&toneGenerator, mute, 0);
-			SEND(self->deadline + MSEC(SILENCE_TIME), USEC(50) , &toneGenerator, unmute, NULL);
 		}
-	
-		SEND(self->deadline, USEC(100) ,self, silence, 0);
-		// This maths is very funky: so need to think of a better way to perform this
-	}
+		
+		self->playingMsg = SEND(self->deadline, USEC(100) ,self, silence, 0);
+	// This maths is very funky: so need to think of a better way to perform this
 }
+
 
 void silence(musicPlayerObj* self, int unused)
 {
 	// Will stop continous looping if user has stopped playing
 	if(self->startStop == 0)
 	{
-		SEND(MSEC(SILENCE_TIME), 0, self, nextNote, 0);
+		if(self->user_mute == 0)
+		{
+			SEND(MSEC(SILENCE_TIME), USEC(200) , &toneGenerator, unmute, NULL);
+		}
+		self->playingMsg = SEND(MSEC(SILENCE_TIME), USEC(100), self, nextNote, 0);
 	}
-
 }
 
 int startStopPlayer(musicPlayerObj* self, int state)
 {
+	ASYNC(&toneGenerator, mute, 0);
 	self->startStop = state;
-	self->i = -1;
 
-	if(self->startStop == 0)
+	// If system is started, continue the nextNote looping
+	if(self->startStop == 0 && self->notePeriod == 0)
 	{
-		SYNC(self, nextNote, 0);
-	}
-	else
-	{
-		SYNC(self, mute, 0);
+		self->playingMsg = ASYNC(self, silence, 0);
 	}
 	
+	// Else break the loop, and mute the toneGenerator
+	else
+	{
+		// Prevent overlapping of ASYNC statements when 
+		// rapidly pressing Start/Stop
+		ABORT(self->playingMsg);
+		
+		// Reinitialise values
+		self->i = -1;
+		self->notePeriod = 0;
+		self->deadline = 0;
+		
+	}
+	// Return status of startStop
 	return self->startStop;
 }
 

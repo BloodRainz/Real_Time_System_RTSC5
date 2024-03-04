@@ -25,6 +25,8 @@ typedef struct {
 	int i;
 	int notePeriod;
 	int startStop;
+	int user_mute;
+	Msg playingMsg;
 }musicPlayerObj;
 
 #define initmusicPlayer() { initObject(), 120, 0, 0, -1, 0, 0};
