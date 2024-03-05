@@ -91,7 +91,24 @@ void receiver(App *self, int unused) {
 			SCI_WRITE(&sci0, "CAN_VOLUME    ");
 			if (self->CANMode == 1)
 			{
-				SYNC(&toneGenerator, setVolume, atoi(msg.buff));
+				char new_buf[5];
+				new_buf[0] = (char)msg.buff[0];
+				new_buf[1] = (char)msg.buff[1];
+				new_buf[2] = (char)msg.buff[2];
+				new_buf[3] = (char)msg.buff[3];
+				new_buf[4] = (char)msg.buff[4];
+				SYNC(&toneGenerator, setVolume, atoi(new_buf));
+				/*SCI_WRITE(&sci0, new_buf);
+				SCI_WRITE(&sci0, " - ");
+				for(int i =0; i<5; i++)
+				{
+					SCI_WRITE(&sci0, "buff= '");
+					SCI_WRITE(&sci0, new_buf[i]);
+					SCI_WRITE(&sci0, "' - '");
+					SCI_WRITE(&sci0, atoi(new_buf[i]));
+					SCI_WRITE(&sci0, "' , ");
+				}
+				SCI_WRITE(&sci0, atoi(new_buf));*/
 				SCI_WRITE(&sci0, " new volume sent    ");
 				SCI_WRITE(&sci0,SYNC(&toneGenerator, getVolume, NULL) );
 			}
@@ -111,7 +128,24 @@ void receiver(App *self, int unused) {
 			SCI_WRITE(&sci0, "CAN_TEMPO    ");
 			if (self->CANMode == 1)
 			{
-				SYNC(&musicPlay, setTempo, atoi(msg.buff));
+				char new_buf[5];
+				new_buf[0] = (char)msg.buff[0];
+				new_buf[1] = (char)msg.buff[1];
+				new_buf[2] = (char)msg.buff[2];
+				new_buf[3] = (char)msg.buff[3];
+				new_buf[4] = (char)msg.buff[4];
+				SYNC(&musicPlay, setTempo, atoi(new_buf));
+				/*SCI_WRITE(&sci0, new_buf);
+				SCI_WRITE(&sci0, " - ");
+				for(int i =0; i<5; i++)
+				{
+					SCI_WRITE(&sci0, "buff= '");
+					SCI_WRITE(&sci0, new_buf[i]);
+					SCI_WRITE(&sci0, "' - '");
+					SCI_WRITE(&sci0, atoi(new_buf[i]));
+					SCI_WRITE(&sci0, "' , ");
+				}
+				SCI_WRITE(&sci0, atoi(new_buf));*/
 				SCI_WRITE(&sci0, " new tempo sent    ");
 				SCI_WRITE(&sci0,SYNC(&musicPlay, getTempo, NULL) );
 			}
@@ -122,7 +156,26 @@ void receiver(App *self, int unused) {
 			SCI_WRITE(&sci0, "CAN_KEY    ");
 			if (self->CANMode == 1)
 			{
-				SYNC(&musicPlay, setKey, atoi(msg.buff));
+				char new_buf[5];
+				new_buf[0] = (char)msg.buff[0];
+				new_buf[1] = (char)msg.buff[1];
+				new_buf[2] = (char)msg.buff[2];
+				new_buf[3] = (char)msg.buff[3];
+				new_buf[4] = (char)msg.buff[4];
+
+				SYNC(&musicPlay, setKey, atoi(new_buf));
+				/*SCI_WRITE(&sci0, new_buf);
+				SCI_WRITE(&sci0, " - ");
+				for(int i =0; i<5; i++)
+				{
+					SCI_WRITE(&sci0, "buff= '");
+					SCI_WRITE(&sci0, new_buf[i]);
+					SCI_WRITE(&sci0, "' - '");
+					SCI_WRITE(&sci0, atoi(new_buf[i]));
+					SCI_WRITE(&sci0, "' , ");
+				}
+				SCI_WRITE(&sci0, " - ");
+				SCI_WRITE(&sci0, atoi(new_buf)); */
 				SCI_WRITE(&sci0, " new Key sent    ");
 				SCI_WRITE(&sci0,SYNC(&musicPlay, getKey, NULL) );
 			}
