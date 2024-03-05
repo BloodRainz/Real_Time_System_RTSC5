@@ -70,15 +70,21 @@ void receiver(App *self, int unused) {
 	{
 		case CAN_START:
 			SCI_WRITE(&sci0, "CAN_START    ");
-			SYNC(&musicPlay, startStopPlayer, 0);
-			SCI_WRITE(&sci0, "Music player started \n"); 
+			if(self->CANMode== 1)
+			{
+				SYNC(&musicPlay, startStopPlayer, 0);
+				SCI_WRITE(&sci0, "Music player started \n"); 
+			}
 			
 		break;
 		
 		case CAN_STOP:
 			SCI_WRITE(&sci0, "CAN_STOP    ");
-			SYNC(&musicPlay, startStopPlayer, 1);
-			SCI_WRITE(&sci0, "Music player stopped \n"); 
+			if(self->CANMode == 1)
+			{
+				SYNC(&musicPlay, startStopPlayer, 1);
+				SCI_WRITE(&sci0, "Music player stopped \n"); 
+			}
 		break;
 		
 		case CAN_VOLUME:
